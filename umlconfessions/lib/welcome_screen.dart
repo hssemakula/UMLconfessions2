@@ -1,20 +1,26 @@
 import 'package:flutter/material.dart';
+import 'create_account_one.dart';
 
 class WelcomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-        home: Scaffold(
+    return Scaffold(
+      appBar: AppBar(
+        title:
+            Container(child: Image.asset('assets/images/logo.png'), height: 30),
+        centerTitle: true,
+        backgroundColor: Theme.of(context).canvasColor,
+        elevation: 0,
+        iconTheme: IconThemeData(color: Color(0xFF0072bc)),
+      ),
       body: Padding(
           padding: EdgeInsets.only(left: 35, top: 10, right: 35, bottom: 15),
           child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: <Widget>[
-                Container(
-                    child: Image.asset('assets/images/logo.png'),
-                    margin: EdgeInsets.only(top: 30),
-                    height: 30),
+                //empty container works with Mai xis alignment to push create account button to middle of screen.
+                Container(),
                 Container(
                     margin: EdgeInsets.only(bottom: 50),
                     child: Column(
@@ -46,7 +52,12 @@ class WelcomeScreen extends StatelessWidget {
                                 shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(20)),
                                 onPressed: () {
-                                  // Perform some action
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            CreateAccountOne()),
+                                  );
                                 },
                               ),
                             )),
@@ -75,6 +86,6 @@ class WelcomeScreen extends StatelessWidget {
                   ],
                 ),
               ])),
-    ));
+    );
   }
 }
