@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'terms_of_service.dart';
 
 class CreateAccountFinal extends StatelessWidget {
   Widget build(BuildContext context) {
@@ -25,7 +26,6 @@ class CreateAccountFinal extends StatelessWidget {
                 child:  Column(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   crossAxisAlignment: CrossAxisAlignment.stretch,
-                  mainAxisSize: MainAxisSize.max,
                   children: <Widget>[
                     Container(
                       margin: EdgeInsets.only(top: 10),
@@ -89,7 +89,14 @@ class CreateAccountFinal extends StatelessWidget {
                               FlatButton(
                                 padding: EdgeInsets.only(top: 0, left: 5, right: 0, bottom: 0),
                                 child: Text("Terms of Service", style: TextStyle(color: Color(0xFF0072bc)),),
-                                onPressed: () {},
+                                onPressed: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            TermsOfService()),
+                                  );
+                                },
                               )
                             ]),
                             RaisedButton(
