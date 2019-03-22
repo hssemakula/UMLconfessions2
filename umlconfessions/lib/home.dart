@@ -12,10 +12,31 @@ class HomeState extends State<Home> {
   var numOfPosts = 16;
   var postsArray = <Widget>[];
   int navIndex = 0;
+  String appTitle = 'home';
+  Widget bodyWidget; // acts like fragment, whenever nav is pressed, this is changed to settings, profile, etc
 
-  //To be used to generate posts.
-  Widget postsList() {
-    return ListView.builder();
+  //To be used to generate and show posts.
+  Widget postsWidget() {
+    //return ListView.builder(itemBuilder: ,);
+    appTitle = "Home";
+    return Text('Posts Here');
+  }
+
+  //To show profile screen
+  Widget profileWidget(){
+    appTitle = 'Profile';
+    return Text("Profile Here");
+  }
+//bookmarks screen
+  Widget bookmarksWidget(){
+    appTitle = 'Bookmarks';
+    return Text("Bookmarks Here");
+  }
+
+  //settings screen
+  Widget settingsWidget(){
+    appTitle = 'Settings';
+    return Text("Settings Here");
   }
 
   @override
@@ -37,13 +58,13 @@ class HomeState extends State<Home> {
                   Container(
                       margin: EdgeInsets.only(left: 20),
                       child: Text(
-                        "Home",
+                        appTitle,
                         style: TextStyle(color: Colors.black, fontSize: 18),
                       ))
                 ]),
             backgroundColor: Theme.of(context).canvasColor,
             elevation: 2),
-        body: Text("Posts list"),
+        body: postsWidget(),
         
         
         bottomNavigationBar:  BottomNavyBar(
@@ -51,6 +72,16 @@ class HomeState extends State<Home> {
               onItemSelected: (index) {
                 return setState(() {
                   navIndex = index;
+                  switch(index){
+                    case 0: bodyWidget = postsWidget();
+                    break;
+                    case 1: bodyWidget = profileWidget();
+                    break;
+                    case 2: bodyWidget = bookmarksWidget();
+                    break;
+                    case 3: bodyWidget = settingsWidget();
+                    break;
+                  }
                 });
               }),
         );
