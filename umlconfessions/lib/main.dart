@@ -9,17 +9,3 @@ class MyApp extends StatelessWidget {
     return  MaterialApp( home: WelcomeScreen());
   }
 }
-
-/* Color choices for home page
-  Widget build(BuildContext context) {
-    return MaterialApp(
-        home: Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.white,
-        title:
-            Text('UML confessions', style: TextStyle(color: Color(0xFF0072bc))),
-      ),
-    ));
-  }
-}
-*/

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'create_account_one.dart';
+import 'login.dart';
 
 class WelcomeScreen extends StatelessWidget {
   @override
@@ -63,8 +64,10 @@ class WelcomeScreen extends StatelessWidget {
                             )),
                       ],
                     )),
-                Row(
-                  children: [
+                Wrap(
+                  spacing: 4,
+                  runSpacing: 7,
+                  children: <Widget>[
                     Container(
                       margin: EdgeInsets.only(bottom: 10),
                       child: Text(
@@ -72,8 +75,7 @@ class WelcomeScreen extends StatelessWidget {
                         style: TextStyle(fontSize: 17, color: Colors.grey),
                       ),
                     ),
-                    FlatButton(
-                      padding: EdgeInsets.only(bottom: 8, right: 10),
+                    InkWell(
                       child: Text(
                         'Log in',
                         style: TextStyle(
@@ -81,7 +83,15 @@ class WelcomeScreen extends StatelessWidget {
                           color: Color(0xFF0072bc),
                         ),
                       ),
-                      onPressed: () {},
+                      onTap: () {
+
+
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                            builder: (context) =>
+                            LogIn()));
+                      },
                     )
                   ],
                 ),

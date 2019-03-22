@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'create_account_final.dart';
 
-class CreateAccountOne extends StatelessWidget {
+class LogIn extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
@@ -21,34 +20,35 @@ class CreateAccountOne extends StatelessWidget {
                     minHeight: viewportConstraints.maxHeight,
                   ),
                   child: Padding(
-                    padding: EdgeInsets.only(left: 35, top: 10, right: 35, bottom: 10),
+                    padding: EdgeInsets.only(
+                        left: 35, top: 10, right: 35, bottom: 10),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: <Widget>[
                         Container(
-                          margin: EdgeInsets.only(top: 10),
-                          child: Text(
-                            'Create your account',
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                              color: Colors.black,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 29,
-                            ),
-                          ),
-                        ),
-                        Container(
                             margin: EdgeInsets.only(bottom: 50),
                             child: Column(
                               children: <Widget>[
+                                Container(
+                                  margin: EdgeInsets.only(top: 10, bottom: 15),
+                                  constraints: BoxConstraints(minWidth: viewportConstraints.maxWidth), //add this so that container doesn't wrap text width and mess up margin
+                                  child: Text(
+                                    'Log in to UML Confessions.',
+                                    textAlign: TextAlign.left,
+                                    style: TextStyle(
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 24,
+                                      height: 1.3,
+                                    ),
+                                  ),
+                                ),
                                 TextFormField(
                                   style: TextStyle(fontSize: 20),
                                   decoration: const InputDecoration(
                                     labelStyle: TextStyle(fontSize: 17),
-                                    icon: Icon(Icons.person),
-                                    hintText: 'Choose a user name',
-                                    labelText: 'Name',
+                                    labelText: 'Email',
                                   ),
                                   onSaved: (String value) {
                                     // This optional block of code can be used to run
@@ -63,12 +63,11 @@ class CreateAccountOne extends StatelessWidget {
                                 Container(
                                     margin: EdgeInsets.only(top: 30),
                                     child: TextFormField(
+                                      obscureText: true,
                                       style: TextStyle(fontSize: 20),
                                       decoration: const InputDecoration(
                                         labelStyle: TextStyle(fontSize: 17),
-                                        icon: Icon(Icons.email),
-                                        hintText: 'someone@example.com',
-                                        labelText: 'Email',
+                                        labelText: 'Password',
                                       ),
                                       onSaved: (String value) {
                                         // This optional block of code can be used to run
@@ -88,7 +87,7 @@ class CreateAccountOne extends StatelessWidget {
                           children: <Widget>[
                             RaisedButton(
                               child: const Text(
-                                'Next',
+                                'Log in',
                                 style: TextStyle(
                                     color: Colors.white,
                                     fontSize: 17,
@@ -99,14 +98,7 @@ class CreateAccountOne extends StatelessWidget {
                               splashColor: Colors.blueGrey,
                               shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(35)),
-                              onPressed: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) =>
-                                          CreateAccountFinal()),
-                                );
-                              },
+                              onPressed: () {},
                             )
                           ],
                         ))
