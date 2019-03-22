@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'terms_of_service.dart';
+import 'home.dart';
 
 class CreateAccountFinal extends StatelessWidget {
   Widget build(BuildContext context) {
@@ -129,7 +130,10 @@ class CreateAccountFinal extends StatelessWidget {
                                 splashColor: Colors.blueGrey,
                                 shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(35)),
-                                onPressed: () {},
+                                onPressed: () {
+                                  Navigator.of(context)
+                                      .pushNamedAndRemoveUntil('/homeScreen', (Route<dynamic> route) => false);
+                                },
                               ),
                             )
                           ],
