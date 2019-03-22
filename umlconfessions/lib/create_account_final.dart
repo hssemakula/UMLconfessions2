@@ -131,6 +131,7 @@ class CreateAccountFinal extends StatelessWidget {
                                 shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(35)),
                                 onPressed: () {
+                                  //AFTER SUCCESSFUL SIGNUP, remove all widgets and load home screen
                                   Navigator.of(context)
                                       .pushNamedAndRemoveUntil('/homeScreen', (Route<dynamic> route) => false);
                                 },
