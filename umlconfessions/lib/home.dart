@@ -11,11 +11,14 @@ class HomeState extends State<Home> {
   var karma = 100;
   var numOfPosts = 16;
   var postsArray = <Widget>[];
+  int navIndex = 0;
 
   //To be used to generate posts.
   Widget postsList() {
     return ListView.builder();
   }
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -43,37 +46,33 @@ class HomeState extends State<Home> {
           backgroundColor: Theme.of(context).canvasColor,
           elevation: 2),
       body: Text("Posts list"),
-      bottomNavigationBar: ,
+      bottomNavigationBar: BottomNavyBar(
+          items: navItems,
+          onItemSelected: (index) {
+            return setState(() {
+              navIndex = index;
+            });
+          }),
     );
   }
 }
 
-class BottomNavyBarHelper{
-  int _index = 0;
-
-  Widget build() {
-    return BottomNavyBar(items: [
-      BottomNavyBarItem(
-        icon: Icon(Icons.apps),
-        title: Text('Home'),
-        activeColor: Colors.red,
-      ),
-      BottomNavyBarItem(
-          icon: Icon(Icons.people),
-          title: Text('Users'),
-          activeColor: Colors.purpleAccent),
-      BottomNavyBarItem(
-          icon: Icon(Icons.message),
-          title: Text('Messages'),
-          activeColor: Colors.pink),
-      BottomNavyBarItem(
-          icon: Icon(Icons.settings),
-          title: Text('Settings'),
-          activeColor: Colors.blue),
-    ], onItemSelected: (index) {
-      return setState(() {
-          _index = index;
-        });
-    });
-  }
-}
+final navItems = <BottomNavyBarItem>[
+  BottomNavyBarItem(
+    icon: Icon(Icons.apps),
+    title: Text('Home'),
+    activeColor: Colors.red,
+  ),
+  BottomNavyBarItem(
+      icon: Icon(Icons.people),
+      title: Text('Users'),
+      activeColor: Colors.purpleAccent),
+  BottomNavyBarItem(
+      icon: Icon(Icons.message),
+      title: Text('Messages'),
+      activeColor: Colors.pink),
+  BottomNavyBarItem(
+      icon: Icon(Icons.settings),
+      title: Text('Settings'),
+      activeColor: Colors.blue),
+];
