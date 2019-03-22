@@ -48,6 +48,7 @@ class CreateAccountFinal extends StatelessWidget {
                                   obscureText: true,
                                   decoration: const InputDecoration(
                                     labelStyle: TextStyle(fontSize: 17),
+                                    border: OutlineInputBorder(),
                                     labelText: 'Password',
                                   ),
                                   onSaved: (String value) {
@@ -67,6 +68,7 @@ class CreateAccountFinal extends StatelessWidget {
                                       style: TextStyle(fontSize: 20),
                                       decoration: const InputDecoration(
                                         labelStyle: TextStyle(fontSize: 17),
+                                        border: OutlineInputBorder(),
                                         labelText: 'Re-enter Password',
                                       ),
                                       onSaved: (String value) {

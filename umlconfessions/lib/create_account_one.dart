@@ -21,7 +21,8 @@ class CreateAccountOne extends StatelessWidget {
                     minHeight: viewportConstraints.maxHeight,
                   ),
                   child: Padding(
-                    padding: EdgeInsets.only(left: 35, top: 10, right: 35, bottom: 10),
+                    padding: EdgeInsets.only(
+                        left: 35, top: 10, right: 35, bottom: 10),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -46,7 +47,9 @@ class CreateAccountOne extends StatelessWidget {
                                   style: TextStyle(fontSize: 20),
                                   decoration: const InputDecoration(
                                     labelStyle: TextStyle(fontSize: 17),
-                                    icon: Icon(Icons.person),
+                                    border: OutlineInputBorder(),
+                                    //gives beautiful textbox design
+
                                     hintText: 'Choose a user name',
                                     labelText: 'Name',
                                   ),
@@ -64,9 +67,11 @@ class CreateAccountOne extends StatelessWidget {
                                     margin: EdgeInsets.only(top: 30),
                                     child: TextFormField(
                                       style: TextStyle(fontSize: 20),
-                                      decoration: const InputDecoration(
+                                      decoration: InputDecoration(
                                         labelStyle: TextStyle(fontSize: 17),
-                                        icon: Icon(Icons.email),
+                                        border: OutlineInputBorder(),
+                                        //gives beautiful textbox design
+
                                         hintText: 'someone@example.com',
                                         labelText: 'Email',
                                       ),
