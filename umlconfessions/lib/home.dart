@@ -18,42 +18,42 @@ class HomeState extends State<Home> {
     return ListView.builder();
   }
 
-
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-          title: Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: <Widget>[
-                Container(
-                  height: 33,
-                  width: 33,
-                  decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      image: DecorationImage(
-                          image: AssetImage(profilePicture),
-                          fit: BoxFit.cover)),
-                ),
-                Container(
-                    margin: EdgeInsets.only(left: 20),
-                    child: Text(
-                      "Home",
-                      style: TextStyle(color: Colors.black, fontSize: 18),
-                    ))
-              ]),
-          backgroundColor: Theme.of(context).canvasColor,
-          elevation: 2),
-      body: Text("Posts list"),
-      bottomNavigationBar: BottomNavyBar(
-          items: navItems,
-          onItemSelected: (index) {
-            return setState(() {
-              navIndex = index;
-            });
-          }),
-    );
+        appBar: AppBar(
+            title: Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+                  Container(
+                    height: 33,
+                    width: 33,
+                    decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        image: DecorationImage(
+                            image: AssetImage(profilePicture),
+                            fit: BoxFit.cover)),
+                  ),
+                  Container(
+                      margin: EdgeInsets.only(left: 20),
+                      child: Text(
+                        "Home",
+                        style: TextStyle(color: Colors.black, fontSize: 18),
+                      ))
+                ]),
+            backgroundColor: Theme.of(context).canvasColor,
+            elevation: 2),
+        body: Text("Posts list"),
+        
+        
+        bottomNavigationBar:  BottomNavyBar(
+              items: navItems,
+              onItemSelected: (index) {
+                return setState(() {
+                  navIndex = index;
+                });
+              }),
+        );
   }
 }
 
@@ -61,18 +61,18 @@ final navItems = <BottomNavyBarItem>[
   BottomNavyBarItem(
     icon: Icon(Icons.apps),
     title: Text('Home'),
-    activeColor: Colors.red,
+    activeColor: Color(0xFF0072bc),
   ),
   BottomNavyBarItem(
       icon: Icon(Icons.people),
-      title: Text('Users'),
-      activeColor: Colors.purpleAccent),
+      title: Text('Profile'),
+      activeColor: Color(0xFF0072bc)),
   BottomNavyBarItem(
-      icon: Icon(Icons.message),
-      title: Text('Messages'),
-      activeColor: Colors.pink),
+      icon: Icon(Icons.bookmark),
+      title: Text('Bookmarks'),
+      activeColor: Color(0xFF0072bc)),
   BottomNavyBarItem(
       icon: Icon(Icons.settings),
       title: Text('Settings'),
-      activeColor: Colors.blue),
+      activeColor: Color(0xFF0072bc)),
 ];
