@@ -100,7 +100,11 @@ class LogIn extends StatelessWidget {
                               splashColor: Colors.blueGrey,
                               shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(35)),
-                              onPressed: () {},
+                              onPressed: () {
+                                //AFTER SUCCESSFUL SIGNUP, remove all widgets and load home screen
+                                Navigator.of(context)
+                                    .pushNamedAndRemoveUntil('/homeScreen', (Route<dynamic> route) => false);
+                              },
                             )
                           ],
                         ))

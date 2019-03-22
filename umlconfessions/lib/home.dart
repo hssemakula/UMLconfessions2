@@ -25,8 +25,8 @@ class RandomWordsState extends State<Home> {
 
                 children: <Widget>[
               Container(
-                height: 35,
-                width: 35,
+                height: 33,
+                width: 33,
                 decoration: BoxDecoration(
                     shape: BoxShape.circle,
                     image: DecorationImage(
@@ -36,7 +36,7 @@ class RandomWordsState extends State<Home> {
                 margin: EdgeInsets.only(left: 20),
               child: Text(
                 "Home",
-                style: TextStyle(color: Colors.black, fontSize: 20),
+                style: TextStyle(color: Colors.black, fontSize: 18),
               ))
             ]),
             backgroundColor: Theme.of(context).canvasColor,
