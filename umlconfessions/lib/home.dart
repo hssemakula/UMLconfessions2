@@ -2,6 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:bottom_navy_bar/bottom_navy_bar.dart';
 import 'package:random_string/random_string.dart';
 import 'dart:math';
+import 'dart:async';
+import 'package:firebase_database/firebase_database.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+
 
 class Home extends StatefulWidget {
   @override
@@ -16,9 +21,48 @@ class HomeState extends State<Home> {
   final postsArray = <Widget>[]; //might need, to store posts
   int navIndex = 0; //keeps track of what menu is open
 
+  String _confessionText = "Confession Text Here";
+  StreamSubscription _subscriptionConfession;
+
+  @override
+  void initState(){
+
+    Future<Confession> myConfession =  FirebaseFunctionality.getConfession("-LSu6ejqSX97jDn6UR1s");
+
+    if(myConfession == null){
+      Fluttertoast.showToast(
+        msg: "err",
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.CENTER,
+      );
+    }
+
+   /*FirebaseFunctionality.getConfession("-LSu6ejqSX97jDn6UR1s").then(_updateConfession);  //.catchError(handleError);
+    Fluttertoast.showToast(
+      msg: "0000000000000000",
+      toastLength: Toast.LENGTH_SHORT,
+      gravity: ToastGravity.CENTER,
+    ).whenComplete(() => Fluttertoast.showToast(
+      msg: "00",
+      toastLength: Toast.LENGTH_SHORT,
+      gravity: ToastGravity.CENTER,
+    )); */
+    FirebaseFunctionality.getConfessionStream("-LSu6ejqSX97jDn6UR1s", _updateConfession).then((StreamSubscription s) => _subscriptionConfession = s);
+       super.initState();
+  }
+
+  @override
+  void dispose() {
+    if(_subscriptionConfession != null){
+      _subscriptionConfession.cancel();
+    }
+    super.dispose();
+  }
+
   //UI
   @override
   Widget build(BuildContext context) {
+
     //This array contains the different screens to be displayed, each index corresponds to a specific nav index when nav icon is pressed.
     final bodyChildren = <Widget>[
       buildPostsList(),
@@ -56,8 +100,7 @@ class HomeState extends State<Home> {
                 ),
                 Container(
                   margin: EdgeInsets.only(left: 20),
-                  child: titleChildren[
-                      navIndex], //instead of title we have array, index 0(navIndex) is selected. This is the app bar title that corresponds to the first nav screen, etc
+                  child: titleChildren[navIndex], //instead of title we have array, index 0(navIndex) is selected. This is the app bar title that corresponds to the first nav screen, etc
                 )
               ]),
           backgroundColor: Theme.of(context).canvasColor,
@@ -72,10 +115,22 @@ class HomeState extends State<Home> {
             });
           }),
     );
+
+
   } //END OF BUILD METHOD.
+
+  _updateConfession(Confession value){
+
+
+    var confessionText = value.confessionText;
+    setState((){
+      _confessionText = confessionText;
+    });
+  }
 
   //Build list of posts
   Widget buildPostsList() {
+
     return ListView.builder(
       itemBuilder: (context, i) {
         if (i.isOdd) return Divider();
@@ -84,7 +139,8 @@ class HomeState extends State<Home> {
         if (index >= postsArray.length) {
           for (int j = 0; j <= 10; j++) {
             postsArray.add(createPost(
-                randomString(Random().nextInt(100)),
+               // randomString(Random().nextInt(100)),
+              "$_confessionText",
                 randomNumeric(Random().nextInt(3)),
                 true,
                 "assets/images/woman.png"));
@@ -161,3 +217,68 @@ class HomeState extends State<Home> {
     Text("Settings", style: TextStyle(color: Colors.black, fontSize: 18))
   ];
 }
+
+
+class Confession {
+  final String key;
+  String confessionText;
+
+
+  Confession.fromJson(this.key, Map data){
+    confessionText = data['confessionText'];
+    if(confessionText==null){
+      confessionText = '';
+    }
+
+
+
+  }
+
+}
+
+
+class FirebaseFunctionality {
+  static Future<StreamSubscription<Event>> getConfessionStream(String confessionKey,
+      void onData(Confession confession)) async {
+    //String confessionKey = await Preferences.getConfessionKey();
+
+    StreamSubscription<Event> subscription = FirebaseDatabase.instance.reference().child("confessions").child(confessionKey).onValue.listen((Event event){
+      var confession = new Confession.fromJson(event.snapshot.key, event.snapshot.value);
+      onData(confession);
+    });
+    return subscription;
+  }
+
+  static Future<Confession> getConfession(String confessionKey) async {
+    //String confessionKey = await Preferences.getConfessionKey();
+
+    Completer<Confession> completer = new Completer<Confession>();
+
+    FirebaseDatabase.instance.reference().child("confessions").child(confessionKey).once().then((DataSnapshot snapshot){
+      var confession = new Confession.fromJson(snapshot.key, snapshot.value);
+      completer.complete(confession);
+
+
+    });
+
+    return (completer.future);
+  }
+
+
+}
+
+class Preferences {
+  static const String USER_KEY = "userKey";
+
+  static Future<String> getAccountKey() async {
+
+    SharedPreferences share = await SharedPreferences.getInstance();
+    String userKey = share.getString(USER_KEY);
+
+    if(userKey == null){
+      userKey = "";
+    }
+    return userKey;
+  }
+}
+
