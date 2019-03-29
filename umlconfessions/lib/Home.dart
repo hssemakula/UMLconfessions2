@@ -17,7 +17,7 @@ class Home extends StatefulWidget {
 class HomeState extends State<Home> {
   final userName = "John Doe";
   final profilePicture =
-      'assets/images/logo.png'; //profile picture from firebae
+      'assets/images/man.png'; //profile picture from firebae
   int karma = 100; //karma value from firebase
   int numOfConfessions = 16; //number of confessions user has from firebase
   final confessionsArray = <Widget>[]; //might need, to store confessions
