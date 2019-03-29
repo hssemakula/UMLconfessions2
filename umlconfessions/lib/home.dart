@@ -25,6 +25,7 @@ class HomeState extends State<Home> {
   String _confessionText = "Confession Text Here";
   StreamSubscription _subscriptionConfession;
 
+
   @override
   void initState() {
     Future<Confession> myConfession =
