@@ -6,7 +6,7 @@ import 'dart:async';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'post_design.dart';
+import 'confession_design.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -18,8 +18,8 @@ class HomeState extends State<Home> {
   final profilePicture =
       'assets/images/logo.png'; //profile picture from firebae
   int karma = 100; //karma value from firebase
-  int numOfPosts = 16; //number of posts user has from firebase
-  final postsArray = <Widget>[]; //might need, to store posts
+  int numOfConfessions = 16; //number of confessions user has from firebase
+  final confessionsArray = <Widget>[]; //might need, to store confessions
   int navIndex = 0; //keeps track of what menu is open
 
   String _confessionText = "Confession Text Here";
@@ -68,7 +68,7 @@ class HomeState extends State<Home> {
   Widget build(BuildContext context) {
     //This array contains the different screens to be displayed, each index corresponds to a specific nav index when nav icon is pressed.
     final bodyChildren = <Widget>[
-      buildPostsList(),
+      buildConfessionsList(),
       Container(
         constraints: BoxConstraints.expand(),
         color: Colors.greenAccent,
@@ -140,18 +140,18 @@ class HomeState extends State<Home> {
     });
   }
 
-  //Build list of posts
-  Widget buildPostsList() {
+  //Build list of confessions
+  Widget buildConfessionsList() {
     return ListView.builder(
       itemBuilder: (context, i) {
         if (i.isOdd) return Divider();
 
-        final index = i ~/ 2; //counts number of posts minus divider widget
-        if (index >= postsArray.length) {
+        final index = i ~/ 2; //counts number of confessions minus divider widget
+        if (index >= confessionsArray.length) {
           for (int j = 0; j <= 10; j++) {
-            // I removed the post design and put in it's own class hence the object PostDesign()
-            postsArray.add(
-              PostDesign().createPost(
+            // I removed the confession design and put in it's own class hence the object ConfessionDesign()
+            confessionsArray.add(
+              ConfessionDesign().createConfession(
                   "Jane Doe",
                   // randomString(Random().nextInt(100)),
                   "$_confessionText",
@@ -164,7 +164,7 @@ class HomeState extends State<Home> {
             );
           }
         }
-        return postsArray[index];
+        return confessionsArray[index];
       },
     );
   }

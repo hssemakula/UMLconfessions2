@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:outline_material_icons/outline_material_icons.dart';
 import 'view_comments_screen.dart';
 
-class PostDesign {
-  //This method designs the post and how it looks like
-  Widget createPost(
+class ConfessionDesign {
+  //This method designs the confession and how it looks like
+  Widget createConfession(
       String userName,
-      String postText,
+      String confessionText,
       String votes,
       bool isBookmarked,
       String avatarPath,
@@ -15,7 +15,7 @@ class PostDesign {
       BuildContext context) {
     return Padding(
         padding: EdgeInsets.all(10),
-        //very important to make up and down vote column strect to height of post text otherwise it stick to top.
+        //very important to make up and down vote column strect to height of confession text otherwise it stick to top.
         child: IntrinsicHeight(
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -68,7 +68,7 @@ class PostDesign {
                     ],
                   ),
 
-                  //POST TEXT and VOTES row.-------------------------------------------------------------------------
+                  //CONFESSION TEXT and VOTES row.-------------------------------------------------------------------------
                   IntrinsicHeight(
                     child: Row(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -82,12 +82,12 @@ class PostDesign {
                               );
                             },
                             child: Container(
-                              //POST TEXT
+                              //CONFESSION TEXT
                               margin: EdgeInsets.only(top: 3),
                               width: MediaQuery.of(context).size.width - 140,
                               //width of device - 140 pixels
                               child: Text(
-                                postText,
+                                confessionText,
                                 softWrap: true,
                                 overflow: TextOverflow.ellipsis,
                                 maxLines: 5,
@@ -171,7 +171,7 @@ class PostDesign {
                         //Bookmark icon
                         IconButton(
                           icon:
-                              isBookmarked //if post is book marked show red icon otherwise
+                              isBookmarked //if confession is book marked show red icon otherwise
                                   ? Icon(
                                       Icons.bookmark_border,
                                       size: 17,
