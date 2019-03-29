@@ -6,7 +6,7 @@ import 'dart:async';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-
+import 'post_design.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -14,6 +14,7 @@ class Home extends StatefulWidget {
 }
 
 class HomeState extends State<Home> {
+  final userName = "John Doe";
   final profilePicture =
       'assets/images/logo.png'; //profile picture from firebae
   int karma = 100; //karma value from firebase
@@ -25,11 +26,11 @@ class HomeState extends State<Home> {
   StreamSubscription _subscriptionConfession;
 
   @override
-  void initState(){
+  void initState() {
+    Future<Confession> myConfession =
+        FirebaseFunctionality.getConfession("-LSu6ejqSX97jDn6UR1s");
 
-    Future<Confession> myConfession =  FirebaseFunctionality.getConfession("-LSu6ejqSX97jDn6UR1s");
-
-    if(myConfession == null){
+    if (myConfession == null) {
       Fluttertoast.showToast(
         msg: "err",
         toastLength: Toast.LENGTH_SHORT,
@@ -37,7 +38,7 @@ class HomeState extends State<Home> {
       );
     }
 
-   /*FirebaseFunctionality.getConfession("-LSu6ejqSX97jDn6UR1s").then(_updateConfession);  //.catchError(handleError);
+    /*FirebaseFunctionality.getConfession("-LSu6ejqSX97jDn6UR1s").then(_updateConfession);  //.catchError(handleError);
     Fluttertoast.showToast(
       msg: "0000000000000000",
       toastLength: Toast.LENGTH_SHORT,
@@ -47,13 +48,15 @@ class HomeState extends State<Home> {
       toastLength: Toast.LENGTH_SHORT,
       gravity: ToastGravity.CENTER,
     )); */
-    FirebaseFunctionality.getConfessionStream("-LSu6ejqSX97jDn6UR1s", _updateConfession).then((StreamSubscription s) => _subscriptionConfession = s);
-       super.initState();
+    FirebaseFunctionality.getConfessionStream(
+            "-LSu6ejqSX97jDn6UR1s", _updateConfession)
+        .then((StreamSubscription s) => _subscriptionConfession = s);
+    super.initState();
   }
 
   @override
   void dispose() {
-    if(_subscriptionConfession != null){
+    if (_subscriptionConfession != null) {
       _subscriptionConfession.cancel();
     }
     super.dispose();
@@ -62,7 +65,6 @@ class HomeState extends State<Home> {
   //UI
   @override
   Widget build(BuildContext context) {
-
     //This array contains the different screens to be displayed, each index corresponds to a specific nav index when nav icon is pressed.
     final bodyChildren = <Widget>[
       buildPostsList(),
@@ -99,14 +101,27 @@ class HomeState extends State<Home> {
                           fit: BoxFit.cover)),
                 ),
                 Container(
-                  margin: EdgeInsets.only(left: 20),
-                  child: titleChildren[navIndex], //instead of title we have array, index 0(navIndex) is selected. This is the app bar title that corresponds to the first nav screen, etc
+                  margin: EdgeInsets.only(left: 30),
+                  child: titleChildren[
+                      navIndex], //instead of title we have array, index 0(navIndex) is selected. This is the app bar title that corresponds to the first nav screen, etc
                 )
               ]),
           backgroundColor: Theme.of(context).canvasColor,
           elevation: 2),
-      body: bodyChildren[navIndex],
       //screen corresponding to nav element selected, is chosen from array
+      body: bodyChildren[navIndex],
+      //if it is the home screen display floating action bar else show nothing
+      floatingActionButton: navIndex == 0
+          ? FloatingActionButton(
+              onPressed: () {},
+              child: Icon(
+                Icons.palette,
+              ),
+              backgroundColor: Color(0x9B0072bc),
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.all(Radius.circular(20.0))),
+            )
+          : null,
       bottomNavigationBar: BottomNavyBar(
           items: navItems,
           onItemSelected: (index) {
@@ -115,22 +130,17 @@ class HomeState extends State<Home> {
             });
           }),
     );
-
-
   } //END OF BUILD METHOD.
 
-  _updateConfession(Confession value){
-
-
+  _updateConfession(Confession value) {
     var confessionText = value.confessionText;
-    setState((){
+    setState(() {
       _confessionText = confessionText;
     });
   }
 
   //Build list of posts
   Widget buildPostsList() {
-
     return ListView.builder(
       itemBuilder: (context, i) {
         if (i.isOdd) return Divider();
@@ -138,54 +148,24 @@ class HomeState extends State<Home> {
         final index = i ~/ 2; //counts number of posts minus divider widget
         if (index >= postsArray.length) {
           for (int j = 0; j <= 10; j++) {
-            postsArray.add(createPost(
-               // randomString(Random().nextInt(100)),
-              "$_confessionText",
-                randomNumeric(Random().nextInt(3)),
-                true,
-                "assets/images/woman.png"));
+            // I removed the post design and put in it's own class hence the object PostDesign()
+            postsArray.add(
+              PostDesign().createPost(
+                  "Jane Doe",
+                  // randomString(Random().nextInt(100)),
+                  "$_confessionText",
+                  randomNumeric(Random().nextInt(3)),
+                  j % 2 == 0 ? false : true,
+                  "assets/images/woman.png",
+                  "20m",
+                  "4",
+                  context),
+            );
           }
         }
         return postsArray[index];
       },
     );
-  }
-
-  //This method designs the post and how it looks like
-  Widget createPost(
-      String postText, String votes, bool isBookmarked, String avatarPath) {
-    return Padding(
-        padding: EdgeInsets.all(10),
-        child: Row(
-          children: <Widget>[
-            Container(
-              height: 55,
-              width: 55,
-              margin: EdgeInsets.only(left: 5, right: 10),
-              decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  image: DecorationImage(
-                      image: AssetImage(avatarPath), fit: BoxFit.cover)),
-            ),
-            Column(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: <Widget>[
-                Text(
-                  postText,
-                  softWrap: true,
-                  maxLines: 5,
-                  overflow: TextOverflow.ellipsis,
-                ),
-                Row(
-                  children: <Widget>[
-                    Text(votes),
-                    Text(isBookmarked.toString())
-                  ],
-                )
-              ],
-            )
-          ],
-        ));
   }
 
   //This array stores all nav icons. the Bottom navy function chooses one by index when you tap.
@@ -218,32 +198,31 @@ class HomeState extends State<Home> {
   ];
 }
 
-
 class Confession {
   final String key;
   String confessionText;
 
-
-  Confession.fromJson(this.key, Map data){
+  Confession.fromJson(this.key, Map data) {
     confessionText = data['confessionText'];
-    if(confessionText==null){
+    if (confessionText == null) {
       confessionText = '';
     }
-
-
-
   }
-
 }
 
-
 class FirebaseFunctionality {
-  static Future<StreamSubscription<Event>> getConfessionStream(String confessionKey,
-      void onData(Confession confession)) async {
+  static Future<StreamSubscription<Event>> getConfessionStream(
+      String confessionKey, void onData(Confession confession)) async {
     //String confessionKey = await Preferences.getConfessionKey();
 
-    StreamSubscription<Event> subscription = FirebaseDatabase.instance.reference().child("confessions").child(confessionKey).onValue.listen((Event event){
-      var confession = new Confession.fromJson(event.snapshot.key, event.snapshot.value);
+    StreamSubscription<Event> subscription = FirebaseDatabase.instance
+        .reference()
+        .child("confessions")
+        .child(confessionKey)
+        .onValue
+        .listen((Event event) {
+      var confession =
+          new Confession.fromJson(event.snapshot.key, event.snapshot.value);
       onData(confession);
     });
     return subscription;
@@ -254,31 +233,30 @@ class FirebaseFunctionality {
 
     Completer<Confession> completer = new Completer<Confession>();
 
-    FirebaseDatabase.instance.reference().child("confessions").child(confessionKey).once().then((DataSnapshot snapshot){
+    FirebaseDatabase.instance
+        .reference()
+        .child("confessions")
+        .child(confessionKey)
+        .once()
+        .then((DataSnapshot snapshot) {
       var confession = new Confession.fromJson(snapshot.key, snapshot.value);
       completer.complete(confession);
-
-
     });
 
     return (completer.future);
   }
-
-
 }
 
 class Preferences {
   static const String USER_KEY = "userKey";
 
   static Future<String> getAccountKey() async {
-
     SharedPreferences share = await SharedPreferences.getInstance();
     String userKey = share.getString(USER_KEY);
 
-    if(userKey == null){
+    if (userKey == null) {
       userKey = "";
     }
     return userKey;
   }
 }
-
