@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'terms_of_service.dart';
-import 'home.dart';
+import 'TermsOfService.dart';
+import 'Home.dart';
 
 class CreateAccountFinal extends StatelessWidget {
   Widget build(BuildContext context) {

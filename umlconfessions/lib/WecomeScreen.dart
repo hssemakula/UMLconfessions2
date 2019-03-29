@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'create_account_one.dart';
-import 'login.dart';
+import 'CreateAccountOne.dart';
+import 'Login.dart';
 
 class WelcomeScreen extends StatelessWidget {
   @override
