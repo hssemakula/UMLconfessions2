@@ -7,6 +7,7 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'ConfessionDesign.dart';
+import 'AddConfessionDialog.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -24,7 +25,6 @@ class HomeState extends State<Home> {
 
   String _confessionText = "Confession Text Here";
   StreamSubscription _subscriptionConfession;
-
 
   @override
   void initState() {
@@ -114,7 +114,15 @@ class HomeState extends State<Home> {
       //if it is the home screen display floating action bar else show nothing
       floatingActionButton: navIndex == 0
           ? FloatingActionButton(
-              onPressed: () {},
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => AddConfessionDialog(),
+                    fullscreenDialog: true
+                  ),
+                );
+              },
               child: Icon(
                 Icons.palette,
               ),
@@ -146,7 +154,8 @@ class HomeState extends State<Home> {
       itemBuilder: (context, i) {
         if (i.isOdd) return Divider();
 
-        final index = i ~/ 2; //counts number of confessions minus divider widget
+        final index =
+            i ~/ 2; //counts number of confessions minus divider widget
         if (index >= confessionsArray.length) {
           for (int j = 0; j <= 10; j++) {
             // I removed the confession design and put in it's own class hence the object ConfessionDesign()
