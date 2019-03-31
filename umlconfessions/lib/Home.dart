@@ -8,6 +8,9 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'ConfessionDesign.dart';
 import 'AddConfessionDialog.dart';
+import 'package:firebase_database/ui/firebase_animated_list.dart';
+import 'package:umlconfessions/FirebaseDatabaseUsage.dart';
+import 'package:umlconfessions/Update_Post.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -115,12 +118,15 @@ class HomeState extends State<Home> {
       floatingActionButton: navIndex == 0
           ? FloatingActionButton(
               onPressed: () {
+               // _createConfessionText();
                 Navigator.push(
                   context,
                   MaterialPageRoute(
                       builder: (context) => AddConfessionDialog(),
                     fullscreenDialog: true
                   ),
+
+
                 );
               },
               child: Icon(
@@ -206,6 +212,24 @@ class HomeState extends State<Home> {
     Text("Bookmarks", style: TextStyle(color: Colors.black, fontSize: 18)),
     Text("Settings", style: TextStyle(color: Colors.black, fontSize: 18))
   ];
+
+  void _createConfessionText(){
+  FirebaseDatabaseUsage.createPost().then((String postKey){
+    //FirebaseDatabaseUsage.doNothing().then((String postKey){
+      _update(postKey);
+    });
+  }
+
+  void _update(String postKey){
+    var v = MaterialPageRoute(
+      //builder: (context) => new UpdatePostPage(postKey: postKey),
+
+        builder: (context) => AddConfessionDialog(post_Key: postKey),
+        fullscreenDialog: true
+
+    );
+    Navigator.of(context).push(v);
+  }
 }
 
 class Confession {

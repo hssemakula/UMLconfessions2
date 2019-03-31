@@ -1,16 +1,49 @@
 import 'package:flutter/material.dart';
 import 'package:outline_material_icons/outline_material_icons.dart';
+import 'package:umlconfessions/FirebaseDatabaseUsage.dart';
+import 'package:flutter/services.dart';
+import 'dart:async';
+
+import 'package:flutter/material.dart';
+import 'package:umlconfessions/FirebaseDatabaseUsage.dart';
+
+
+
 
 class AddConfessionDialog extends StatefulWidget {
+
+  final String post_Key;
+
+
+  AddConfessionDialog({Key key, this.post_Key}) : super(key : key);
+
   @override
   AddConfessionDialogState createState() => new AddConfessionDialogState();
 }
 
 class AddConfessionDialogState extends State<AddConfessionDialog> {
   String profilePicture = 'assets/images/man.png';
+final GlobalKey<FormState> _key_for_form = new GlobalKey<FormState>();
+String val;
+  void _submit(){
+    final FormState f = _key_for_form.currentState;
 
+    FirebaseDatabaseUsage.createPost().then((String postKey) {
+
+      FirebaseDatabaseUsage.pullText(postKey, val);
+
+    });
+
+    Navigator.pop(context);
+    //if(!f.validate()){
+
+    //} else {
+     // f.save();
+    //}
+  }
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
       appBar: AppBar(
         actions: [
@@ -23,9 +56,10 @@ class AddConfessionDialogState extends State<AddConfessionDialog> {
                       fontSize: 17,
                       fontWeight: FontWeight.bold),
                 ),
-                onPressed: () {
+                onPressed: _submit,/*() {
                   //TODO: Handle save
-                },
+
+                },*/
                 elevation: 0,
                 color: Color(0xFF0072bc),
                 shape: RoundedRectangleBorder(
@@ -65,21 +99,30 @@ class AddConfessionDialogState extends State<AddConfessionDialog> {
                    padding: EdgeInsets.only(left: 15),
                    margin: EdgeInsets.only(bottom: 20),
                    constraints: BoxConstraints(minHeight: MediaQuery.of(context).size.height/2,),
-                   child: TextFormField(
+                   child: TextField(
+                     key: _key_for_form,
                       style: TextStyle(fontSize: 20, height: 1.2),
                       maxLines: null,
                       autofocus: true,
                       decoration: const InputDecoration.collapsed(hintText: "What's happening?", ),
 
-                      onSaved: (String value) {
+                      //onSaved: (String value) {
                         // This optional block of code can be used to run
                         // code when the user saves the form.
-                      },
-                      validator: (String value) {
+
+
+                     // },
+
+                       onChanged: (String value) {
+                         val = value;
+                       },
+
+
+                      /*validator: (String value) {
                         return value.contains('@')
                             ? 'Do not use the @ char.'
                             : null;
-                      },
+                      },*/
                     ),
                  )
                 ],
@@ -99,6 +142,9 @@ class AddConfessionDialogState extends State<AddConfessionDialog> {
           ),
         ),
       ),
+
     );
+
+
   }
 }
