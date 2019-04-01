@@ -146,13 +146,28 @@ class ConfessionDesign {
                                 size: 18,
                                 color: Colors.black54,
                               ),
-                              onPressed: () {},
+                              onPressed: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => ViewCommentsPage()),
+                                );
+                              },
                             ),
                             Container(
-                              child: Text(
-                                numOfComments,
-                                style: TextStyle(
-                                    fontSize: 14, color: Colors.black54),
+                              child: InkWell(
+                                onTap: (){
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => ViewCommentsPage()),
+                                  );
+                                },
+                                child: Text(
+                                  numOfComments,
+                                  style: TextStyle(
+                                      fontSize: 14, color: Colors.black54),
+                                ),
                               ),
                               margin: EdgeInsets.only(right: 10),
                             )
