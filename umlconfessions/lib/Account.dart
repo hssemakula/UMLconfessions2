@@ -8,7 +8,8 @@ class Account extends StatefulWidget {
   String karma;
   String numOfPosts;
 
-  Account(this.userEmail, this.password, this.userName, this.profilePictureUrl, this.karma, this.numOfPosts);
+  Account(this.userEmail, this.password, this.userName, this.profilePictureUrl,
+      this.karma, this.numOfPosts);
 
   @override
   AccountState createState() => new AccountState();
@@ -34,7 +35,7 @@ class AccountState extends State<Account> {
                   padding: const EdgeInsets.only(left: 15, right: 10),
                   child: Container(
                     color: Theme.of(context).canvasColor,
-                    height: 100,
+                    height: 150,
                     margin: EdgeInsets.only(top: 5),
                     child: Column(children: [
                       Row(mainAxisAlignment: MainAxisAlignment.end, children: [
@@ -55,31 +56,60 @@ class AccountState extends State<Account> {
                           Text(
                             widget.userName,
                             style: TextStyle(
-                                fontWeight: FontWeight.bold, fontSize: 22),
+                                fontWeight: FontWeight.bold, fontSize: 25),
                           )
                         ],
                       ),
 
+                      //Number of posts and Karma row
                       Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        mainAxisAlignment: MainAxisAlignment.start,
                         children: <Widget>[
                           Container(
+                            margin: EdgeInsets.only(top: 15),
                             child: Row(
                               children: <Widget>[
-                                Text(widget.karma),
-                                Text("Karma")
+                                Text(
+                                  widget.karma + " ",
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.w500,
+                                      fontSize: 20),
+                                ),
+                                Text("Karma",
+                                    style: TextStyle(
+                                        color: Colors.black54, fontSize: 15))
                               ],
                             ),
                           ),
-                          Container(),
-                          Container(),
+                          Container(
+                            margin: EdgeInsets.only(top: 15, left: 30),
+                            child: Row(
+                              children: <Widget>[
+                                Text(
+                                  widget.numOfPosts + " ",
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.w500,
+                                      fontSize: 20),
+                                ),
+                                Text("Posts",
+                                    style: TextStyle(
+                                        color: Colors.black54, fontSize: 15))
+                              ],
+                            ),
+                          ),
                         ],
                       ),
                     ]),
                   ),
+                ),
+
+                Divider(
+                  height: 0,
                 )
               ],
             ),
+
+            //PROFILE PICTURE
             Positioned(
               top: 122.5,
               left: 10,
@@ -97,8 +127,102 @@ class AccountState extends State<Account> {
               ),
             ),
           ],
-        )
+        ),
+
+        //MAIN CONTENT.
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: <Widget>[
+            Container(
+              padding: EdgeInsets.only(left: 15, right: 10),
+              height: 60,
+              color: Color(0x110072bc),
+              child: Align(
+                  alignment: Alignment.centerLeft,
+                  child: Text(
+                    "Name",
+                    style: TextStyle(
+                        fontSize: 22,
+                        color: Colors.black54,
+                        fontWeight: FontWeight.bold),
+                  )),
+            ),
+            Container(
+              padding: EdgeInsets.only(left: 15, right: 10),
+              height: 60,
+              child: Align(
+                  alignment: Alignment.centerLeft,
+                  child: Text(
+                    widget.userName,
+                    style: TextStyle(
+                      fontSize: 18,
+                    ),
+                  )),
+            ),
+            Container(
+              padding: EdgeInsets.only(left: 15, right: 10),
+              height: 60,
+              color: Color(0x110072bc),
+              child: Align(
+                  alignment: Alignment.centerLeft,
+                  child: Text(
+                    "Email",
+                    style: TextStyle(
+                        fontSize: 22,
+                        color: Colors.black54,
+                        fontWeight: FontWeight.bold),
+                  )),
+            ),
+            Container(
+              padding: EdgeInsets.only(left: 15, right: 10),
+              height: 60,
+              child: Align(
+                  alignment: Alignment.centerLeft,
+                  child: Text(
+                    widget.userEmail,
+                    style: TextStyle(
+                      fontSize: 18,
+                    ),
+                  )),
+            ),
+            Container(
+              padding: EdgeInsets.only(left: 15, right: 10),
+              height: 60,
+              color: Color(0x110072bc),
+              child: Align(
+                  alignment: Alignment.centerLeft,
+                  child: Text(
+                    "Password",
+                    style: TextStyle(
+                        fontSize: 22,
+                        color: Colors.black54,
+                        fontWeight: FontWeight.bold),
+                  )),
+            ),
+            Container(
+              padding: EdgeInsets.only(left: 15, right: 10),
+              height: 60,
+              child: Align(
+                  alignment: Alignment.centerLeft,
+                  child: Text(
+                    obscureText(widget.password),
+                    style: TextStyle(
+                      fontSize: 18,
+                    ),
+                  )),
+            ),
+          ],
+        ),
       ],
     );
   }
+}
+
+String obscureText(String password){
+  String obscurePwd = "";
+  for(int i = 0; i < password.length; i++){
+    obscurePwd += "•";
+
+  }
+  return obscurePwd;
 }
