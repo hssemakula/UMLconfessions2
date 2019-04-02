@@ -8,96 +8,96 @@ class Settings extends StatefulWidget {
 }
 
 class SettingsState extends State<Settings> {
-
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<Object>(
         stream: bloc.darkThemeEnabled,
         initialData: false,
-      builder: (context, snapshot) {
-        return SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: <Widget>[
-              Container(
-                padding: EdgeInsets.only(left: 20, right: 10),
-                height: 60,
-                child: Align(
-                    alignment: Alignment.centerLeft,
-                    child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            "Dark mode",
-                            style: TextStyle(
-                              fontSize: 20,
-                              color: Colors.black,
+        builder: (context, snapshot) {
+          return SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: <Widget>[
+                Container(
+                  padding: EdgeInsets.only(left: 20, right: 10),
+                  height: 60,
+                  child: Align(
+                      alignment: Alignment.centerLeft,
+                      child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              "Dark mode",
+                              style: TextStyle(
+                                fontSize: 20,
+                                color:
+                                    snapshot.data ? Colors.white : Colors.black,
+                              ),
                             ),
-                          ),
-                          Switch(
+                            Switch(
                               value: snapshot.data,
-                              onChanged: bloc.changeTheme
-                          ),
-                        ])),
-              ),
-              Divider(),
-              InkWell(
-                child: Container(
-                  padding: EdgeInsets.only(left: 20, right: 10),
-                  height: 60,
-                  child: Align(
-                      alignment: Alignment.centerLeft,
-                      child: Text(
-                        "Terms of Service",
-                        style: TextStyle(
-                          fontSize: 20,
-                        ),
-                      )),
+                              onChanged: bloc.changeTheme,
+                            ),
+                          ])),
                 ),
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => TermsOfService()),
-                  );
-                },
-              ),
-              Divider(),
-              InkWell(
-                child: Container(
-                  padding: EdgeInsets.only(left: 20, right: 10),
-                  height: 60,
-                  child: Align(
-                      alignment: Alignment.centerLeft,
-                      child: Text(
-                        "Delete account",
-                        style: TextStyle(
+                Divider(),
+                InkWell(
+                  child: Container(
+                    padding: EdgeInsets.only(left: 20, right: 10),
+                    height: 60,
+                    child: Align(
+                        alignment: Alignment.centerLeft,
+                        child: Text(
+                          "Terms of Service",
+                          style: TextStyle(
                             fontSize: 20,
-                            color: Colors.black54,
-                            fontWeight: FontWeight.bold),
-                      )),
+                          ),
+                        )),
+                  ),
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => TermsOfService()),
+                    );
+                  },
                 ),
-                onTap: () {},
-              ),
-              Divider(),
-              InkWell(
-                child: Container(
-                  padding: EdgeInsets.only(left: 20, right: 10),
-                  height: 60,
-                  child: Align(
-                      alignment: Alignment.centerLeft,
-                      child: Text(
-                        "Log out",
-                        style: TextStyle(
-                          fontSize: 20,
-                        ),
-                      )),
+                Divider(),
+                InkWell(
+                  child: Container(
+                    padding: EdgeInsets.only(left: 20, right: 10),
+                    height: 60,
+                    child: Align(
+                        alignment: Alignment.centerLeft,
+                        child: Text(
+                          "Delete account",
+                          style: TextStyle(
+                              fontSize: 20,
+                              color:
+                                  snapshot.data ? Colors.white : Colors.black,
+                              fontWeight: FontWeight.bold),
+                        )),
+                  ),
+                  onTap: () {},
                 ),
-                onTap: () {},
-              ),
-            ],
-          ),
-        );
-      }
-    );
+                Divider(),
+                InkWell(
+                  child: Container(
+                    padding: EdgeInsets.only(left: 20, right: 10),
+                    height: 60,
+                    child: Align(
+                        alignment: Alignment.centerLeft,
+                        child: Text(
+                          "Log out",
+                          style: TextStyle(
+                            fontSize: 20,
+                          ),
+                        )),
+                  ),
+                  onTap: () {},
+                ),
+              ],
+            ),
+          );
+        });
   }
 }

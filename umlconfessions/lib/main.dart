@@ -46,9 +46,7 @@ class Bloc {
     return _themeController.sink.add;
   }
 
-  get darkThemeEnabled {
-    return _themeController.stream;
-  }
+  get darkThemeEnabled => _themeController.stream;
 }
 
 final bloc = Bloc();
