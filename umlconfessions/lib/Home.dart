@@ -10,16 +10,21 @@ import 'ConfessionDesign.dart';
 import 'AddConfessionDialog.dart';
 import 'package:firebase_database/ui/firebase_animated_list.dart';
 import 'package:umlconfessions/FirebaseDatabaseUsage.dart';
+import 'Account.dart';
 import 'package:umlconfessions/Update_Post.dart';
 
 class Home extends StatefulWidget {
   String userName;
   String profilePictureUrl; //profile picture from firebae
   int karma; //karma value from firebase
+  String userEmail;
+  String userPassword;
+  int numOfPosts;
+
   Home(
       this.userName,
       this.profilePictureUrl, //profile picture from firebae
-      this.karma);
+      this.karma,  this.numOfPosts, this.userEmail, this.userPassword);
 
   //might need, to store confessions)
   @override
@@ -77,11 +82,7 @@ class HomeState extends State<Home> {
     //This array contains the different screens to be displayed, each index corresponds to a specific nav index when nav icon is pressed.
     final bodyChildren = <Widget>[
       buildConfessionsList(),
-      Container(
-        constraints: BoxConstraints.expand(),
-        color: Colors.greenAccent,
-        child: Text("Profile"),
-      ),
+      Account(widget.userEmail, widget.userPassword, widget.userName, widget.profilePictureUrl, widget.karma.toString(), widget.numOfPosts.toString()),
       Container(
         constraints: BoxConstraints.expand(),
         color: Colors.redAccent,
@@ -97,7 +98,7 @@ class HomeState extends State<Home> {
     //This array contains appbars and a specific index is chosen depending on nav icon selected.
     final appBarChildren = <Widget>[
       createAppBar(context, "Home"),
-      Text("Account", style: TextStyle(color: Colors.black, fontSize: 18)),
+      null,
       createAppBar(context, "Bookmarks"),
       createAppBar(context, "Settings")
     ];

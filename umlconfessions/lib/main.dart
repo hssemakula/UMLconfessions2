@@ -16,7 +16,7 @@ class MyApp extends StatelessWidget {
         routes: <String, WidgetBuilder>{
           //5
           '/welcomeScreen': (BuildContext context) => WelcomeScreen(), //6
-          '/homeScreen': (BuildContext context) => Home("Jane Doe", "assets/images/man.png", 100)
+          '/homeScreen': (BuildContext context) => Home("John Doe", "assets/images/man.png", 100, 315, "someone@example.com", "apassword")
         },
         debugShowCheckedModeBanner: false);
   }
