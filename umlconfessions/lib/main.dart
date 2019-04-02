@@ -8,6 +8,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
+
+  static bool isDarkTheme = false;
   @override
   Widget build(BuildContext context) {
     return MaterialApp(

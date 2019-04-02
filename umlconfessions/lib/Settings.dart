@@ -1,0 +1,101 @@
+import 'package:flutter/material.dart';
+import 'main.dart';
+import 'TermsOfService.dart';
+
+class Settings extends StatefulWidget {
+  @override
+  SettingsState createState() => new SettingsState();
+}
+
+class SettingsState extends State<Settings> {
+  @override
+  Widget build(BuildContext context) {
+    return SingleChildScrollView(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: <Widget>[
+          Container(
+            padding: EdgeInsets.only(left: 20, right: 10),
+            height: 60,
+            child: Align(
+                alignment: Alignment.centerLeft,
+                child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        "Dark mode",
+                        style: TextStyle(
+                          fontSize: 20,
+                          color: Colors.black,
+                        ),
+                      ),
+                      Switch(
+                          value: MyApp.isDarkTheme,
+                          onChanged: (value) {
+                            setState(() {
+                              value
+                                  ? MyApp.isDarkTheme = false
+                                  : MyApp.isDarkTheme = true;
+                            });
+                          })
+                    ])),
+          ),
+          Divider(),
+          InkWell(
+            child: Container(
+              padding: EdgeInsets.only(left: 20, right: 10),
+              height: 60,
+              child: Align(
+                  alignment: Alignment.centerLeft,
+                  child: Text(
+                    "Terms of Service",
+                    style: TextStyle(
+                      fontSize: 20,
+                    ),
+                  )),
+            ),
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => TermsOfService()),
+              );
+            },
+          ),
+          Divider(),
+          InkWell(
+            child: Container(
+              padding: EdgeInsets.only(left: 20, right: 10),
+              height: 60,
+              child: Align(
+                  alignment: Alignment.centerLeft,
+                  child: Text(
+                    "Delete account",
+                    style: TextStyle(
+                        fontSize: 20,
+                        color: Colors.black54,
+                        fontWeight: FontWeight.bold),
+                  )),
+            ),
+            onTap: () {},
+          ),
+          Divider(),
+          InkWell(
+            child: Container(
+              padding: EdgeInsets.only(left: 20, right: 10),
+              height: 60,
+              child: Align(
+                  alignment: Alignment.centerLeft,
+                  child: Text(
+                    "Log out",
+                    style: TextStyle(
+                      fontSize: 20,
+                    ),
+                  )),
+            ),
+            onTap: () {},
+          ),
+        ],
+      ),
+    );
+  }
+}

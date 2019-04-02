@@ -12,6 +12,9 @@ import 'package:firebase_database/ui/firebase_animated_list.dart';
 import 'package:umlconfessions/FirebaseDatabaseUsage.dart';
 import 'Account.dart';
 import 'package:umlconfessions/Update_Post.dart';
+import 'Settings.dart';
+
+
 
 class Home extends StatefulWidget {
   String userName;
@@ -24,7 +27,10 @@ class Home extends StatefulWidget {
   Home(
       this.userName,
       this.profilePictureUrl, //profile picture from firebae
-      this.karma,  this.numOfPosts, this.userEmail, this.userPassword);
+      this.karma,
+      this.numOfPosts,
+      this.userEmail,
+      this.userPassword);
 
   //might need, to store confessions)
   @override
@@ -78,21 +84,22 @@ class HomeState extends State<Home> {
   //UI
   @override
   Widget build(BuildContext context) {
-
     //This array contains the different screens to be displayed, each index corresponds to a specific nav index when nav icon is pressed.
     final bodyChildren = <Widget>[
       buildConfessionsList(),
-      Account(widget.userEmail, widget.userPassword, widget.userName, widget.profilePictureUrl, widget.karma.toString(), widget.numOfPosts.toString()),
+      Account(
+          widget.userEmail,
+          widget.userPassword,
+          widget.userName,
+          widget.profilePictureUrl,
+          widget.karma.toString(),
+          widget.numOfPosts.toString()),
       Container(
         constraints: BoxConstraints.expand(),
         color: Colors.redAccent,
         child: Text("Bookmarks"),
       ),
-      Container(
-        constraints: BoxConstraints.expand(),
-        color: Colors.amberAccent,
-        child: Text("Settings"),
-      )
+  Settings()
     ];
 
     //This array contains appbars and a specific index is chosen depending on nav icon selected.
@@ -100,7 +107,14 @@ class HomeState extends State<Home> {
       createAppBar(context, "Home"),
       null,
       createAppBar(context, "Bookmarks"),
-      createAppBar(context, "Settings")
+      AppBar(
+          title: Container(
+            padding: EdgeInsets.only(left: 5),
+            child: Text("Settings",
+                style: TextStyle(color: Colors.black, fontSize: 18)),
+          ),
+          backgroundColor: Theme.of(context).canvasColor,
+          elevation: 1)
     ];
 
     //Actually draws on screen.
