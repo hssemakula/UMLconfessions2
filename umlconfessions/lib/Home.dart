@@ -13,21 +13,25 @@ import 'package:umlconfessions/FirebaseDatabaseUsage.dart';
 import 'package:umlconfessions/Update_Post.dart';
 
 class Home extends StatefulWidget {
+  String userName;
+  String profilePictureUrl; //profile picture from firebae
+  int karma; //karma value from firebase
+  Home(
+      this.userName,
+      this.profilePictureUrl, //profile picture from firebae
+      this.karma);
+
+  //might need, to store confessions)
   @override
   HomeState createState() => new HomeState();
 }
 
 class HomeState extends State<Home> {
-  final userName = "John Doe";
-  final profilePicture =
-      'assets/images/man.png'; //profile picture from firebae
-  int karma = 100; //karma value from firebase
-  int numOfConfessions = 16; //number of confessions user has from firebase
-  final confessionsArray = <Widget>[]; //might need, to store confessions
   int navIndex = 0; //keeps track of what menu is open
-
+  int numOfConfessions = 16; //number of confessions user has from firebase
   String _confessionText = "Confession Text Here";
   StreamSubscription _subscriptionConfession;
+  final confessionsArray = <Widget>[];
 
   @override
   void initState() {
@@ -69,6 +73,7 @@ class HomeState extends State<Home> {
   //UI
   @override
   Widget build(BuildContext context) {
+
     //This array contains the different screens to be displayed, each index corresponds to a specific nav index when nav icon is pressed.
     final bodyChildren = <Widget>[
       buildConfessionsList(),
@@ -89,44 +94,29 @@ class HomeState extends State<Home> {
       )
     ];
 
+    //This array contains appbars and a specific index is chosen depending on nav icon selected.
+    final appBarChildren = <Widget>[
+      createAppBar(context, "Home"),
+      Text("Account", style: TextStyle(color: Colors.black, fontSize: 18)),
+      createAppBar(context, "Bookmarks"),
+      createAppBar(context, "Settings")
+    ];
+
     //Actually draws on screen.
     return Scaffold(
-      appBar: AppBar(
-          title: Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: <Widget>[
-                Container(
-                  height: 33,
-                  width: 33,
-                  decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      image: DecorationImage(
-                          image: AssetImage(profilePicture),
-                          fit: BoxFit.cover)),
-                ),
-                Container(
-                  margin: EdgeInsets.only(left: 30),
-                  child: titleChildren[
-                      navIndex], //instead of title we have array, index 0(navIndex) is selected. This is the app bar title that corresponds to the first nav screen, etc
-                )
-              ]),
-          backgroundColor: Theme.of(context).canvasColor,
-          elevation: 2),
+      appBar: appBarChildren[navIndex],
       //screen corresponding to nav element selected, is chosen from array
       body: bodyChildren[navIndex],
       //if it is the home screen display floating action bar else show nothing
       floatingActionButton: navIndex == 0
           ? FloatingActionButton(
               onPressed: () {
-               // _createConfessionText();
+                // _createConfessionText();
                 Navigator.push(
                   context,
                   MaterialPageRoute(
                       builder: (context) => AddConfessionDialog(),
-                    fullscreenDialog: true
-                  ),
-
-
+                      fullscreenDialog: true),
                 );
               },
               child: Icon(
@@ -184,6 +174,33 @@ class HomeState extends State<Home> {
     );
   }
 
+  Widget createAppBar(BuildContext contex, title) {
+    return AppBar(
+        title: Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: <Widget>[
+              Container(
+                height: 33,
+                width: 33,
+                decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    image: DecorationImage(
+                        image: AssetImage(widget.profilePictureUrl),
+                        fit: BoxFit.cover)),
+              ),
+              Container(
+                margin: EdgeInsets.only(left: 30),
+                child: Text(title,
+                    style: TextStyle(
+                        color: Colors.black,
+                        fontSize:
+                            18)), //instead of title we have array, index 0(navIndex) is selected. This is the app bar title that corresponds to the first nav screen, etc
+              )
+            ]),
+        backgroundColor: Theme.of(context).canvasColor,
+        elevation: 2);
+  }
+
   //This array stores all nav icons. the Bottom navy function chooses one by index when you tap.
   final navItems = <BottomNavyBarItem>[
     BottomNavyBarItem(
@@ -205,29 +222,19 @@ class HomeState extends State<Home> {
         activeColor: Color(0xFF0072bc)),
   ];
 
-  //This array contains appbar titles and a specific index is chosen depending on nav icon slected.
-  final titleChildren = <Widget>[
-    Text("Home", style: TextStyle(color: Colors.black, fontSize: 18)),
-    Text("Profile", style: TextStyle(color: Colors.black, fontSize: 18)),
-    Text("Bookmarks", style: TextStyle(color: Colors.black, fontSize: 18)),
-    Text("Settings", style: TextStyle(color: Colors.black, fontSize: 18))
-  ];
-
-  void _createConfessionText(){
-  FirebaseDatabaseUsage.createPost().then((String postKey){
-    //FirebaseDatabaseUsage.doNothing().then((String postKey){
+  void _createConfessionText() {
+    FirebaseDatabaseUsage.createPost().then((String postKey) {
+      //FirebaseDatabaseUsage.doNothing().then((String postKey){
       _update(postKey);
     });
   }
 
-  void _update(String postKey){
+  void _update(String postKey) {
     var v = MaterialPageRoute(
-      //builder: (context) => new UpdatePostPage(postKey: postKey),
+        //builder: (context) => new UpdatePostPage(postKey: postKey),
 
         builder: (context) => AddConfessionDialog(post_Key: postKey),
-        fullscreenDialog: true
-
-    );
+        fullscreenDialog: true);
     Navigator.of(context).push(v);
   }
 }
