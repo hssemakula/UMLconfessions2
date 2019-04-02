@@ -2,13 +2,32 @@ import 'package:flutter/material.dart';
 import 'package:outline_material_icons/outline_material_icons.dart';
 
 class ViewCommentsPage extends StatefulWidget {
+  String userName;
+  String confessionText;
+  String votes;
+  bool isBookmarked;
+  String avatarPath;
+  String timePassed;
+  String numOfComments;
+  BuildContext context;
+
+  ViewCommentsPage(
+      this.userName,
+      this.confessionText,
+      this.votes,
+      this.isBookmarked,
+      this.avatarPath,
+      this.timePassed,
+      this.numOfComments,
+      this.context);
+
   @override
   ViewCommentsPageState createState() => ViewCommentsPageState();
 }
 
 class ViewCommentsPageState extends State<ViewCommentsPage> {
-  final commentsArray = <Widget>[]; //first item is the post followed by all of it's comments.
-
+  final commentsArray =
+      <Widget>[]; //first item is the post followed by all of it's comments.
 
   @override
   Widget build(BuildContext context) {
@@ -16,13 +35,284 @@ class ViewCommentsPageState extends State<ViewCommentsPage> {
       appBar: AppBar(
           iconTheme: IconThemeData(color: Colors.black),
           title: Container(
-            margin: EdgeInsets.only(left: 30),
+            margin: EdgeInsets.only(left: 5),
             child: Text("Confession",
                 style: TextStyle(color: Colors.black, fontSize: 18)),
           ),
           backgroundColor: Theme.of(context).canvasColor,
           elevation: 2),
+      body: buildCommentsAndConfessionList(),
     );
   }
 
+  Widget mainConfession() {
+    return Padding(
+        padding: EdgeInsets.all(10),
+        //very important to make up and down vote column strect to height of confession text otherwise it stick to top.
+        child: IntrinsicHeight(
+          child: Column(children: [
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Container(
+                  height: 55,
+                  width: 55,
+                  margin: EdgeInsets.only(left: 5, right: 10, top: 2),
+                  decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      image: DecorationImage(
+                          image: AssetImage(widget.avatarPath),
+                          fit: BoxFit.cover)),
+                ),
+                Column(
+                  //MAIN COLUMN
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    //USERNAME, TIME row ---------------------------------------------------------------------------
+                    Row(
+                      children: <Widget>[
+                        Container(
+                          //USER NAME
+                          child: Text(
+                            widget.userName,
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold, fontSize: 18),
+                          ),
+                          margin: EdgeInsets.only(bottom: 2),
+                        ),
+                        Container(
+                          //dot between name and time
+                          height: 5,
+                          width: 5,
+                          margin: EdgeInsets.only(
+                              top: 10, bottom: 10, left: 5, right: 5),
+                          decoration: BoxDecoration(
+                              shape: BoxShape.circle, color: Colors.black38),
+                        ),
+                        Container(
+                          //TIME PASSED
+                          child: Text(
+                            widget.timePassed,
+                            style: TextStyle(
+                                fontWeight: FontWeight.w300,
+                                fontSize: 14,
+                                color: Colors.black38),
+                          ),
+                        ),
+                      ],
+                    ),
+
+                    //CONFESSION TEXT and VOTES row.-------------------------------------------------------------------------
+                    IntrinsicHeight(
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          GestureDetector(
+                              onTap: () {},
+                              child: Container(
+                                //CONFESSION TEXT
+                                margin: EdgeInsets.only(top: 3),
+                                width: MediaQuery.of(context).size.width - 140,
+                                //width of device - 140 pixels
+                                child: Text(
+                                  widget.confessionText,
+                                  softWrap: true,
+                                  overflow: TextOverflow.ellipsis,
+                                  maxLines: 5,
+                                  textAlign: TextAlign.justify,
+                                  style: TextStyle(fontSize: 16, height: 1.2),
+                                ),
+                              )),
+
+                          //UPVOTE DOWNVOTE BUTTON
+                          Padding(
+                            padding: EdgeInsets.only(left: 10),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: <Widget>[
+                                InkWell(
+                                  child: Container(
+                                    child: Icon(
+                                      Icons.expand_less,
+                                      color: Color(0xFF0072bc),
+                                      size: 35,
+                                    ),
+                                    margin: EdgeInsets.only(bottom: 3),
+                                  ),
+                                  onTap: () {},
+                                ),
+                                Text(widget.votes),
+                                Container(
+                                  child: InkWell(
+                                    child: Icon(Icons.expand_more,
+                                        color: Color(0xFF0072bc), size: 35),
+                                    onTap: () {},
+                                  ),
+                                  margin: EdgeInsets.only(top: 3),
+                                ),
+                              ],
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+            Container(
+              padding: EdgeInsets.only(bottom: 20),
+            ),
+            //empty container for padding
+            Divider(
+              height: 5,
+            ),
+            // REPORT ROW.----------------------------------------------------------------------
+            Container(
+              width: MediaQuery.of(context).size.width - 20,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  //report icon
+                  IconButton(
+                      icon: Icon(
+                        OMIcons.flag,
+                        size: 18,
+                        color: Colors.black54,
+                      ),
+                      onPressed: () {}),
+
+                  //Bookmark icon
+                  IconButton(
+                    icon: widget
+                            .isBookmarked //if confession is book marked show red icon otherwise
+                        ? Icon(
+                            Icons.bookmark_border,
+                            size: 17,
+                            color: Colors.red,
+                          )
+                        : Icon(
+                            Icons.bookmark_border,
+                            color: Colors.black38,
+                            size: 18,
+                          ),
+                    onPressed: () {},
+                  ),
+                ],
+              ),
+            ),
+          ]),
+        ));
+  }
+
+  Widget buildComment(String userName, String commentText, String avatarPath,
+      String timePassed, BuildContext context) {
+    return Padding(
+        padding: EdgeInsets.only(left: 70, right: 10, top: 10, bottom: 10),
+        //very important to make up and down vote column strect to height of confession text otherwise it stick to top.
+        child: IntrinsicHeight(
+            child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            Container(
+              height: 40,
+              width: 40,
+              margin: EdgeInsets.only(left: 5, right: 10, top: 2),
+              decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  image: DecorationImage(
+                      image: AssetImage(avatarPath), fit: BoxFit.cover)),
+            ),
+            Column(
+              //MAIN COLUMN
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                //USERNAME, TIME row ---------------------------------------------------------------------------
+                Row(
+                  children: <Widget>[
+                    Container(
+                      //USER NAME
+                      child: Text(
+                        userName,
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold, fontSize: 18),
+                      ),
+                      margin: EdgeInsets.only(bottom: 2),
+                    ),
+                    Container(
+                      //dot between name and time
+                      height: 5,
+                      width: 5,
+                      margin: EdgeInsets.only(
+                          top: 10, bottom: 10, left: 5, right: 5),
+                      decoration: BoxDecoration(
+                          shape: BoxShape.circle, color: Colors.black38),
+                    ),
+                    Container(
+                      //TIME PASSED
+                      child: Text(
+                        timePassed,
+                        style: TextStyle(
+                            fontWeight: FontWeight.w300,
+                            fontSize: 14,
+                            color: Colors.black38),
+                      ),
+                    ),
+                  ],
+                ),
+
+                //CONFESSION TEXT and VOTES row.-------------------------------------------------------------------------
+                IntrinsicHeight(
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      GestureDetector(
+                          onTap: () {},
+                          child: Container(
+                            //CONFESSION TEXT
+                            margin: EdgeInsets.only(top: 1),
+                            width: MediaQuery.of(context).size.width - 140,
+                            //width of device - 140 pixels
+                            child: Text(
+                              commentText,
+                              softWrap: true,
+                              overflow: TextOverflow.ellipsis,
+                              maxLines: 5,
+                              textAlign: TextAlign.justify,
+                              style: TextStyle(fontSize: 16, height: 1.2),
+                            ),
+                          )),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ],
+        )));
+  }
+
+  //Build list of comments and confession
+  Widget buildCommentsAndConfessionList() {
+    return ListView.builder(
+      itemBuilder: (context, i) {
+        if(i.isOdd && i == 1) return Divider(height: 5,);
+        else if (i.isOdd) return Divider();
+
+        final index =
+            i ~/ 2; //counts number of confessions minus divider widget
+        if (index >= commentsArray.length) {
+          for (int j = 0; j <= 10; j++) {
+            // I removed the confession design and put in it's own class hence the object ConfessionDesign()
+            commentsArray.add(buildComment("John doe", "Some comment",
+                "assets/images/man.png", "40m", this.context));
+          }
+        }
+        commentsArray[0] = mainConfession();
+        return commentsArray[index];
+      },
+    );
+  }
 }

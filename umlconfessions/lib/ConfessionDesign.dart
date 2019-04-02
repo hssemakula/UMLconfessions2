@@ -78,7 +78,15 @@ class ConfessionDesign {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => ViewCommentsPage()),
+                                    builder: (context) => ViewCommentsPage(
+                                        userName,
+                                        confessionText,
+                                        votes,
+                                        isBookmarked,
+                                        avatarPath,
+                                        timePassed,
+                                        numOfComments,
+                                        context)),
                               );
                             },
                             child: Container(
@@ -150,17 +158,34 @@ class ConfessionDesign {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) => ViewCommentsPage()),
+                                      builder: (context) => ViewCommentsPage(
+                                          userName,
+                                          confessionText,
+                                          votes,
+                                          isBookmarked,
+                                          avatarPath,
+                                          timePassed,
+                                          numOfComments,
+                                          context)),
                                 );
                               },
                             ),
                             Container(
+                              padding: EdgeInsets.only(right: 20),
                               child: InkWell(
-                                onTap: (){
+                                onTap: () {
                                   Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                        builder: (context) => ViewCommentsPage()),
+                                        builder: (context) => ViewCommentsPage(
+                                            userName,
+                                            confessionText,
+                                            votes,
+                                            isBookmarked,
+                                            avatarPath,
+                                            timePassed,
+                                            numOfComments,
+                                            context)),
                                   );
                                 },
                                 child: Text(
@@ -182,6 +207,14 @@ class ConfessionDesign {
                               color: Colors.black54,
                             ),
                             onPressed: () {}),
+                        IconButton(
+                          icon:Icon(OMIcons.delete,
+                            size: 17,
+                            color: Colors.black54,
+                          )
+                          ,
+                          onPressed: () {},
+                        ),
 
                         //Bookmark icon
                         IconButton(
@@ -194,7 +227,7 @@ class ConfessionDesign {
                                     )
                                   : Icon(
                                       Icons.bookmark_border,
-                                      color: Colors.black38,
+                                      color: Colors.black54,
                                       size: 18,
                                     ),
                           onPressed: () {},
