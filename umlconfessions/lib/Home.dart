@@ -166,7 +166,7 @@ class HomeState extends State<Home> {
           for (int j = 0; j <= 10; j++) {
             // I removed the confession design and put in it's own class hence the object ConfessionDesign()
             confessionsArray.add(
-              ConfessionDesign().createConfession(
+              ConfessionDesign(
                   "Jane Doe",
                   // randomString(Random().nextInt(100)),
                   "$_confessionText",
@@ -193,7 +193,7 @@ class HomeState extends State<Home> {
     ),
     BottomNavyBarItem(
         icon: Icon(Icons.people),
-        title: Text('Profile'),
+        title: Text('Account'),
         activeColor: Color(0xFF0072bc)),
     BottomNavyBarItem(
         icon: Icon(Icons.bookmark),

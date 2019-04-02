@@ -2,17 +2,33 @@ import 'package:flutter/material.dart';
 import 'package:outline_material_icons/outline_material_icons.dart';
 import 'ViewCommentsScreen.dart';
 
-class ConfessionDesign {
+class ConfessionDesign extends StatefulWidget {
+  String userName;
+  String confessionText;
+  String votes;
+  bool isBookmarked;
+  String avatarPath;
+  String timePassed;
+  String numOfComments;
+  BuildContext context;
+
+  ConfessionDesign(
+      this.userName,
+      this.confessionText,
+      this.votes,
+      this.isBookmarked,
+      this.avatarPath,
+      this.timePassed,
+      this.numOfComments,
+      context);
+
+  @override
+  ConfessionDesignState createState() => new ConfessionDesignState();
+}
+
+class ConfessionDesignState extends State<ConfessionDesign> {
   //This method designs the confession and how it looks like
-  Widget createConfession(
-      String userName,
-      String confessionText,
-      String votes,
-      bool isBookmarked,
-      String avatarPath,
-      String timePassed,
-      String numOfComments,
-      BuildContext context) {
+  Widget build(BuildContext context) {
     return Padding(
         padding: EdgeInsets.all(10),
         //very important to make up and down vote column strect to height of confession text otherwise it stick to top.
@@ -27,7 +43,8 @@ class ConfessionDesign {
                 decoration: BoxDecoration(
                     shape: BoxShape.circle,
                     image: DecorationImage(
-                        image: AssetImage(avatarPath), fit: BoxFit.cover)),
+                        image: AssetImage(widget.avatarPath),
+                        fit: BoxFit.cover)),
               ),
               Column(
                 //MAIN COLUMN
@@ -40,7 +57,7 @@ class ConfessionDesign {
                       Container(
                         //USER NAME
                         child: Text(
-                          userName,
+                          widget.userName,
                           style: TextStyle(
                               fontWeight: FontWeight.bold, fontSize: 18),
                         ),
@@ -58,7 +75,7 @@ class ConfessionDesign {
                       Container(
                         //TIME PASSED
                         child: Text(
-                          timePassed,
+                          widget.timePassed,
                           style: TextStyle(
                               fontWeight: FontWeight.w300,
                               fontSize: 14,
@@ -79,13 +96,13 @@ class ConfessionDesign {
                                 context,
                                 MaterialPageRoute(
                                     builder: (context) => ViewCommentsPage(
-                                        userName,
-                                        confessionText,
-                                        votes,
-                                        isBookmarked,
-                                        avatarPath,
-                                        timePassed,
-                                        numOfComments,
+                                        widget.userName,
+                                        widget.confessionText,
+                                        widget.votes,
+                                        widget.isBookmarked,
+                                        widget.avatarPath,
+                                        widget.timePassed,
+                                        widget.numOfComments,
                                         context)),
                               );
                             },
@@ -95,7 +112,7 @@ class ConfessionDesign {
                               width: MediaQuery.of(context).size.width - 140,
                               //width of device - 140 pixels
                               child: Text(
-                                confessionText,
+                                widget.confessionText,
                                 softWrap: true,
                                 overflow: TextOverflow.ellipsis,
                                 maxLines: 5,
@@ -121,7 +138,7 @@ class ConfessionDesign {
                                 ),
                                 onTap: () {},
                               ),
-                              Text(votes),
+                              Text(widget.votes),
                               Container(
                                 child: InkWell(
                                   child: Icon(Icons.expand_more,
@@ -159,13 +176,13 @@ class ConfessionDesign {
                                   context,
                                   MaterialPageRoute(
                                       builder: (context) => ViewCommentsPage(
-                                          userName,
-                                          confessionText,
-                                          votes,
-                                          isBookmarked,
-                                          avatarPath,
-                                          timePassed,
-                                          numOfComments,
+                                          widget.userName,
+                                          widget.confessionText,
+                                          widget.votes,
+                                          widget.isBookmarked,
+                                          widget.avatarPath,
+                                          widget.timePassed,
+                                          widget.numOfComments,
                                           context)),
                                 );
                               },
@@ -178,18 +195,18 @@ class ConfessionDesign {
                                     context,
                                     MaterialPageRoute(
                                         builder: (context) => ViewCommentsPage(
-                                            userName,
-                                            confessionText,
-                                            votes,
-                                            isBookmarked,
-                                            avatarPath,
-                                            timePassed,
-                                            numOfComments,
+                                            widget.userName,
+                                            widget.confessionText,
+                                            widget.votes,
+                                            widget.isBookmarked,
+                                            widget.avatarPath,
+                                            widget.timePassed,
+                                            widget.numOfComments,
                                             context)),
                                   );
                                 },
                                 child: Text(
-                                  numOfComments,
+                                  widget.numOfComments,
                                   style: TextStyle(
                                       fontSize: 14, color: Colors.black54),
                                 ),
@@ -208,28 +225,28 @@ class ConfessionDesign {
                             ),
                             onPressed: () {}),
                         IconButton(
-                          icon:Icon(OMIcons.delete,
+                          icon: Icon(
+                            OMIcons.delete,
                             size: 17,
                             color: Colors.black54,
-                          )
-                          ,
+                          ),
                           onPressed: () {},
                         ),
 
                         //Bookmark icon
                         IconButton(
-                          icon:
-                              isBookmarked //if confession is book marked show red icon otherwise
-                                  ? Icon(
-                                      Icons.bookmark_border,
-                                      size: 17,
-                                      color: Colors.red,
-                                    )
-                                  : Icon(
-                                      Icons.bookmark_border,
-                                      color: Colors.black54,
-                                      size: 18,
-                                    ),
+                          icon: widget
+                                  .isBookmarked //if confession is book marked show red icon otherwise
+                              ? Icon(
+                                  Icons.bookmark_border,
+                                  size: 17,
+                                  color: Colors.red,
+                                )
+                              : Icon(
+                                  Icons.bookmark_border,
+                                  color: Colors.black54,
+                                  size: 18,
+                                ),
                           onPressed: () {},
                         ),
                       ],
