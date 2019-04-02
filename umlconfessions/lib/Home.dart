@@ -13,6 +13,7 @@ import 'package:umlconfessions/FirebaseDatabaseUsage.dart';
 import 'Account.dart';
 import 'package:umlconfessions/Update_Post.dart';
 import 'Settings.dart';
+import 'Bookmarks.dart';
 
 class Home extends StatefulWidget {
   String userName;
@@ -92,11 +93,7 @@ class HomeState extends State<Home> {
           widget.profilePictureUrl,
           widget.karma.toString(),
           widget.numOfPosts.toString()),
-      Container(
-        constraints: BoxConstraints.expand(),
-        color: Colors.redAccent,
-        child: Text("Bookmarks"),
-      ),
+      Bookmarks(confessionsArray),
       Settings()
     ];
 
@@ -162,28 +159,26 @@ class HomeState extends State<Home> {
   Widget buildConfessionsList() {
     return ListView.builder(
       itemBuilder: (context, i) {
-        if (i.isOdd) return Divider();
-
-        final index =
-            i ~/ 2; //counts number of confessions minus divider widget
-        if (index >= confessionsArray.length) {
+        if (i >= confessionsArray.length) {
           for (int j = 0; j <= 10; j++) {
             // I removed the confession design and put in it's own class hence the object ConfessionDesign()
             confessionsArray.add(
-              ConfessionDesign(
-                  "Jane Doe",
-                  // randomString(Random().nextInt(100)),
-                  "$_confessionText",
-                  randomNumeric(Random().nextInt(3)),
-                  j % 2 == 0 ? false : true,
-                  "assets/images/woman.png",
-                  "20m",
-                  "4",
-                  context),
+              Column(
+                children: [ConfessionDesign(
+                    "Jane Doe",
+                    // randomString(Random().nextInt(100)),
+                    "$_confessionText",
+                    randomNumeric(Random().nextInt(3)),
+                    j % 2 == 0 ? false : true,
+                    "assets/images/woman.png",
+                    "20m",
+                    "4",
+                    context), Divider()]
+              ),
             );
           }
         }
-        return confessionsArray[index];
+        return confessionsArray[i];
       },
     );
   }

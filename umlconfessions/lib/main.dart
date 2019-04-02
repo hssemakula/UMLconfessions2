@@ -42,9 +42,13 @@ class MyAppState extends State<MyApp> {
 class Bloc {
   final _themeController = StreamController<bool>.broadcast();
 
-  get changeTheme => _themeController.sink.add;
+  get changeTheme {
+    return _themeController.sink.add;
+  }
 
-  get darkThemeEnabled => _themeController.stream;
+  get darkThemeEnabled {
+    return _themeController.stream;
+  }
 }
 
 final bloc = Bloc();
