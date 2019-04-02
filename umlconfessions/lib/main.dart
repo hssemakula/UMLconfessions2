@@ -7,35 +7,44 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 void main() => runApp(MyApp());
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
+  @override
+  MyAppState createState() => new MyAppState();
+}
 
-  static bool isDarkTheme = false;
+class MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-        // new
-        home: WelcomeScreen(),
-        routes: <String, WidgetBuilder>{
-          //5
-          '/welcomeScreen': (BuildContext context) => WelcomeScreen(), //6
-          '/homeScreen': (BuildContext context) => Home("John Doe", "assets/images/man.png", 100, 315, "someone@example.com", "apassword")
-        },
-        debugShowCheckedModeBanner: false);
+    return StreamBuilder<Object>(
+        stream: bloc.darkThemeEnabled,
+        initialData: false,
+        builder: (context, snapshot) {
+          return MaterialApp(
+              // new
+              home: WelcomeScreen(),
+              theme: snapshot.data ? ThemeData.dark() : ThemeData.light(),
+              routes: <String, WidgetBuilder>{
+                //5
+                '/welcomeScreen': (BuildContext context) => WelcomeScreen(), //6
+                '/homeScreen': (BuildContext context) => Home(
+                    "John Doe",
+                    "assets/images/man.png",
+                    100,
+                    315,
+                    "someone@example.com",
+                    "apassword")
+              },
+              debugShowCheckedModeBanner: false);
+        });
   }
 }
 
-/* DARK THEME: DON'T DELETE
+class Bloc {
+  final _themeController = StreamController<bool>.broadcast();
 
-class MyApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(theme: ThemeData(
-      brightness: Brightness.dark,                        // new
-    ), home: WelcomeScreen(),
-        routes: <String, WidgetBuilder>{ //5
-          '/welcomeScreen': (BuildContext context) => WelcomeScreen(), //6
-          '/homeScreen': (BuildContext context) => Home()}, debugShowCheckedModeBanner: false);
-  }
+  get changeTheme => _themeController.sink.add;
+
+  get darkThemeEnabled => _themeController.stream;
 }
 
- */
+final bloc = Bloc();

@@ -14,8 +14,6 @@ import 'Account.dart';
 import 'package:umlconfessions/Update_Post.dart';
 import 'Settings.dart';
 
-
-
 class Home extends StatefulWidget {
   String userName;
   String profilePictureUrl; //profile picture from firebae
@@ -99,7 +97,7 @@ class HomeState extends State<Home> {
         color: Colors.redAccent,
         child: Text("Bookmarks"),
       ),
-  Settings()
+      Settings()
     ];
 
     //This array contains appbars and a specific index is chosen depending on nav icon selected.
@@ -119,37 +117,38 @@ class HomeState extends State<Home> {
 
     //Actually draws on screen.
     return Scaffold(
-      appBar: appBarChildren[navIndex],
-      //screen corresponding to nav element selected, is chosen from array
-      body: bodyChildren[navIndex],
-      //if it is the home screen display floating action bar else show nothing
-      floatingActionButton: navIndex == 0
-          ? FloatingActionButton(
-              onPressed: () {
-                // _createConfessionText();
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => AddConfessionDialog(),
-                      fullscreenDialog: true),
-                );
-              },
-              child: Icon(
-                Icons.palette,
-              ),
-              backgroundColor: Color(0x9B0072bc),
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(20.0))),
-            )
-          : null,
-      bottomNavigationBar: BottomNavyBar(
-          items: navItems,
-          onItemSelected: (index) {
-            return setState(() {
-              navIndex = index;
-            });
-          }),
-    );
+        appBar: appBarChildren[navIndex],
+
+        //screen corresponding to nav element selected, is chosen from array
+        body: bodyChildren[navIndex],
+        //if it is the home screen display floating action bar else show nothing
+        floatingActionButton: navIndex == 0
+            ? FloatingActionButton(
+                onPressed: () {
+                  // _createConfessionText();
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => AddConfessionDialog(),
+                        fullscreenDialog: true),
+                  );
+                },
+                child: Icon(
+                  Icons.palette,
+                ),
+                backgroundColor: Color(0x9B0072bc),
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(20.0))),
+              )
+            : null,
+        bottomNavigationBar: BottomNavyBar(
+            items: navItems,
+            onItemSelected: (index) {
+              return setState(() {
+                navIndex = index;
+              });
+            }),
+      );
   } //END OF BUILD METHOD.
 
   _updateConfession(Confession value) {
