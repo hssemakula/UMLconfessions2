@@ -42,11 +42,14 @@ class HomeState extends State<Home> {
   String _confessionText = "Confession Text Here";
   StreamSubscription _subscriptionConfession;
   final confessionsArray = <Widget>[];
+  var list;
 
   @override
   void initState() {
     Future<Confession> myConfession =
         FirebaseFunctionality.getConfession("-LSu6ejqSX97jDn6UR1s");
+
+
 
     if (myConfession == null) {
       Fluttertoast.showToast(
@@ -80,9 +83,13 @@ class HomeState extends State<Home> {
     super.dispose();
   }
 
+
+
   //UI
   @override
   Widget build(BuildContext context) {
+
+
     //This array contains the different screens to be displayed, each index corresponds to a specific nav index when nav icon is pressed.
     final bodyChildren = <Widget>[
       buildConfessionsList(),
@@ -148,6 +155,11 @@ class HomeState extends State<Home> {
       );
   } //END OF BUILD METHOD.
 
+  String textGenerate(String s){
+    list.add(s);
+return list;
+  }
+
   _updateConfession(Confession value) {
     var confessionText = value.confessionText;
     setState(() {
@@ -157,19 +169,65 @@ class HomeState extends State<Home> {
 
   //Build list of confessions
   Widget buildConfessionsList() {
+    /*return new FutureBuilder<List<Confession>>(
+      future: getAllConfessions(),//getConfessionsNewThing
+      builder: (context, snapshot){
+      if(!snapshot.hasData) return Container();
+      List<Confession> conf = snapshot.data;
+      return new ListView(
+        children: conf.map((confes) => Text(confes.confessionText)).toList()
+      );
+    }
+    );*/
+    //[
+   // return Flexible(
+
+
+    /**DON'T DELETE!  THIS IS THE CODE THAT SHOWS THE FEED RIGHT NOW.  WORK IN PROGRESS*/
+    /*return FirebaseAnimatedList(
+
+
+              query: FirebaseDatabase.instance
+                  .reference().child("confessions"),
+
+                padding: new EdgeInsets.all(8.0),
+                reverse: false,
+                itemBuilder: (_, DataSnapshot snapshot,
+                    Animation<double> animation, int x) {
+                  return new ListTile(
+                    subtitle: new Text(snapshot.value.remove("confessionText").toString()),
+                  );
+                }
+
+            );*/
+
+
+          //  );
+
+
     return ListView.builder(
       itemBuilder: (context, i) {
-        if (i >= confessionsArray.length) {
-          for (int j = 0; j <= 10; j++) {
+       if (i >= confessionsArray.length) {
+          for (int j = 0; j <= 1; j++) {
             // I removed the confession design and put in it's own class hence the object ConfessionDesign()
             confessionsArray.add(
               Column(
-                children: [ConfessionDesign(
+                children: [ ConfessionDesign(
                     "Jane Doe",
                     // randomString(Random().nextInt(100)),
+
+                        //textGenerate(FirebaseDatabase.instance
+                          //  .reference().child("confessions")),
+
+
+
+
+
+
                     "$_confessionText",
                     randomNumeric(Random().nextInt(3)),
-                    j % 2 == 0 ? false : true,
+
+                   j % 2 == 0 ? false : true,
                     "assets/images/woman.png",
                     "20m",
                     "4",
@@ -238,6 +296,8 @@ class HomeState extends State<Home> {
     });
   }
 
+
+
   void _update(String postKey) {
     var v = MaterialPageRoute(
         //builder: (context) => new UpdatePostPage(postKey: postKey),
@@ -246,6 +306,31 @@ class HomeState extends State<Home> {
         fullscreenDialog: true);
     Navigator.of(context).push(v);
   }
+  static Future<List<Confession>> getAllConfessions() async {
+    //String confessionKey = await Preferences.getConfessionKey();
+
+    Completer<Confession> completer = new Completer<Confession>();
+    List<Confession> val = new List<Confession>();
+    FirebaseDatabase.instance
+        .reference()
+        .child("confessions")
+        .orderByKey()
+        .once()
+        .then((DataSnapshot snapshot) {
+      var confession = new Confession.fromJson(snapshot.key, snapshot.value);
+      completer.complete(confession);
+      val.add(confession);
+    });
+
+
+
+    Completer<List<Confession>> c = new Completer<List<Confession>>();
+
+    c.complete(val);
+
+    return val;
+  }
+
 }
 
 class Confession {
@@ -278,6 +363,8 @@ class FirebaseFunctionality {
     return subscription;
   }
 
+
+
   static Future<Confession> getConfession(String confessionKey) async {
     //String confessionKey = await Preferences.getConfessionKey();
 
@@ -295,7 +382,16 @@ class FirebaseFunctionality {
 
     return (completer.future);
   }
+
+
+
+
+
+
+
 }
+
+
 
 class Preferences {
   static const String USER_KEY = "userKey";

@@ -60,6 +60,12 @@ class FirebaseDatabaseUsage  {
     return '';
   }
 
+  static DatabaseReference findConfession() {
+    return FirebaseDatabase.instance.reference().child("confessions");
+  }
+
+
+
   static doNothing(){
 
   }

@@ -30,6 +30,7 @@ class AddConfessionDialogState extends State<AddConfessionDialog> {
     });
 
     Navigator.pop(context);
+
     //if(!f.validate()){
 
     //} else {
