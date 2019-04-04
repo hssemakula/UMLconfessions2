@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:outline_material_icons/outline_material_icons.dart';
+import 'Themer.dart';
 
 class ViewCommentsPage extends StatefulWidget {
   String userName;
@@ -33,11 +34,14 @@ class ViewCommentsPageState extends State<ViewCommentsPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-          iconTheme: IconThemeData(color: Colors.black),
+          iconTheme: IconThemeData(
+              color: Themer.setColor(context, Colors.black, null)),
           title: Container(
             margin: EdgeInsets.only(left: 5),
             child: Text("Confession",
-                style: TextStyle(color: Colors.black, fontSize: 18)),
+                style: TextStyle(
+                    color: Themer.setColor(context, Colors.black, null),
+                    fontSize: 18)),
           ),
           backgroundColor: Theme.of(context).canvasColor,
           elevation: 2),
@@ -88,16 +92,21 @@ class ViewCommentsPageState extends State<ViewCommentsPage> {
                           margin: EdgeInsets.only(
                               top: 10, bottom: 10, left: 5, right: 5),
                           decoration: BoxDecoration(
-                              shape: BoxShape.circle, color: Colors.black38),
+                            shape: BoxShape.circle,
+                            color: Themer.setColor(
+                                context, Colors.black38, Colors.white70),
+                          ),
                         ),
                         Container(
                           //TIME PASSED
                           child: Text(
                             widget.timePassed,
                             style: TextStyle(
-                                fontWeight: FontWeight.w300,
-                                fontSize: 14,
-                                color: Colors.black38),
+                              fontWeight: FontWeight.w300,
+                              fontSize: 14,
+                              color: Themer.setColor(
+                                  context, Colors.black38, Colors.white70),
+                            ),
                           ),
                         ),
                       ],
@@ -180,7 +189,8 @@ class ViewCommentsPageState extends State<ViewCommentsPage> {
                       icon: Icon(
                         OMIcons.flag,
                         size: 18,
-                        color: Colors.black54,
+                        color: Themer.setColor(
+                            context, Colors.black38, Colors.white70),
                       ),
                       onPressed: () {}),
 
@@ -195,7 +205,8 @@ class ViewCommentsPageState extends State<ViewCommentsPage> {
                           )
                         : Icon(
                             Icons.bookmark_border,
-                            color: Colors.black38,
+                            color: Themer.setColor(
+                                context, Colors.black38, Colors.white70),
                             size: 18,
                           ),
                     onPressed: () {},
@@ -249,7 +260,9 @@ class ViewCommentsPageState extends State<ViewCommentsPage> {
                       margin: EdgeInsets.only(
                           top: 10, bottom: 10, left: 5, right: 5),
                       decoration: BoxDecoration(
-                          shape: BoxShape.circle, color: Colors.black38),
+                          shape: BoxShape.circle,
+                          color: Themer.setColor(
+                              context, Colors.black38, Colors.white70)),
                     ),
                     Container(
                       //TIME PASSED
@@ -258,7 +271,8 @@ class ViewCommentsPageState extends State<ViewCommentsPage> {
                         style: TextStyle(
                             fontWeight: FontWeight.w300,
                             fontSize: 14,
-                            color: Colors.black38),
+                            color: Themer.setColor(
+                                context, Colors.black38, Colors.white70)),
                       ),
                     ),
                   ],
@@ -298,7 +312,10 @@ class ViewCommentsPageState extends State<ViewCommentsPage> {
   Widget buildCommentsAndConfessionList() {
     return ListView.builder(
       itemBuilder: (context, i) {
-        if(i.isOdd && i == 1) return Divider(height: 5,);
+        if (i.isOdd && i == 1)
+          return Divider(
+            height: 5,
+          );
         else if (i.isOdd) return Divider();
 
         final index =

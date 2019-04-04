@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'Themer.dart';
 
 class EditAccount extends StatefulWidget {
   String userEmail;
@@ -14,19 +15,20 @@ class EditAccount extends StatefulWidget {
 class EditAccountState extends State<EditAccount> {
   @override
   Widget build(BuildContext context) {
+    Color titleIconColor = Themer.setColor(context, Color(0xFF0072bc), null);
     return Scaffold(
       appBar: AppBar(
-          iconTheme: IconThemeData(color: Color(0xFF0072bc)),
+          iconTheme: IconThemeData(color: titleIconColor),
           title: Container(
             margin: EdgeInsets.only(left: 5),
             child: Text("Edit account",
-                style: TextStyle(color: Color(0xFF0072bc), fontSize: 18)),
+                style: TextStyle(color: titleIconColor, fontSize: 18)),
           ),
           actions: <Widget>[
             FlatButton(
               padding: EdgeInsets.only(top: 4),
               child: Text("SAVE",
-                  style: TextStyle(color: Color(0xFF0072bc), fontSize: 18)),
+                  style: TextStyle(color: titleIconColor, fontSize: 18)),
               onPressed: () {},
             )
           ],
@@ -37,6 +39,7 @@ class EditAccountState extends State<EditAccount> {
   }
 
   Widget buildEditLayout() {
+    Color themeColor = Themer.setColor(context, Colors.black54, Colors.white70);
     return SingleChildScrollView(
       child: Padding(
         padding: const EdgeInsets.only(left: 15, right: 10, top: 20),
@@ -53,7 +56,7 @@ class EditAccountState extends State<EditAccount> {
                     "Name",
                     style: TextStyle(
                         fontSize: 18,
-                        color: Colors.black54,
+                        color: themeColor,
                         fontWeight: FontWeight.bold),
                   )),
             ),
@@ -65,7 +68,9 @@ class EditAccountState extends State<EditAccount> {
                   child: TextField(
                     style: TextStyle(fontSize: 18),
                     decoration: InputDecoration(
-                        hintStyle: TextStyle(color: Colors.black),
+                        hintStyle: TextStyle(
+                            color:
+                                Themer.setColor(context, Colors.black54, null)),
                         hintText: widget.userName),
                   )),
             ),
@@ -81,7 +86,7 @@ class EditAccountState extends State<EditAccount> {
                     "Email",
                     style: TextStyle(
                         fontSize: 18,
-                        color: Colors.black54,
+                        color: themeColor,
                         fontWeight: FontWeight.bold),
                   )),
             ),
@@ -93,7 +98,9 @@ class EditAccountState extends State<EditAccount> {
                   child: TextField(
                     style: TextStyle(fontSize: 18),
                     decoration: InputDecoration(
-                        hintStyle: TextStyle(color: Colors.black),
+                        hintStyle: TextStyle(
+                            color:
+                                Themer.setColor(context, Colors.black54, null)),
                         hintText: widget.userEmail),
                   )),
             ),
@@ -109,7 +116,7 @@ class EditAccountState extends State<EditAccount> {
                     "Password",
                     style: TextStyle(
                         fontSize: 18,
-                        color: Colors.black54,
+                        color: themeColor,
                         fontWeight: FontWeight.bold),
                   )),
             ),
@@ -122,7 +129,9 @@ class EditAccountState extends State<EditAccount> {
                     obscureText: true,
                     style: TextStyle(fontSize: 18),
                     decoration: InputDecoration(
-                        hintStyle: TextStyle(color: Colors.black),
+                        hintStyle: TextStyle(
+                            color:
+                                Themer.setColor(context, Colors.black54, null)),
                         hintText: obscureText(widget.password)),
                   )),
             ),

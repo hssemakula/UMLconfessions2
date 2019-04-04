@@ -24,8 +24,7 @@ class MyAppState extends State<MyApp> {
               home: WelcomeScreen(),
               theme: snapshot.data ? ThemeData.dark() : ThemeData.light(),
               routes: <String, WidgetBuilder>{
-                //5
-                '/welcomeScreen': (BuildContext context) => WelcomeScreen(), //6
+                '/welcomeScreen': (BuildContext context) => WelcomeScreen(),
                 '/homeScreen': (BuildContext context) => Home(
                     "John Doe",
                     "assets/images/man.png",

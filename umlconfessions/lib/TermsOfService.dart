@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'Themer.dart';
 
 class TermsOfService extends StatelessWidget {
   Widget build(BuildContext context) {
@@ -6,12 +7,13 @@ class TermsOfService extends StatelessWidget {
         appBar: AppBar(
           title: Text(
             'UML Confessions',
-            style: TextStyle(color: Colors.black),
+            style: TextStyle(color: Themer.setColor(context, Colors.black, null)),
           ),
           backgroundColor: Theme.of(context).canvasColor,
           //color of whole app
           elevation: 0,
-          iconTheme: IconThemeData(color: Color(0xFF0072bc)),
+          iconTheme: IconThemeData(
+              color: Themer.setColor(context, Color(0xFF0072bc), null)),
         ),
         body: LayoutBuilder(
           builder: (BuildContext context, BoxConstraints viewportConstraints) {
