@@ -29,9 +29,7 @@ class SettingsState extends State<Settings> {
                             Text(
                               "Dark mode",
                               style: TextStyle(
-                                fontSize: 20,
-                                color:
-                                    snapshot.data ? Colors.white : Colors.black,
+                                fontSize: 20
                               ),
                             ),
                             Switch(
@@ -72,8 +70,8 @@ class SettingsState extends State<Settings> {
                           "Delete account",
                           style: TextStyle(
                               fontSize: 20,
-                              color:
-                                  snapshot.data ? Colors.white : Colors.black,
+                              //check if  dark theme, change color
+                              color: Theme.of(context).brightness == Brightness.dark?  Colors.white: Colors.black54,
                               fontWeight: FontWeight.bold),
                         )),
                   ),

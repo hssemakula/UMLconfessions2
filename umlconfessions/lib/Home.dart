@@ -49,8 +49,6 @@ class HomeState extends State<Home> {
     Future<Confession> myConfession =
         FirebaseFunctionality.getConfession("-LSu6ejqSX97jDn6UR1s");
 
-
-
     if (myConfession == null) {
       Fluttertoast.showToast(
         msg: "err",
@@ -83,13 +81,9 @@ class HomeState extends State<Home> {
     super.dispose();
   }
 
-
-
   //UI
   @override
   Widget build(BuildContext context) {
-
-
     //This array contains the different screens to be displayed, each index corresponds to a specific nav index when nav icon is pressed.
     final bodyChildren = <Widget>[
       buildConfessionsList(),
@@ -113,7 +107,12 @@ class HomeState extends State<Home> {
           title: Container(
             padding: EdgeInsets.only(left: 5),
             child: Text("Settings",
-                style: TextStyle(color: Colors.black, fontSize: 18)),
+                //check if dark theme change color
+                style: TextStyle(
+                    color: Theme.of(context).brightness == Brightness.dark
+                        ? Colors.white
+                        : Colors.black,
+                    fontSize: 18)),
           ),
           backgroundColor: Theme.of(context).canvasColor,
           elevation: 1)
@@ -121,43 +120,46 @@ class HomeState extends State<Home> {
 
     //Actually draws on screen.
     return Scaffold(
-        appBar: appBarChildren[navIndex],
+      appBar: appBarChildren[navIndex],
 
-        //screen corresponding to nav element selected, is chosen from array
-        body: bodyChildren[navIndex],
-        //if it is the home screen display floating action bar else show nothing
-        floatingActionButton: navIndex == 0
-            ? FloatingActionButton(
-                onPressed: () {
-                  // _createConfessionText();
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => AddConfessionDialog(),
-                        fullscreenDialog: true),
-                  );
-                },
-                child: Icon(
-                  Icons.palette,
-                ),
-                backgroundColor: Color(0x9B0072bc),
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(20.0))),
-              )
-            : null,
-        bottomNavigationBar: BottomNavyBar(
-            items: navItems,
-            onItemSelected: (index) {
-              return setState(() {
-                navIndex = index;
-              });
-            }),
-      );
+      //screen corresponding to nav element selected, is chosen from array
+      body: bodyChildren[navIndex],
+      //if it is the home screen display floating action bar else show nothing
+      floatingActionButton: navIndex == 0
+          ? FloatingActionButton(
+              onPressed: () {
+                // _createConfessionText();
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => AddConfessionDialog(),
+                      fullscreenDialog: true),
+                );
+              },
+              child: Icon(
+                Icons.palette,
+              ),
+              //check if dark theme change color
+              backgroundColor: Theme.of(context).brightness == Brightness.dark
+                  ? Colors.white
+                  : Color(0x9B0072bc),
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.all(Radius.circular(20.0))),
+            )
+          : null,
+      bottomNavigationBar: BottomNavyBar(
+          items: navItems,
+          onItemSelected: (index) {
+            return setState(() {
+              navIndex = index;
+            });
+          }),
+    );
   } //END OF BUILD METHOD.
 
-  String textGenerate(String s){
+  String textGenerate(String s) {
     list.add(s);
-return list;
+    return list;
   }
 
   _updateConfession(Confession value) {
@@ -180,8 +182,7 @@ return list;
     }
     );*/
     //[
-   // return Flexible(
-
+    // return Flexible(
 
     /**DON'T DELETE!  THIS IS THE CODE THAT SHOWS THE FEED RIGHT NOW.  WORK IN PROGRESS*/
     /*return FirebaseAnimatedList(
@@ -201,38 +202,31 @@ return list;
 
             );*/
 
-
-          //  );
-
+    //  );
 
     return ListView.builder(
       itemBuilder: (context, i) {
-       if (i >= confessionsArray.length) {
+        if (i >= confessionsArray.length) {
           for (int j = 0; j <= 1; j++) {
             // I removed the confession design and put in it's own class hence the object ConfessionDesign()
             confessionsArray.add(
-              Column(
-                children: [ ConfessionDesign(
+              Column(children: [
+                ConfessionDesign(
                     "Jane Doe",
                     // randomString(Random().nextInt(100)),
 
-                        //textGenerate(FirebaseDatabase.instance
-                          //  .reference().child("confessions")),
-
-
-
-
-
+                    //textGenerate(FirebaseDatabase.instance
+                    //  .reference().child("confessions")),
 
                     "$_confessionText",
                     randomNumeric(Random().nextInt(3)),
-
-                   j % 2 == 0 ? false : true,
+                    j % 2 == 0 ? false : true,
                     "assets/images/woman.png",
                     "20m",
                     "4",
-                    context), Divider()]
-              ),
+                    context),
+                Divider()
+              ]),
             );
           }
         }
@@ -259,7 +253,10 @@ return list;
                 margin: EdgeInsets.only(left: 30),
                 child: Text(title,
                     style: TextStyle(
-                        color: Colors.black,
+                        //check if dark theme change color
+                        color: Theme.of(context).brightness == Brightness.dark
+                            ? Colors.white
+                            : Colors.black,
                         fontSize:
                             18)), //instead of title we have array, index 0(navIndex) is selected. This is the app bar title that corresponds to the first nav screen, etc
               )
@@ -296,8 +293,6 @@ return list;
     });
   }
 
-
-
   void _update(String postKey) {
     var v = MaterialPageRoute(
         //builder: (context) => new UpdatePostPage(postKey: postKey),
@@ -306,6 +301,7 @@ return list;
         fullscreenDialog: true);
     Navigator.of(context).push(v);
   }
+
   static Future<List<Confession>> getAllConfessions() async {
     //String confessionKey = await Preferences.getConfessionKey();
 
@@ -322,15 +318,12 @@ return list;
       val.add(confession);
     });
 
-
-
     Completer<List<Confession>> c = new Completer<List<Confession>>();
 
     c.complete(val);
 
     return val;
   }
-
 }
 
 class Confession {
@@ -363,8 +356,6 @@ class FirebaseFunctionality {
     return subscription;
   }
 
-
-
   static Future<Confession> getConfession(String confessionKey) async {
     //String confessionKey = await Preferences.getConfessionKey();
 
@@ -382,16 +373,7 @@ class FirebaseFunctionality {
 
     return (completer.future);
   }
-
-
-
-
-
-
-
 }
-
-
 
 class Preferences {
   static const String USER_KEY = "userKey";
