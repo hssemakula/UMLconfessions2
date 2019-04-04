@@ -3,6 +3,7 @@ import 'package:outline_material_icons/outline_material_icons.dart';
 import 'package:umlconfessions/FirebaseDatabaseUsage.dart';
 import 'package:flutter/services.dart';
 import 'dart:async';
+import 'Themer.dart';
 
 import 'package:flutter/material.dart';
 import 'package:umlconfessions/FirebaseDatabaseUsage.dart';
@@ -40,16 +41,18 @@ class AddConfessionDialogState extends State<AddConfessionDialog> {
 
   @override
   Widget build(BuildContext context) {
+
+
     return Scaffold(
       appBar: AppBar(
         actions: [
           Container(
             child: RaisedButton(
-                disabledColor: Color(0x990072bc),
+                disabledColor: Themer.setColor(context, Color(0x990072bc), Colors.white70),
                 child: Text(
                   'Confess',
                   style: TextStyle(
-                      color: Colors.white,
+                      color: Themer.setColor(context, Colors.white, Colors.black54),
                       fontSize: 17,
                       fontWeight: FontWeight.bold),
                 ),
@@ -60,15 +63,15 @@ class AddConfessionDialogState extends State<AddConfessionDialog> {
 
                 },*/
                 elevation: 0,
-                color: Color(0xFF0072bc),
+                color: Themer.setColor(context, Color(0xFF0072bc), null),
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(20.0))),
             padding: EdgeInsets.only(top: 12, bottom: 10),
             margin: EdgeInsets.only(right: 15, top: 3),
           ),
         ],
-        backgroundColor: Theme.of(context).canvasColor,
-        iconTheme: IconThemeData(color: Colors.black),
+        backgroundColor:  Theme.of(context).canvasColor,
+        iconTheme: IconThemeData(color: Themer.setColor(context, Colors.black, null)),
         elevation: 0,
       ),
       body: SingleChildScrollView(

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:outline_material_icons/outline_material_icons.dart';
 import 'ViewCommentsScreen.dart';
-import 'main.dart';
+import 'Themer.dart';
 
 class ConfessionDesign extends StatefulWidget {
   String userName;
@@ -65,19 +65,17 @@ class ConfessionDesignState extends State<ConfessionDesign> {
                         margin: EdgeInsets.only(bottom: 2),
                       ),
                       Container(
-                        //dot between name and time
-                        height: 5,
-                        width: 5,
-                        margin: EdgeInsets.only(
-                            top: 10, bottom: 10, left: 5, right: 5),
-                        decoration: BoxDecoration(
+                          //dot between name and time
+                          height: 5,
+                          width: 5,
+                          margin: EdgeInsets.only(
+                              top: 10, bottom: 10, left: 5, right: 5),
+                          decoration: BoxDecoration(
                             shape: BoxShape.circle,
                             //check if dark theme change color
-                            color:
-                                Theme.of(context).brightness == Brightness.dark
-                                    ? Colors.white
-                                    : Colors.black38),
-                      ),
+                            color: Themer.setColor(
+                                context, Colors.black38, Colors.white70),
+                          )),
                       Container(
                         //TIME PASSED
                         child: Text(
@@ -86,10 +84,8 @@ class ConfessionDesignState extends State<ConfessionDesign> {
                             fontWeight: FontWeight.w300,
                             fontSize: 14,
                             //check if dark theme change color
-                            color:
-                                Theme.of(context).brightness == Brightness.dark
-                                    ? Colors.white
-                                    : Colors.black38,
+                            color: Themer.setColor(
+                                context, Colors.black38, Colors.white70),
                           ),
                         ),
                       ),
@@ -181,10 +177,8 @@ class ConfessionDesignState extends State<ConfessionDesign> {
                                 OMIcons.chat,
                                 size: 18,
                                 //check if dark theme change color
-                                color: Theme.of(context).brightness ==
-                                        Brightness.dark
-                                    ? Colors.white
-                                    : Colors.black54,
+                                color: Themer.setColor(
+                                    context, Colors.black38, Colors.white70),
                               ),
                               onPressed: () {
                                 Navigator.push(
@@ -220,16 +214,13 @@ class ConfessionDesignState extends State<ConfessionDesign> {
                                             context)),
                                   );
                                 },
-                                child: Text(
-                                  widget.numOfComments,
-                                  style: TextStyle(
+                                child: Text(widget.numOfComments,
+                                    style: TextStyle(
                                       fontSize: 14,
                                       //check if dark theme change color
-                                      color: Theme.of(context).brightness ==
-                                              Brightness.dark
-                                          ? Colors.white
-                                          : Colors.black54),
-                                ),
+                                      color: Themer.setColor(context,
+                                          Colors.black38, Colors.white70),
+                                    )),
                               ),
                               margin: EdgeInsets.only(right: 10),
                             )
@@ -242,10 +233,8 @@ class ConfessionDesignState extends State<ConfessionDesign> {
                               OMIcons.flag,
                               size: 18,
                               //check if dark theme change color
-                              color: Theme.of(context).brightness ==
-                                      Brightness.dark
-                                  ? Colors.white
-                                  : Colors.black54,
+                              color:  Themer.setColor(context,
+                                Colors.black38, Colors.white70),
                             ),
                             onPressed: () {}),
                         IconButton(
@@ -253,10 +242,8 @@ class ConfessionDesignState extends State<ConfessionDesign> {
                             OMIcons.delete,
                             size: 17,
                             //check if dark theme change color
-                            color:
-                                Theme.of(context).brightness == Brightness.dark
-                                    ? Colors.white
-                                    : Colors.black54,
+                            color: Themer.setColor(
+                                context, Colors.black38, Colors.white70),
                           ),
                           onPressed: () {},
                         ),
@@ -273,10 +260,8 @@ class ConfessionDesignState extends State<ConfessionDesign> {
                               : Icon(
                                   Icons.bookmark_border,
                                   //check if dark theme change color
-                                  color: Theme.of(context).brightness ==
-                                          Brightness.dark
-                                      ? Colors.white
-                                      : Colors.black54,
+                                  color: Themer.setColor(
+                                      context, Colors.black38, Colors.white70),
                                   size: 18,
                                 ),
                           onPressed: () {},

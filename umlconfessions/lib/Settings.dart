@@ -12,7 +12,9 @@ class SettingsState extends State<Settings> {
   Widget build(BuildContext context) {
     return StreamBuilder<Object>(
         stream: bloc.darkThemeEnabled,
-        initialData: false,
+        //check dark theme if true turn switch on
+        initialData:Theme.of(context).brightness ==
+        Brightness.dark,
         builder: (context, snapshot) {
           return SingleChildScrollView(
             child: Column(

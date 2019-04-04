@@ -14,6 +14,7 @@ import 'Account.dart';
 import 'package:umlconfessions/Update_Post.dart';
 import 'Settings.dart';
 import 'Bookmarks.dart';
+import 'Themer.dart';
 
 class Home extends StatefulWidget {
   String userName;
@@ -138,11 +139,12 @@ class HomeState extends State<Home> {
               },
               child: Icon(
                 Icons.palette,
+                color: Themer.setColor(context, Colors.white, Colors.black87),
               ),
               //check if dark theme change color
-              backgroundColor: Theme.of(context).brightness == Brightness.dark
-                  ? Colors.white
-                  : Color(0x9B0072bc),
+              backgroundColor: Themer.setColor(
+                  context, Color(0x9B0072bc), Color(0x9BFfffff)),
+              //: ,
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.all(Radius.circular(20.0))),
             )
@@ -235,7 +237,7 @@ class HomeState extends State<Home> {
     );
   }
 
-  Widget createAppBar(BuildContext contex, title) {
+  Widget createAppBar(BuildContext context, title) {
     return AppBar(
         title: Row(
             crossAxisAlignment: CrossAxisAlignment.center,

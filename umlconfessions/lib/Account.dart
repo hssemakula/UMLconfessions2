@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'EditAccount.dart';
+import 'Themer.dart';
 
 class Account extends StatefulWidget {
   String userEmail;
@@ -19,6 +20,8 @@ class Account extends StatefulWidget {
 class AccountState extends State<Account> {
   @override
   Widget build(BuildContext context) {
+    Color themeColor = Themer.setColor(context, Colors.black54, null);
+
     return SingleChildScrollView(
       child: Column(
         children: <Widget>[
@@ -40,27 +43,30 @@ class AccountState extends State<Account> {
                       height: 150,
                       margin: EdgeInsets.only(top: 5),
                       child: Column(children: [
-                        Row(mainAxisAlignment: MainAxisAlignment.end, children: [
-                          OutlineButton(
-                              borderSide: BorderSide(color: Colors.black54),
-                              child: Text(
-                                "Edit",
-                                style: TextStyle(
-                                    fontSize: 17, fontWeight: FontWeight.bold),
-                              ),
-                              shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(35)),
-                              onPressed: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => EditAccount(
-                                          widget.userEmail,
-                                          widget.password,
-                                          widget.userName)),
-                                );
-                              })
-                        ]),
+                        Row(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            children: [
+                              OutlineButton(
+                                  borderSide: BorderSide(color: themeColor),
+                                  child: Text(
+                                    "Edit",
+                                    style: TextStyle(
+                                        fontSize: 17,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(35)),
+                                  onPressed: () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => EditAccount(
+                                              widget.userEmail,
+                                              widget.password,
+                                              widget.userName)),
+                                    );
+                                  })
+                            ]),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: <Widget>[
@@ -88,7 +94,7 @@ class AccountState extends State<Account> {
                                   ),
                                   Text("Karma",
                                       style: TextStyle(
-                                          color: Colors.black54, fontSize: 15))
+                                          color: themeColor, fontSize: 15))
                                 ],
                               ),
                             ),
@@ -104,7 +110,7 @@ class AccountState extends State<Account> {
                                   ),
                                   Text("Posts",
                                       style: TextStyle(
-                                          color: Colors.black54, fontSize: 15))
+                                          color: themeColor, fontSize: 15))
                                 ],
                               ),
                             ),
@@ -130,7 +136,9 @@ class AccountState extends State<Account> {
                   margin: EdgeInsets.only(left: 5, right: 10, top: 2),
                   decoration: BoxDecoration(
                       border: Border.all(
-                          color: Theme.of(context).canvasColor, width: 4),
+                          color: Themer.setColor(context,
+                              Theme.of(context).canvasColor, null),
+                          width: 4),
                       shape: BoxShape.circle,
                       image: DecorationImage(
                           image: AssetImage(widget.profilePictureUrl),
@@ -154,7 +162,7 @@ class AccountState extends State<Account> {
                       "Name",
                       style: TextStyle(
                           fontSize: 22,
-                          color: Colors.black54,
+                          color: themeColor,
                           fontWeight: FontWeight.bold),
                     )),
               ),
@@ -180,7 +188,7 @@ class AccountState extends State<Account> {
                       "Email",
                       style: TextStyle(
                           fontSize: 22,
-                          color: Colors.black54,
+                          color: themeColor,
                           fontWeight: FontWeight.bold),
                     )),
               ),
@@ -206,7 +214,7 @@ class AccountState extends State<Account> {
                       "Password",
                       style: TextStyle(
                           fontSize: 22,
-                          color: Colors.black54,
+                          color: themeColor,
                           fontWeight: FontWeight.bold),
                     )),
               ),
