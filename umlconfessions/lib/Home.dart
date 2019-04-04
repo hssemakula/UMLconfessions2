@@ -184,7 +184,7 @@ return list;
 
 
     /**DON'T DELETE!  THIS IS THE CODE THAT SHOWS THE FEED RIGHT NOW.  WORK IN PROGRESS*/
-    /*return FirebaseAnimatedList(
+    return FirebaseAnimatedList(
 
 
               query: FirebaseDatabase.instance
@@ -194,12 +194,37 @@ return list;
                 reverse: false,
                 itemBuilder: (_, DataSnapshot snapshot,
                     Animation<double> animation, int x) {
-                  return new ListTile(
-                    subtitle: new Text(snapshot.value.remove("confessionText").toString()),
+                return new
+                  Column(
+                      children: [ ConfessionDesign(
+                          "Jane Doe",
+                          // randomString(Random().nextInt(100)),
+
+                          //textGenerate(FirebaseDatabase.instance
+                          //  .reference().child("confessions")),
+
+
+
+
+
+
+                    snapshot.value.remove("confessionText").toString(),//"$_confessionText",
+                          randomNumeric(Random().nextInt(3)),
+
+                          x % 2 == 0 ? false : true,
+                          "assets/images/woman.png",
+                          "20m",
+                          "4",
+                          context), Divider()]
                   );
+
+
+                 /* return new ListTile(
+                    subtitle: new Text(snapshot.value.remove("confessionText").toString()),
+                  );*/
                 }
 
-            );*/
+            );
 
 
           //  );
