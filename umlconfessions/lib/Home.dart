@@ -171,6 +171,13 @@ class HomeState extends State<Home> {
     return t;
   }
 
+  String commentCountMake(DataSnapshot snapshot){
+    var iop = snapshot.value.remove("commentCount");
+    String t = iop.toString();
+    snapshot.value.putIfAbsent("commentCount", () => iop);
+    return t;
+  }
+
   _updateConfession(Confession value) {
     var confessionText = value.confessionText;
     setState(() {
@@ -225,7 +232,7 @@ class HomeState extends State<Home> {
                           x % 2 == 0 ? false : true,
                           "assets/images/woman.png",
                           "20m",
-                          "4",
+                          commentCountMake(snapshot),
                           context), Divider()]
                   );
 
