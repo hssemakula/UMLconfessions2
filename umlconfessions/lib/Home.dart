@@ -215,8 +215,8 @@ class HomeState extends State<Home> {
                   .reference().child("confessions").orderByChild("negative_time"),
 
 
-                padding: new EdgeInsets.all(8.0),
-                reverse: false,
+                //padding: new EdgeInsets.all(8.0),
+                //reverse: false,
                 itemBuilder: (_, DataSnapshot snapshot,
                     Animation<double> animation, int x) {
                 return new
