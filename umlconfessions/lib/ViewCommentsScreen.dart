@@ -278,7 +278,7 @@ class ViewCommentsPageState extends State<ViewCommentsPage> {
                   ],
                 ),
 
-                //CONFESSION TEXT and VOTES row.-------------------------------------------------------------------------
+                //COMMENT TEXT ROW.-------------------------------------------------------------------------
                 IntrinsicHeight(
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -288,13 +288,13 @@ class ViewCommentsPageState extends State<ViewCommentsPage> {
                           child: Container(
                             //CONFESSION TEXT
                             margin: EdgeInsets.only(top: 1),
-                            width: MediaQuery.of(context).size.width - 140,
-                            //width of device - 140 pixels
+                            width: MediaQuery.of(context).size.width - 155,
+                            //width of device - 155 pixels. 155 becuase of larger left margin
                             child: Text(
                               commentText,
                               softWrap: true,
                               overflow: TextOverflow.ellipsis,
-                              maxLines: 5,
+                              maxLines: 100,
                               textAlign: TextAlign.justify,
                               style: TextStyle(fontSize: 16, height: 1.2),
                             ),
