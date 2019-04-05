@@ -164,6 +164,13 @@ class HomeState extends State<Home> {
     return list;
   }
 
+  String textMake(DataSnapshot snapshot){
+    var iop = snapshot.value.remove("confessionText");
+    String t = iop.toString();
+    snapshot.value.putIfAbsent("confessionText", () => iop);
+    return t;
+  }
+
   _updateConfession(Confession value) {
     var confessionText = value.confessionText;
     setState(() {
@@ -193,6 +200,7 @@ class HomeState extends State<Home> {
               query: FirebaseDatabase.instance
                   .reference().child("confessions").orderByChild("negative_time"),
 
+
                 padding: new EdgeInsets.all(8.0),
                 reverse: false,
                 itemBuilder: (_, DataSnapshot snapshot,
@@ -211,7 +219,7 @@ class HomeState extends State<Home> {
 
 
 
-                    snapshot.value.remove("confessionText").toString(),//"$_confessionText",
+                          textMake(snapshot),//"$_confessionText",
                           randomNumeric(Random().nextInt(3)),
 
                           x % 2 == 0 ? false : true,
