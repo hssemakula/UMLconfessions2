@@ -27,7 +27,11 @@ class ConfessionDesign extends StatefulWidget {
   ConfessionDesignState createState() => new ConfessionDesignState();
 }
 
+
+
 class ConfessionDesignState extends State<ConfessionDesign> {
+
+
   //This method designs the confession and how it looks like
   Widget build(BuildContext context) {
     return Padding(
@@ -38,8 +42,8 @@ class ConfessionDesignState extends State<ConfessionDesign> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Container(
-                height: 55,
-                width: 55,
+                height: MediaQuery.of(context).size.width*.13,
+                width: MediaQuery.of(context).size.width*.13,
                 margin: EdgeInsets.only(left: 5, right: 10, top: 2),
                 decoration: BoxDecoration(
                     shape: BoxShape.circle,
@@ -96,6 +100,7 @@ class ConfessionDesignState extends State<ConfessionDesign> {
                   IntrinsicHeight(
                     child: Row(
                       crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: <Widget>[
                         GestureDetector(
                             onTap: () {
@@ -116,8 +121,12 @@ class ConfessionDesignState extends State<ConfessionDesign> {
                             child: Container(
                               //CONFESSION TEXT
                               margin: EdgeInsets.only(top: 3),
-                              width: MediaQuery.of(context).size.width - 140,
-                              //width of device - 140 pixels
+                              color: Colors.blue,
+                              //65% of the screen width
+                              constraints: BoxConstraints(
+                                maxWidth:  MediaQuery.of(context).size.width*.65
+                              ),
+
                               child: Text(
                                 widget.confessionText,
                                 softWrap: true,
@@ -163,9 +172,8 @@ class ConfessionDesignState extends State<ConfessionDesign> {
 
                   //BOOKMARKS, VIEW COMMENTS, REPORT ROW.----------------------------------------------------------------------
                   Container(
-                    width: MediaQuery.of(context).size.width - 140,
                     child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
                         Row(
