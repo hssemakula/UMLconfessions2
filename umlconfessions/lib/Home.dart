@@ -178,6 +178,13 @@ class HomeState extends State<Home> {
     return t;
   }
 
+  String likeCountMake(DataSnapshot snapshot){
+    var iop = snapshot.value.remove("likeCount");
+    String t = iop.toString();
+    snapshot.value.putIfAbsent("likeCount", () => iop);
+    return t;
+  }
+
   _updateConfession(Confession value) {
     var confessionText = value.confessionText;
     setState(() {
@@ -227,7 +234,7 @@ class HomeState extends State<Home> {
 
 
                           textMake(snapshot),//"$_confessionText",
-                          randomNumeric(Random().nextInt(3)),
+                          likeCountMake(snapshot),//randomNumeric(Random().nextInt(3)),
 
                           x % 2 == 0 ? false : true,
                           "assets/images/woman.png",
