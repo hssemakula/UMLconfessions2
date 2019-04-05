@@ -127,8 +127,8 @@ class ViewCommentsPageState extends State<ViewCommentsPage> {
                                 child: Text(
                                   widget.confessionText,
                                   softWrap: true,
+                                  maxLines: 30,
                                   overflow: TextOverflow.ellipsis,
-                                  maxLines: 5,
                                   textAlign: TextAlign.justify,
                                   style: TextStyle(fontSize: 16, height: 1.2),
                                 ),
