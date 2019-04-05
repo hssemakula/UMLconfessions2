@@ -121,12 +121,7 @@ class ConfessionDesignState extends State<ConfessionDesign> {
                             child: Container(
                               //CONFESSION TEXT
                               margin: EdgeInsets.only(top: 3),
-                              color: Colors.blue,
-                              //65% of the screen width
-                              constraints: BoxConstraints(
-                                maxWidth:  MediaQuery.of(context).size.width*.65
-                              ),
-
+                              width: MediaQuery.of(context).size.width - 140,
                               child: Text(
                                 widget.confessionText,
                                 softWrap: true,
