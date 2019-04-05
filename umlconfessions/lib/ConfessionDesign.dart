@@ -38,8 +38,8 @@ class ConfessionDesignState extends State<ConfessionDesign> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Container(
-                height: MediaQuery.of(context).size.width * .13,
-                width: MediaQuery.of(context).size.width * .13,
+                height: 55,
+                width: 55,
                 margin: EdgeInsets.only(left: 5, right: 10, top: 2),
                 decoration: BoxDecoration(
                     shape: BoxShape.circle,
