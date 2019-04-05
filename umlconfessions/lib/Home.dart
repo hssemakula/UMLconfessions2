@@ -191,7 +191,7 @@ class HomeState extends State<Home> {
 
 
               query: FirebaseDatabase.instance
-                  .reference().child("confessions"),
+                  .reference().child("confessions").orderByChild("negative_time"),
 
                 padding: new EdgeInsets.all(8.0),
                 reverse: false,

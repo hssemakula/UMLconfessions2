@@ -12,13 +12,19 @@ class FirebaseDatabaseUsage  {
 
     String myStr=ref.key;
 
+    int positive = _getCurrentDate();
+    int neg = 0-positive;
+
+
+
 
     var post = <String, dynamic>{
       'commentCount' : 0,
       'confessionID' : myStr,
       'confessionText' : '',
       'likeCount': 0,
-      'time_of_creation': _getCurrentDate(),
+      'time_of_creation': positive,
+      'negative_time': neg,
 
     };
 
@@ -71,10 +77,10 @@ class FirebaseDatabaseUsage  {
   }
 
 
-  static String _getCurrentDate() {
-    var date = new DateTime.now().millisecondsSinceEpoch;
+  static int _getCurrentDate() {
+    int date = new DateTime.now().millisecondsSinceEpoch;
     String str = date.toString();
-    return str;
+    return date;
   }
 
 }
