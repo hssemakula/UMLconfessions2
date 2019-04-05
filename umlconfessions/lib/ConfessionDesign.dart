@@ -27,11 +27,7 @@ class ConfessionDesign extends StatefulWidget {
   ConfessionDesignState createState() => new ConfessionDesignState();
 }
 
-
-
 class ConfessionDesignState extends State<ConfessionDesign> {
-
-
   //This method designs the confession and how it looks like
   Widget build(BuildContext context) {
     return Padding(
@@ -42,8 +38,8 @@ class ConfessionDesignState extends State<ConfessionDesign> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Container(
-                height: MediaQuery.of(context).size.width*.13,
-                width: MediaQuery.of(context).size.width*.13,
+                height: MediaQuery.of(context).size.width * .13,
+                width: MediaQuery.of(context).size.width * .13,
                 margin: EdgeInsets.only(left: 5, right: 10, top: 2),
                 decoration: BoxDecoration(
                     shape: BoxShape.circle,
@@ -121,6 +117,7 @@ class ConfessionDesignState extends State<ConfessionDesign> {
                             child: Container(
                               //CONFESSION TEXT
                               margin: EdgeInsets.only(top: 3),
+                              //make width 140 pixels less that screen width
                               width: MediaQuery.of(context).size.width - 140,
                               child: Text(
                                 widget.confessionText,
@@ -167,8 +164,9 @@ class ConfessionDesignState extends State<ConfessionDesign> {
 
                   //BOOKMARKS, VIEW COMMENTS, REPORT ROW.----------------------------------------------------------------------
                   Container(
+                    width: MediaQuery.of(context).size.width - 140,
                     child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
                         Row(
@@ -236,8 +234,8 @@ class ConfessionDesignState extends State<ConfessionDesign> {
                               OMIcons.flag,
                               size: 18,
                               //check if dark theme change color
-                              color:  Themer.setColor(context,
-                                Colors.black38, Colors.white70),
+                              color: Themer.setColor(
+                                  context, Colors.black38, Colors.white70),
                             ),
                             onPressed: () {}),
                         IconButton(
