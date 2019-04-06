@@ -171,6 +171,13 @@ class HomeState extends State<Home> {
     return t;
   }
 
+  String confessionIDMake(DataSnapshot snapshot){
+    var iop = snapshot.value.remove("confessionID");
+    String t = iop.toString();
+    snapshot.value.putIfAbsent("confessionID", () => iop);
+    return t;
+  }
+
   String commentCountMake(DataSnapshot snapshot){
     var iop = snapshot.value.remove("commentCount");
     String t = iop.toString();
@@ -240,6 +247,8 @@ class HomeState extends State<Home> {
                           "assets/images/woman.png",
                           "20m",
                           commentCountMake(snapshot),
+                          snapshot,
+                          confessionIDMake(snapshot),
                           context), Divider()]
                   );
 
@@ -273,6 +282,8 @@ class HomeState extends State<Home> {
                     "assets/images/woman.png",
                     "20m",
                     "4",
+                    null,
+                    null,
                     context),
                 Divider()
               ]),

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:outline_material_icons/outline_material_icons.dart';
 import 'Themer.dart';
+import 'package:firebase_database/firebase_database.dart';
+import 'package:firebase_database/ui/firebase_animated_list.dart';
 
 class ViewCommentsPage extends StatefulWidget {
   String userName;
@@ -10,6 +12,8 @@ class ViewCommentsPage extends StatefulWidget {
   String avatarPath;
   String timePassed;
   String numOfComments;
+  DataSnapshot snapshop;
+  String confessionID;
   BuildContext context;
 
   ViewCommentsPage(
@@ -20,6 +24,8 @@ class ViewCommentsPage extends StatefulWidget {
       this.avatarPath,
       this.timePassed,
       this.numOfComments,
+      this.snapshop,
+      this.confessionID,
       this.context);
 
   @override
@@ -29,6 +35,8 @@ class ViewCommentsPage extends StatefulWidget {
 class ViewCommentsPageState extends State<ViewCommentsPage> {
   final commentsArray =
       <Widget>[]; //first item is the post followed by all of it's comments.
+
+int count;
 
   @override
   Widget build(BuildContext context) {
@@ -310,7 +318,113 @@ class ViewCommentsPageState extends State<ViewCommentsPage> {
 
   //Build list of comments and confession
   Widget buildCommentsAndConfessionList() {
-    return ListView.builder(
+  // return ListView.builder(
+return  FirebaseAnimatedList(
+query: FirebaseDatabase.instance
+    .reference().child("the_comments").child(widget.confessionID),
+//query: FirebaseDatabase.instance
+//  .reference().child("confessions").orderByChild("negative_time"),
+itemBuilder: (context, DataSnapshot snaps, Animation<double> animation, int x) {
+//  if (x.isOdd && x == 1)
+//  return Divider(
+//  height: 5,
+//);
+//else if (x.isOdd) return Divider();
+
+//final index =
+//  x ~/ 2; //counts number of confessions minus divider widget
+//if (index >= commentsArray.length) {
+//for (int j = 0; j <= 10; j++) {
+// I removed the confession design and put in it's own class hence the object ConfessionDesign()
+// commentsArray[0] = null;
+// commentsArray.add(buildComment(textMakeT(snaps), "Some comment",
+// "assets/images/man.png", "40m", this.context));
+
+// commentsArray.add(buildComment(textMake(snaps), "Some comment",
+//   "assets/images/man.png", "40m", this.context));
+// }
+// }
+//commentsArray[0] = mainConfession();
+
+return buildComment("John Doe", textMake(snaps),
+"assets/images/man.png", "40m", this.context);
+},
+);
+//);
+
+
+  }
+  String commentKeyMake(DataSnapshot snapshot){
+    var iop = snapshot.value.remove("ConfessionID");
+    String t = iop.toString();
+    snapshot.value.putIfAbsent("ConfessionID", () => iop);
+    return t;
+  }
+  String textMake(DataSnapshot snapshot){
+    var iop = snapshot.value.remove("comment_text");
+    String t = iop.toString();
+    snapshot.value.putIfAbsent("comment_text", () => iop);
+    return t;
+  }
+
+  String textMakeT(DataSnapshot snapshot){
+    var iop = snapshot.value.remove("confessionText");
+    String t = iop.toString();
+    snapshot.value.putIfAbsent("confessionText", () => iop);
+    return t;
+  }
+}
+
+
+/*
+return FirebaseAnimatedList(
+
+
+              query: FirebaseDatabase.instance
+                  .reference().child("confessions").orderByChild("negative_time"),
+
+
+                //padding: new EdgeInsets.all(8.0),
+                //reverse: false,
+                itemBuilder: (_, DataSnapshot snapshot,
+                    Animation<double> animation, int x) {
+                return new
+                  Column(
+                      children: [ ConfessionDesign(
+                          "Jane Doe",
+                          // randomString(Random().nextInt(100)),
+
+                          //textGenerate(FirebaseDatabase.instance
+                          //  .reference().child("confessions")),
+
+
+
+
+
+
+                          textMake(snapshot),//"$_confessionText",
+                          likeCountMake(snapshot),//randomNumeric(Random().nextInt(3)),
+
+                          x % 2 == 0 ? false : true,
+                          "assets/images/woman.png",
+                          "20m",
+                          commentCountMake(snapshot),
+                          context), Divider()]
+                  );
+
+
+                 /* return new ListTile(
+                    subtitle: new Text(snapshot.value.remove("confessionText").toString()),
+                  );*/
+                }
+
+            );
+ */
+
+/*
+Widget buildCommentsAndConfessionList() {
+   return ListView.builder(
+
       itemBuilder: (context, i) {
         if (i.isOdd && i == 1)
           return Divider(
@@ -333,3 +447,4 @@ class ViewCommentsPageState extends State<ViewCommentsPage> {
     );
   }
 }
+ */

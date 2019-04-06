@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:outline_material_icons/outline_material_icons.dart';
 import 'ViewCommentsScreen.dart';
 import 'Themer.dart';
+import 'package:firebase_database/firebase_database.dart';
 
 class ConfessionDesign extends StatefulWidget {
   String userName;
@@ -11,6 +12,8 @@ class ConfessionDesign extends StatefulWidget {
   String avatarPath;
   String timePassed;
   String numOfComments;
+  DataSnapshot snapshot;
+  String confessionID;
   BuildContext context;
 
   ConfessionDesign(
@@ -21,6 +24,8 @@ class ConfessionDesign extends StatefulWidget {
       this.avatarPath,
       this.timePassed,
       this.numOfComments,
+      this.snapshot,
+      this.confessionID,
       context);
 
   @override
@@ -111,6 +116,8 @@ class ConfessionDesignState extends State<ConfessionDesign> {
                                         widget.avatarPath,
                                         widget.timePassed,
                                         widget.numOfComments,
+                                        widget.snapshot,
+                                        widget.confessionID,
                                         context)),
                               );
                             },
@@ -193,6 +200,8 @@ class ConfessionDesignState extends State<ConfessionDesign> {
                                           widget.avatarPath,
                                           widget.timePassed,
                                           widget.numOfComments,
+                                          widget.snapshot,
+                                          widget.confessionID,
                                           context)),
                                 );
                               },
@@ -212,6 +221,8 @@ class ConfessionDesignState extends State<ConfessionDesign> {
                                             widget.avatarPath,
                                             widget.timePassed,
                                             widget.numOfComments,
+                                            widget.snapshot,
+                                            widget.confessionID,
                                             context)),
                                   );
                                 },
