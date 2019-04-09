@@ -171,7 +171,7 @@ class ConfessionDesignState extends State<ConfessionDesign> {
 
                   //BOOKMARKS, VIEW COMMENTS, REPORT ROW.----------------------------------------------------------------------
                   Container(
-                    width: MediaQuery.of(context).size.width - 140,
+                    width: MediaQuery.of(context).size.width - 120,
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       crossAxisAlignment: CrossAxisAlignment.start,
