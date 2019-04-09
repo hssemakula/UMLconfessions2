@@ -108,6 +108,7 @@ class AddConfessionDialogState extends State<AddConfessionDialog> {
                         key: _key_for_form,
                         style: TextStyle(fontSize: 20, height: 1.2),
                         maxLines: null,
+                        maxLength: 180,
                         autofocus: true,
                         decoration: const InputDecoration.collapsed(
                           hintText: "What's happening?",

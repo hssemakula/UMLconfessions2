@@ -10,7 +10,7 @@ import 'ConfessionDesign.dart';
 import 'AddConfessionDialog.dart';
 import 'package:firebase_database/ui/firebase_animated_list.dart';
 import 'package:umlconfessions/FirebaseDatabaseUsage.dart';
-import 'Account.dart';
+import 'ViewAccount.dart';
 import 'package:umlconfessions/Update_Post.dart';
 import 'Settings.dart';
 import 'Bookmarks.dart';

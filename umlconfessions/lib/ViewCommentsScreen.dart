@@ -36,7 +36,7 @@ class ViewCommentsPageState extends State<ViewCommentsPage> {
   final commentsArray =
       <Widget>[]; //first item is the post followed by all of it's comments.
 
-int count;
+  int count;
 
   @override
   Widget build(BuildContext context) {
@@ -53,25 +53,62 @@ int count;
           ),
           backgroundColor: Theme.of(context).canvasColor,
           elevation: 2),
-      body: buildCommentsAndConfessionList()//ListView.builder(
-        //itemBuilder: (context,i) {
-         // if (i<1) {
-           // return buildCommentsAndConfessionList();/*new Column(
-                //children: <Widget>[
-               // buildCommentsAndConfessionList(),
+      //Body is stack. List is first widget. Then a column is placed on top of list and is pushed to the bottom left
+      //This makes it stick to bottom and rise when keyboard is pressed.
+      body: Stack(children: [
+        buildCommentsAndConfessionList(),
+        Align(
+          alignment: Alignment.bottomLeft,
+          child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+            Divider(),
+            Padding(
+              padding: const EdgeInsets.only(left: 20, right: 10),
+              child: Row(
+                children: <Widget>[
+                  Container(
+                    constraints: BoxConstraints(maxHeight: 150),
+                    width: MediaQuery.of(context).size.width - 80,
+                    child: TextField(
+                      style: TextStyle(fontSize: 18),
+                      autofocus: true,
+                      maxLines: null, //this makes textbox grow as user types.
+                      decoration: InputDecoration.collapsed(
+                          hintStyle: TextStyle(
+                              color: Themer.setColor(
+                                  context, Colors.black54, null)),
+                          hintText: "Write a comment..."),
+                    ),
+                  ),
+                  IconButton(
+                    onPressed: () {
+                      //set action for send button
+                    },
+                    icon: Icon(Icons.send),
+                  )
+                ],
+              ),
+            ),
+          ]),
+        ),
+      ]),
 
-             //   ],
+      //ListView.builder(
+      //itemBuilder: (context,i) {
+      // if (i<1) {
+      // return buildCommentsAndConfessionList();/*new Column(
+      //children: <Widget>[
+      // buildCommentsAndConfessionList(),
 
-           // );*/
+      //   ],
 
-          //}
+      // );*/
 
+      //}
 
-
-
-     //   }
-   // )
-
+      //   }
+      // )
     );
   }
 
@@ -336,13 +373,16 @@ int count;
 
   //Build list of comments and confession
   Widget buildCommentsAndConfessionList() {
-  // return ListView.builder(
-return  FirebaseAnimatedList(
-query: FirebaseDatabase.instance
-    .reference().child("the_comments").child(widget.confessionID),
+    // return ListView.builder(
+    return FirebaseAnimatedList(
+      query: FirebaseDatabase.instance
+          .reference()
+          .child("the_comments")
+          .child(widget.confessionID),
 //query: FirebaseDatabase.instance
 //  .reference().child("confessions").orderByChild("negative_time"),
-itemBuilder: (context, DataSnapshot snaps, Animation<double> animation, int x) {
+      itemBuilder:
+          (context, DataSnapshot snaps, Animation<double> animation, int x) {
 //  if (x.isOdd && x == 1)
 //  return Divider(
 //  height: 5,
@@ -364,35 +404,34 @@ itemBuilder: (context, DataSnapshot snaps, Animation<double> animation, int x) {
 // }
 //commentsArray[0] = mainConfession();
 
-return buildComment("John Doe", textMake(snaps),
-"assets/images/man.png", "40m", this.context);
-},
-);
+        return buildComment("John Doe", textMake(snaps),
+            "assets/images/man.png", "40m", this.context);
+      },
+    );
 //);
-
-
   }
-  String commentKeyMake(DataSnapshot snapshot){
+
+  String commentKeyMake(DataSnapshot snapshot) {
     var iop = snapshot.value.remove("ConfessionID");
     String t = iop.toString();
     snapshot.value.putIfAbsent("ConfessionID", () => iop);
     return t;
   }
-  String textMake(DataSnapshot snapshot){
+
+  String textMake(DataSnapshot snapshot) {
     var iop = snapshot.value.remove("comment_text");
     String t = iop.toString();
     snapshot.value.putIfAbsent("comment_text", () => iop);
     return t;
   }
 
-  String textMakeT(DataSnapshot snapshot){
+  String textMakeT(DataSnapshot snapshot) {
     var iop = snapshot.value.remove("confessionText");
     String t = iop.toString();
     snapshot.value.putIfAbsent("confessionText", () => iop);
     return t;
   }
 }
-
 
 /*
 return FirebaseAnimatedList(
