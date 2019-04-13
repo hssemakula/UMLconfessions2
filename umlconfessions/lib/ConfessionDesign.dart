@@ -4,6 +4,7 @@ import 'ViewCommentsScreen.dart';
 import 'Themer.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'dart:async';
 
 class ConfessionDesign extends StatefulWidget {
   String userName;
@@ -157,6 +158,13 @@ class ConfessionDesignState extends State<ConfessionDesign> {
                                   toastLength: Toast.LENGTH_SHORT,
                                   gravity: ToastGravity.CENTER,
                                 );
+
+                                var iop = widget.snapshot.value.remove("likeCount");
+                                int t = iop+1;
+                                widget.snapshot.value.putIfAbsent("likeCount", () => iop);
+
+                                FirebaseDatabase.instance.reference().child("confessions").child(widget.confessionID).child("likeCount").set(t);
+
                                 },
                               ),
                               Text(widget.votes),
@@ -168,7 +176,16 @@ class ConfessionDesignState extends State<ConfessionDesign> {
                                     msg: "Downvote",
                                     toastLength: Toast.LENGTH_SHORT,
                                     gravity: ToastGravity.CENTER,
-                                  );},
+                                  );
+
+                                  var iop = widget.snapshot.value.remove("likeCount");
+                                  int t = iop-1;
+                                  widget.snapshot.value.putIfAbsent("likeCount", () => iop);
+
+                                  FirebaseDatabase.instance.reference().child("confessions").child(widget.confessionID).child("likeCount").set(t);
+
+
+                                  },
                                 ),
                                 margin: EdgeInsets.only(top: 3),
                               ),
