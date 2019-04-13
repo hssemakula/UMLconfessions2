@@ -20,18 +20,19 @@ class MyAppState extends State<MyApp> {
         initialData: false,
         builder: (context, snapshot) {
           return MaterialApp(
-              // new
+            // new
               home: WelcomeScreen(),
               theme: snapshot.data ? ThemeData.dark() : ThemeData.light(),
               routes: <String, WidgetBuilder>{
                 '/welcomeScreen': (BuildContext context) => WelcomeScreen(),
-                '/homeScreen': (BuildContext context) => Home(
-                    "John Doe",
-                    "assets/images/man.png",
-                    100,
-                    315,
-                    "someone@example.com",
-                    "apassword")
+                '/homeScreen': (BuildContext context) =>
+                    Home(
+                        "John Doe",
+                        "assets/images/man.png",
+                        100,
+                        315,
+                        "someone@example.com",
+                        "apassword")
               },
               debugShowCheckedModeBanner: false);
         });
