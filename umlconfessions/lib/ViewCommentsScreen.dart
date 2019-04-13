@@ -364,6 +364,7 @@ itemBuilder: (context, DataSnapshot snaps, Animation<double> animation, int x) {
 // }
 //commentsArray[0] = mainConfession();
 
+  commentsArray[0] = mainConfession();
 return buildComment("John Doe", textMake(snaps),
 "assets/images/man.png", "40m", this.context);
 },
