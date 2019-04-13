@@ -8,6 +8,8 @@ import 'package:firebase_database/firebase_database.dart';
 
 import 'package:firebase_database/ui/firebase_animated_list.dart';
 
+import 'package:umlconfessions/FirebaseDatabaseUsage.dart';
+
 
 
 class ViewCommentsPage extends StatefulWidget {
@@ -72,9 +74,15 @@ class ViewCommentsPageState extends State<ViewCommentsPage> {
 
   <Widget>[]; //first item is the post followed by all of it's comments.
 
-
+  final myController = TextEditingController();
 
   int count;
+
+  @override
+  void dispose(){
+    myController.dispose();
+        super.dispose();
+  }
 
 
 
@@ -144,6 +152,8 @@ class ViewCommentsPageState extends State<ViewCommentsPage> {
 
                         child: TextField(
 
+                          controller: myController,
+
                           style: TextStyle(fontSize: 18),
 
                           autofocus: true,
@@ -167,6 +177,10 @@ class ViewCommentsPageState extends State<ViewCommentsPage> {
                       IconButton(
 
                         onPressed: () {
+
+                          FirebaseDatabaseUsage.createComment(widget.confessionID).then((String commentKey) {
+                            FirebaseDatabaseUsage.commentText(commentKey, myController.text, widget.confessionID);
+                          });
 
                           //set action for send button
 
