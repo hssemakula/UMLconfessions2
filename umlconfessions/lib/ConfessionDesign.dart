@@ -3,6 +3,7 @@ import 'package:outline_material_icons/outline_material_icons.dart';
 import 'ViewCommentsScreen.dart';
 import 'Themer.dart';
 import 'package:firebase_database/firebase_database.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class ConfessionDesign extends StatefulWidget {
   String userName;
@@ -151,14 +152,23 @@ class ConfessionDesignState extends State<ConfessionDesign> {
                                   ),
                                   margin: EdgeInsets.only(bottom: 3),
                                 ),
-                                onTap: () {},
+                                onTap: () {Fluttertoast.showToast(
+                                  msg: "Upvote",
+                                  toastLength: Toast.LENGTH_SHORT,
+                                  gravity: ToastGravity.CENTER,
+                                );
+                                },
                               ),
                               Text(widget.votes),
                               Container(
                                 child: InkWell(
                                   child: Icon(Icons.expand_more,
                                       color: Color(0xFF0072bc), size: 35),
-                                  onTap: () {},
+                                  onTap: () {Fluttertoast.showToast(
+                                    msg: "Downvote",
+                                    toastLength: Toast.LENGTH_SHORT,
+                                    gravity: ToastGravity.CENTER,
+                                  );},
                                 ),
                                 margin: EdgeInsets.only(top: 3),
                               ),
