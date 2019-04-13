@@ -153,18 +153,25 @@ class ConfessionDesignState extends State<ConfessionDesign> {
                                   ),
                                   margin: EdgeInsets.only(bottom: 3),
                                 ),
-                                onTap: () {Fluttertoast.showToast(
-                                  msg: "Upvote",
-                                  toastLength: Toast.LENGTH_SHORT,
-                                  gravity: ToastGravity.CENTER,
-                                );
+                                onTap: () {
+                                  Fluttertoast.showToast(
+                                    msg: "Upvote",
+                                    toastLength: Toast.LENGTH_SHORT,
+                                    gravity: ToastGravity.CENTER,
+                                  );
 
-                                var iop = widget.snapshot.value.remove("likeCount");
-                                int t = iop+1;
-                                widget.snapshot.value.putIfAbsent("likeCount", () => iop);
+                                  var iop =
+                                      widget.snapshot.value.remove("likeCount");
+                                  int t = iop + 1;
+                                  widget.snapshot.value
+                                      .putIfAbsent("likeCount", () => iop);
 
-                                FirebaseDatabase.instance.reference().child("confessions").child(widget.confessionID).child("likeCount").set(t);
-
+                                  FirebaseDatabase.instance
+                                      .reference()
+                                      .child("confessions")
+                                      .child(widget.confessionID)
+                                      .child("likeCount")
+                                      .set(t);
                                 },
                               ),
                               Text(widget.votes),
@@ -172,19 +179,25 @@ class ConfessionDesignState extends State<ConfessionDesign> {
                                 child: InkWell(
                                   child: Icon(Icons.expand_more,
                                       color: Color(0xFF0072bc), size: 35),
-                                  onTap: () {Fluttertoast.showToast(
-                                    msg: "Downvote",
-                                    toastLength: Toast.LENGTH_SHORT,
-                                    gravity: ToastGravity.CENTER,
-                                  );
+                                  onTap: () {
+                                    Fluttertoast.showToast(
+                                      msg: "Downvote",
+                                      toastLength: Toast.LENGTH_SHORT,
+                                      gravity: ToastGravity.CENTER,
+                                    );
 
-                                  var iop = widget.snapshot.value.remove("likeCount");
-                                  int t = iop-1;
-                                  widget.snapshot.value.putIfAbsent("likeCount", () => iop);
+                                    var iop = widget.snapshot.value
+                                        .remove("likeCount");
+                                    int t = iop - 1;
+                                    widget.snapshot.value
+                                        .putIfAbsent("likeCount", () => iop);
 
-                                  FirebaseDatabase.instance.reference().child("confessions").child(widget.confessionID).child("likeCount").set(t);
-
-
+                                    FirebaseDatabase.instance
+                                        .reference()
+                                        .child("confessions")
+                                        .child(widget.confessionID)
+                                        .child("likeCount")
+                                        .set(t);
                                   },
                                 ),
                                 margin: EdgeInsets.only(top: 3),
@@ -201,58 +214,41 @@ class ConfessionDesignState extends State<ConfessionDesign> {
                     width: MediaQuery.of(context).size.width - 120,
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
-                        Row(
-                          //comment button and text Row
-                          children: <Widget>[
-                            IconButton(
-                              padding: EdgeInsets.only(left: 0),
-                              icon: Icon(
-                                OMIcons.chat,
-                                size: 18,
-                                //check if dark theme change color
-                                color: Themer.setColor(
-                                    context, Colors.black38, Colors.white70),
+                        InkWell(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => ViewCommentsPage(
+                                      widget.userName,
+                                      widget.confessionText,
+                                      widget.votes,
+                                      widget.isBookmarked,
+                                      widget.avatarPath,
+                                      widget.timePassed,
+                                      widget.numOfComments,
+                                      widget.snapshot,
+                                      widget.confessionID,
+                                      context)),
+                            );
+                          },
+                          child: Stack(
+                            //comment button and text Stack to push them together
+                            children: <Widget>[
+                              Container(
+                                alignment: Alignment.centerLeft,
+                                width: 30,
+                                child: Icon(
+                                  OMIcons.chat,
+                                  size: 18,
+                                  //check if dark theme change color
+                                  color: Themer.setColor(
+                                      context, Colors.black38, Colors.white70),
+                                ),
                               ),
-                              onPressed: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => ViewCommentsPage(
-                                          widget.userName,
-                                          widget.confessionText,
-                                          widget.votes,
-                                          widget.isBookmarked,
-                                          widget.avatarPath,
-                                          widget.timePassed,
-                                          widget.numOfComments,
-                                          widget.snapshot,
-                                          widget.confessionID,
-                                          context)),
-                                );
-                              },
-                            ),
-                            Container(
-                              padding: EdgeInsets.only(right: 20),
-                              child: InkWell(
-                                onTap: () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => ViewCommentsPage(
-                                            widget.userName,
-                                            widget.confessionText,
-                                            widget.votes,
-                                            widget.isBookmarked,
-                                            widget.avatarPath,
-                                            widget.timePassed,
-                                            widget.numOfComments,
-                                            widget.snapshot,
-                                            widget.confessionID,
-                                            context)),
-                                  );
-                                },
+                              Positioned(
+                                left: 20,
                                 child: Text(widget.numOfComments,
                                     style: TextStyle(
                                       fontSize: 14,
@@ -261,9 +257,8 @@ class ConfessionDesignState extends State<ConfessionDesign> {
                                           Colors.black38, Colors.white70),
                                     )),
                               ),
-                              margin: EdgeInsets.only(right: 10),
-                            )
-                          ],
+                            ],
+                          ),
                         ),
 
                         //report icon
@@ -316,3 +311,24 @@ class ConfessionDesignState extends State<ConfessionDesign> {
     ;
   }
 }
+
+/*
+
+                             onPressed: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => ViewCommentsPage(
+                                          widget.userName,
+                                          widget.confessionText,
+                                          widget.votes,
+                                          widget.isBookmarked,
+                                          widget.avatarPath,
+                                          widget.timePassed,
+                                          widget.numOfComments,
+                                          widget.snapshot,
+                                          widget.confessionID,
+                                          context)),
+                                );
+                              }
+ */
