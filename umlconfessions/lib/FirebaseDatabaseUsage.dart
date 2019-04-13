@@ -45,8 +45,18 @@ class FirebaseDatabaseUsage  {
 
     int positive = _getCurrentDate();
     int neg = 0-positive;
+ var snap;
+    await FirebaseDatabase.instance.reference().child("confessions").child(pstKey).once().then((DataSnapshot snaps){
+      snap = snaps;
+    });
+
+    var iop = snap.value.remove("commentCount");
+    int t = iop+1;
+    snap.value.putIfAbsent("commentCount", () => iop);
 
 
+
+    FirebaseDatabase.instance.reference().child("confessions").child(pstKey).child("commentCount").set(t);
 
 
     var post = <String, dynamic>{
