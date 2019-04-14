@@ -13,8 +13,7 @@ class SettingsState extends State<Settings> {
     return StreamBuilder<Object>(
         stream: bloc.darkThemeEnabled,
         //check dark theme if true turn switch on
-        initialData:Theme.of(context).brightness ==
-        Brightness.dark,
+        initialData: Theme.of(context).brightness == Brightness.dark,
         builder: (context, snapshot) {
           return SingleChildScrollView(
             child: Column(
@@ -30,9 +29,7 @@ class SettingsState extends State<Settings> {
                           children: [
                             Text(
                               "Dark mode",
-                              style: TextStyle(
-                                fontSize: 20
-                              ),
+                              style: TextStyle(fontSize: 20),
                             ),
                             Switch(
                               value: snapshot.data,
@@ -73,7 +70,10 @@ class SettingsState extends State<Settings> {
                           style: TextStyle(
                               fontSize: 20,
                               //check if  dark theme, change color
-                              color: Theme.of(context).brightness == Brightness.dark?  Colors.white: Colors.black54,
+                              color: Theme.of(context).brightness ==
+                                      Brightness.dark
+                                  ? Colors.white
+                                  : Colors.black54,
                               fontWeight: FontWeight.bold),
                         )),
                   ),
@@ -93,7 +93,32 @@ class SettingsState extends State<Settings> {
                           ),
                         )),
                   ),
-                  onTap: () {},
+                  onTap: () {
+                    return showDialog(
+                        context: context,
+                        barrierDismissible: true,
+                        builder: (BuildContext context) {
+                          return AlertDialog(
+                            title: Text("Log out"),
+                            content: SingleChildScrollView(
+                              child: Text(
+                                  "Are you sure? Logging out will remove all uml confessions data from this device."),
+                            ),
+                            actions: <Widget>[
+                              FlatButton(
+                                onPressed: () => Navigator.pop(context),
+                                child: Text("CANCEL"),
+                              ),
+                              FlatButton(
+                                onPressed: () {
+                                  //LOG OUT CODE HERE
+                                },
+                                child: Text("OK"),
+                              )
+                            ],
+                          );
+                        });
+                  },
                 ),
               ],
             ),
