@@ -115,7 +115,7 @@ class EditAccountState extends State<EditAccount> {
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(5)),
                 onPressed: () {
-                  //DELETE ACCOUNT HERE
+                  //DELETE ACCOUNT ACCOUNT HERE
                 },
               ),
             )
