@@ -36,7 +36,7 @@ class ConfessionDesign extends StatefulWidget {
 }
 
 class ConfessionDesignState extends State<ConfessionDesign> {
-  String myUserName = "Jane Do";
+  String myUserName = "Jane Doe";
 
   //This method designs the confession and how it looks like
   Widget build(BuildContext context) {
@@ -98,6 +98,35 @@ class ConfessionDesignState extends State<ConfessionDesign> {
               color: Themer.setColor(context, Colors.black38, Colors.white70),
             ),
             onPressed: () {
+              showDialog(
+                  context: context,
+                  barrierDismissible: true,
+                  builder: (BuildContext context) {
+                    return Container(
+                      child: AlertDialog(
+                          actions: <Widget>[
+                            FlatButton(
+                              onPressed: () {
+                                //SEND FEEDBACK
+                              },
+                              child: Text("SEND"),
+                            ),
+                            FlatButton(
+                              onPressed: () => Navigator.pop(context),
+                              child: Text(
+                                "CANCEL",
+                                style: TextStyle(
+                                    color: Themer.setColor(context,
+                                        Colors.black54, Colors.white70)),
+                              ),
+                            )
+                          ],
+                          content: Container(
+                              height: MediaQuery.of(context).size.height / 3,
+                              width: MediaQuery.of(context).size.width - 40,
+                              child: ReportPostDialog())),
+                    );
+                  });
             }),
         IconButton(
           icon: Icon(
@@ -106,7 +135,42 @@ class ConfessionDesignState extends State<ConfessionDesign> {
             //check if dark theme change color
             color: Themer.setColor(context, Colors.black38, Colors.white70),
           ),
-          onPressed: () {},
+          onPressed: () {
+            showDialog(
+                context: context,
+                barrierDismissible: true,
+                builder: (BuildContext context) {
+                  return AlertDialog(
+                    title: Text("Delete confession?"),
+                    content: SingleChildScrollView(
+                      child: Text(
+                          "Are you sure? This confession can't be recovered after it is deleted"),
+                    ),
+                    actions: <Widget>[
+                      FlatButton(
+                        onPressed: () {
+                          //LOG OUT CODE HERE
+                        },
+                        child: Text(
+                          "DELETE",
+                          style: TextStyle(
+                              color: Themer.setColor(
+                                  context, Colors.blueAccent, Colors.white)),
+                        ),
+                      ),
+                      FlatButton(
+                        onPressed: () => Navigator.pop(context),
+                        child: Text(
+                          "CANCEL",
+                          style: TextStyle(
+                              color: Themer.setColor(
+                                  context, Colors.black54, Colors.white70)),
+                        ),
+                      ),
+                    ],
+                  );
+                });
+          },
         ),
 
         //Bookmark icon

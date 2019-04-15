@@ -65,7 +65,7 @@ class TermsOfService extends StatelessWidget {
                               Container(
                                 margin: EdgeInsets.only(top: 30),
                                 child: Text(
-                                  "2. Threats and Harrasment",
+                                  "2. Threats and Harassment",
                                   style: TextStyle(
                                       fontSize: 24,
                                       color: Color(0xFF0072bc),

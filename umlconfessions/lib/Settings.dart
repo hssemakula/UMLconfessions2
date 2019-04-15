@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'main.dart';
 import 'TermsOfService.dart';
 import 'DeleteAccount.dart';
+import 'Themer.dart';
 
 class Settings extends StatefulWidget {
   String userEmail;
@@ -126,13 +127,23 @@ class SettingsState extends State<Settings> {
                             actions: <Widget>[
                               FlatButton(
                                 onPressed: () => Navigator.pop(context),
-                                child: Text("CANCEL"),
+                                child: Text(
+                                  "CANCEL",
+                                  style: TextStyle(
+                                      color: Themer.setColor(context,
+                                          Colors.black54, Colors.white70)),
+                                ),
                               ),
                               FlatButton(
                                 onPressed: () {
                                   //LOG OUT CODE HERE
                                 },
-                                child: Text("OK"),
+                                child: Text(
+                                  "OK",
+                                  style: TextStyle(
+                                      color: Themer.setColor(context,
+                                          Colors.black54, Colors.white70)),
+                                ),
                               )
                             ],
                           );
