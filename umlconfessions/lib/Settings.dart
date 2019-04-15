@@ -1,8 +1,17 @@
 import 'package:flutter/material.dart';
 import 'main.dart';
 import 'TermsOfService.dart';
+import 'DeleteAccount.dart';
 
 class Settings extends StatefulWidget {
+  String userEmail;
+  String password;
+  String userName;
+  String profilePictureUrl;
+
+  Settings(
+      this.userEmail, this.password, this.userName, this.profilePictureUrl);
+
   @override
   SettingsState createState() => new SettingsState();
 }
@@ -77,7 +86,17 @@ class SettingsState extends State<Settings> {
                               fontWeight: FontWeight.bold),
                         )),
                   ),
-                  onTap: () {},
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => EditAccount(
+                              widget.userEmail,
+                              widget.password,
+                              widget.userName,
+                              widget.profilePictureUrl)),
+                    );
+                  },
                 ),
                 Divider(),
                 InkWell(

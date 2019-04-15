@@ -42,7 +42,7 @@ class EditAccountState extends State<EditAccount> {
     Color themeColor = Themer.setColor(context, Colors.black54, Colors.white70);
     return SingleChildScrollView(
       child: Padding(
-        padding: const EdgeInsets.only(left: 15, right: 10, top: 20),
+        padding: const EdgeInsets.only(left: 5, right: 10, top: 20),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[

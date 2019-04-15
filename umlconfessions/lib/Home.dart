@@ -96,7 +96,7 @@ class HomeState extends State<Home> {
           widget.karma.toString(),
           widget.numOfPosts.toString()),
       Bookmarks(confessionsArray),
-      Settings()
+      Settings(widget.userEmail, widget.userPassword, widget.userName, widget.profilePictureUrl)
     ];
 
     //This array contains appbars and a specific index is chosen depending on nav icon selected.
@@ -164,28 +164,28 @@ class HomeState extends State<Home> {
     return list;
   }
 
-  String textMake(DataSnapshot snapshot){
+  String textMake(DataSnapshot snapshot) {
     var iop = snapshot.value.remove("confessionText");
     String t = iop.toString();
     snapshot.value.putIfAbsent("confessionText", () => iop);
     return t;
   }
 
-  String confessionIDMake(DataSnapshot snapshot){
+  String confessionIDMake(DataSnapshot snapshot) {
     var iop = snapshot.value.remove("confessionID");
     String t = iop.toString();
     snapshot.value.putIfAbsent("confessionID", () => iop);
     return t;
   }
 
-  String commentCountMake(DataSnapshot snapshot){
+  String commentCountMake(DataSnapshot snapshot) {
     var iop = snapshot.value.remove("commentCount");
     String t = iop.toString();
     snapshot.value.putIfAbsent("commentCount", () => iop);
     return t;
   }
 
-  String likeCountMake(DataSnapshot snapshot){
+  String likeCountMake(DataSnapshot snapshot) {
     var iop = snapshot.value.remove("likeCount");
     String t = iop.toString();
     snapshot.value.putIfAbsent("likeCount", () => iop);
@@ -216,49 +216,42 @@ class HomeState extends State<Home> {
 
     /**DON'T DELETE!  THIS IS THE CODE THAT SHOWS THE FEED RIGHT NOW.  WORK IN PROGRESS*/
     return FirebaseAnimatedList(
+        query: FirebaseDatabase.instance
+            .reference()
+            .child("confessions")
+            .orderByChild("negative_time"),
 
+        //padding: new EdgeInsets.all(8.0),
+        //reverse: false,
+        itemBuilder:
+            (_, DataSnapshot snapshot, Animation<double> animation, int x) {
+          return new Column(children: [
+            ConfessionDesign(
+                "Jane Doe",
+                // randomString(Random().nextInt(100)),
 
-              query: FirebaseDatabase.instance
-                  .reference().child("confessions").orderByChild("negative_time"),
+                //textGenerate(FirebaseDatabase.instance
+                //  .reference().child("confessions")),
 
+                textMake(snapshot),
+                //"$_confessionText",
+                likeCountMake(snapshot),
+                //randomNumeric(Random().nextInt(3)),
 
-                //padding: new EdgeInsets.all(8.0),
-                //reverse: false,
-                itemBuilder: (_, DataSnapshot snapshot,
-                    Animation<double> animation, int x) {
-                return new
-                  Column(
-                      children: [ ConfessionDesign(
-                          "Jane Doe",
-                          // randomString(Random().nextInt(100)),
+                x % 2 == 0 ? false : true,
+                "assets/images/woman.png",
+                "20m",
+                commentCountMake(snapshot),
+                snapshot,
+                confessionIDMake(snapshot),
+                context),
+            Divider()
+          ]);
 
-                          //textGenerate(FirebaseDatabase.instance
-                          //  .reference().child("confessions")),
-
-
-
-
-
-
-                          textMake(snapshot),//"$_confessionText",
-                          likeCountMake(snapshot),//randomNumeric(Random().nextInt(3)),
-
-                          x % 2 == 0 ? false : true,
-                          "assets/images/woman.png",
-                          "20m",
-                          commentCountMake(snapshot),
-                          snapshot,
-                          confessionIDMake(snapshot),
-                          context), Divider()]
-                  );
-
-
-                 /* return new ListTile(
+          /* return new ListTile(
                     subtitle: new Text(snapshot.value.remove("confessionText").toString()),
                   );*/
-                }
-
-            );
+        });
 
     //  );
 

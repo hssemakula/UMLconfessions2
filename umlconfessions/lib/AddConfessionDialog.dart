@@ -97,7 +97,6 @@ class AddConfessionDialogState extends State<AddConfessionDialog> {
 
                     //container for text input for confession
                     Container(
-                      //height: MediaQuery.of(context).size.height - 200, //device height - 200px
                       width: MediaQuery.of(context).size.width - 100,
                       //device width - 100
                       padding: EdgeInsets.only(left: 15),
