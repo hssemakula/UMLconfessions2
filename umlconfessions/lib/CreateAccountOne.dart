@@ -11,28 +11,35 @@ class CreateAccountOne extends StatelessWidget {
 
 
   Widget build(BuildContext context) {
-
+    dynamic res;
     TextEditingController _accountEmail = new TextEditingController();
 
-    TextEditingController _accountPassword = new TextEditingController();
+    TextEditingController _accountUsername = new TextEditingController();
 
-    void _doSignUp() async {
+   /* void _doSignUp() async {
 
-      FirebaseUser fbUser = await _auth.createUserWithEmailAndPassword(
+
+
+
+        FirebaseUser fbUser = await _auth.createUserWithEmailAndPassword(
 
           email: _accountEmail.text,
 
-          password: _accountPassword.text
+          password: _accountPassword.text,
 
-      );
+
+        );
+
+
+
 
       Fluttertoast.showToast(
-        msg: fbUser.toString(),
+        msg: fbUser.toString(),//fbUser.toString(),
         toastLength: Toast.LENGTH_SHORT,
         gravity: ToastGravity.CENTER,
       );
 
-    }
+    }*/
     return Scaffold(
         appBar: AppBar(
           title: Container(
@@ -74,7 +81,7 @@ class CreateAccountOne extends StatelessWidget {
                             child: Column(
                               children: <Widget>[
                                 TextFormField(
-                                  controller:_accountPassword,
+                                  controller:_accountUsername,
                                   style: TextStyle(fontSize: 20),
                                   decoration: const InputDecoration(
                                     labelStyle: TextStyle(fontSize: 17),
@@ -142,12 +149,14 @@ class CreateAccountOne extends StatelessWidget {
                                   toastLength: Toast.LENGTH_SHORT,
                                   gravity: ToastGravity.CENTER,
                                 );
-                                _doSignUp();
+                                //_doSignUp();
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
                                       builder: (context) =>
-                                          CreateAccountFinal()),
+                                          CreateAccountFinal(_accountEmail.text,
+
+                                             _accountUsername.text)),
                                 );
                               },
                             )

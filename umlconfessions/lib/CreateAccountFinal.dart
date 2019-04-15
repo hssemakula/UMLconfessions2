@@ -8,26 +8,34 @@ import 'package:firebase_auth/firebase_auth.dart';
 final FirebaseAuth _auth = FirebaseAuth.instance;
 
 class CreateAccountFinal extends StatelessWidget {
+String username;
+String email;
 
-
+CreateAccountFinal(String email, String username){
+  this.email =email;
+  this.username=username;
+}
 
 
 
 
   Widget build(BuildContext context) {
-    TextEditingController _accountName = new TextEditingController();
+    TextEditingController _accountPasswordVerify = new TextEditingController();
 
     TextEditingController _accountPassword = new TextEditingController();
 
-    void _handleSignUp() async {
+    void _doSignUp() async {
 
       FirebaseUser fbUser = await _auth.createUserWithEmailAndPassword(
 
-          email: _accountName.text,
+          email: email,
 
           password: _accountPassword.text
 
       );
+      UserUpdateInfo j = new UserUpdateInfo();
+      j.displayName = username;
+      fbUser.updateProfile(j);
 
     }
 
@@ -72,6 +80,7 @@ class CreateAccountFinal extends StatelessWidget {
                             child: Column(
                               children: <Widget>[
                                 TextFormField(
+                                  controller:_accountPassword,
                                  // controller: _accountPassword,
                                   style: TextStyle(fontSize: 20),
                                   obscureText: true,
@@ -91,8 +100,10 @@ class CreateAccountFinal extends StatelessWidget {
                                   },
                                 ),
                                 Container(
+
                                     margin: EdgeInsets.only(top: 30),
                                     child: TextFormField(
+                                      controller:_accountPasswordVerify,
                                       obscureText: true,
                                       style: TextStyle(fontSize: 20),
                                       decoration: const InputDecoration(
@@ -160,6 +171,7 @@ class CreateAccountFinal extends StatelessWidget {
                                     borderRadius: BorderRadius.circular(35)),
                                 onPressed: () {
                                   //AFTER SUCCESSFUL SIGNUP, remove all widgets and load home screen
+                                  _doSignUp();
                                   Navigator.of(context)
                                       .pushNamedAndRemoveUntil('/homeScreen', (Route<dynamic> route) => false);
                                 },
