@@ -10,6 +10,7 @@
         android:name="io.flutter.app.FlutterApplication"
         android:label="umlconfessions"
         android:icon="@mipmap/ic_launcher">
+        <uses-permission android:name="android.permission.INTERNET" />
         <activity
             android:name=".MainActivity"
             android:launchMode="singleTop"

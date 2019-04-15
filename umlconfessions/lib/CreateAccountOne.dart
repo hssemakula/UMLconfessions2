@@ -1,8 +1,38 @@
 import 'package:flutter/material.dart';
 import 'CreateAccountFinal.dart';
+import 'package:flutter/material.dart';
+
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+
+final FirebaseAuth _auth = FirebaseAuth.instance;
 
 class CreateAccountOne extends StatelessWidget {
+
+
   Widget build(BuildContext context) {
+
+    TextEditingController _accountEmail = new TextEditingController();
+
+    TextEditingController _accountPassword = new TextEditingController();
+
+    void _doSignUp() async {
+
+      FirebaseUser fbUser = await _auth.createUserWithEmailAndPassword(
+
+          email: _accountEmail.text,
+
+          password: _accountPassword.text
+
+      );
+
+      Fluttertoast.showToast(
+        msg: fbUser.toString(),
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.CENTER,
+      );
+
+    }
     return Scaffold(
         appBar: AppBar(
           title: Container(
@@ -44,6 +74,7 @@ class CreateAccountOne extends StatelessWidget {
                             child: Column(
                               children: <Widget>[
                                 TextFormField(
+                                  controller:_accountPassword,
                                   style: TextStyle(fontSize: 20),
                                   decoration: const InputDecoration(
                                     labelStyle: TextStyle(fontSize: 17),
@@ -66,6 +97,7 @@ class CreateAccountOne extends StatelessWidget {
                                 Container(
                                     margin: EdgeInsets.only(top: 30),
                                     child: TextFormField(
+                                      controller:_accountEmail,
                                       style: TextStyle(fontSize: 20),
                                       decoration: InputDecoration(
                                         labelStyle: TextStyle(fontSize: 17),
@@ -105,6 +137,12 @@ class CreateAccountOne extends StatelessWidget {
                               shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(35)),
                               onPressed: () {
+                                Fluttertoast.showToast(
+                                  msg: _accountEmail.text,
+                                  toastLength: Toast.LENGTH_SHORT,
+                                  gravity: ToastGravity.CENTER,
+                                );
+                                _doSignUp();
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
