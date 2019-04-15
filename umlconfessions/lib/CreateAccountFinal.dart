@@ -1,9 +1,36 @@
 import 'package:flutter/material.dart';
 import 'TermsOfService.dart';
 import 'Home.dart';
+import 'package:flutter/material.dart';
+
+import 'package:firebase_auth/firebase_auth.dart';
+
+final FirebaseAuth _auth = FirebaseAuth.instance;
 
 class CreateAccountFinal extends StatelessWidget {
+
+
+
+
+
+
   Widget build(BuildContext context) {
+    TextEditingController _accountName = new TextEditingController();
+
+    TextEditingController _accountPassword = new TextEditingController();
+
+    void _handleSignUp() async {
+
+      FirebaseUser fbUser = await _auth.createUserWithEmailAndPassword(
+
+          email: _accountName.text,
+
+          password: _accountPassword.text
+
+      );
+
+    }
+
     return Scaffold(
         appBar: AppBar(
           title: Container(
@@ -45,6 +72,7 @@ class CreateAccountFinal extends StatelessWidget {
                             child: Column(
                               children: <Widget>[
                                 TextFormField(
+                                 // controller: _accountPassword,
                                   style: TextStyle(fontSize: 20),
                                   obscureText: true,
                                   decoration: const InputDecoration(
@@ -145,5 +173,7 @@ class CreateAccountFinal extends StatelessWidget {
             );
           },
         ));
+
+
   }
 }
