@@ -100,7 +100,7 @@ class DeleteAccountState extends State<DeleteAccount> {
               ),
             ),
             Container(
-              margin: EdgeInsets.only(top: 50),
+              margin: EdgeInsets.only(top: 50, bottom: 10),
               width: MediaQuery.of(context).size.width - 80,
               child: OutlineButton(
                 padding: EdgeInsets.all(20),
