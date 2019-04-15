@@ -41,7 +41,7 @@ class ReportPostDialogState extends State<ReportPostDialog> {
                               : harassmentFlag = true;
                         });
                       }),
-                  Text("Harrasment")
+                  Text("Harassment")
                 ]),
                 Row(children: [
                   Checkbox(
