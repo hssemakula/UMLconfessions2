@@ -4,6 +4,7 @@ import 'ViewCommentsScreen.dart';
 import 'Themer.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'ReportPostDialog.dart';
 import 'dart:async';
 
 class ConfessionDesign extends StatefulWidget {
@@ -96,7 +97,8 @@ class ConfessionDesignState extends State<ConfessionDesign> {
               //check if dark theme change color
               color: Themer.setColor(context, Colors.black38, Colors.white70),
             ),
-            onPressed: () {}),
+            onPressed: () {
+            }),
         IconButton(
           icon: Icon(
             OMIcons.delete,

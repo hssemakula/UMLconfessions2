@@ -1,20 +1,20 @@
 import 'package:flutter/material.dart';
 import 'Themer.dart';
 
-class EditAccount extends StatefulWidget {
+class DeleteAccount extends StatefulWidget {
   String userEmail;
   String password;
   String userName;
   String profilePictureUrl;
 
-  EditAccount(
+  DeleteAccount(
       this.userEmail, this.password, this.userName, this.profilePictureUrl);
 
   @override
-  EditAccountState createState() => new EditAccountState();
+  DeleteAccountState createState() => new DeleteAccountState();
 }
 
-class EditAccountState extends State<EditAccount> {
+class DeleteAccountState extends State<DeleteAccount> {
   @override
   Widget build(BuildContext context) {
     Color titleIconColor = Themer.setColor(context, Color(0xFF0072bc), null);

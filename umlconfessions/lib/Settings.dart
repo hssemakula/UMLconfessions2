@@ -90,7 +90,7 @@ class SettingsState extends State<Settings> {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => EditAccount(
+                          builder: (context) => DeleteAccount(
                               widget.userEmail,
                               widget.password,
                               widget.userName,
