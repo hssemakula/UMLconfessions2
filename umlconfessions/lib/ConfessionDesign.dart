@@ -35,8 +35,105 @@ class ConfessionDesign extends StatefulWidget {
 }
 
 class ConfessionDesignState extends State<ConfessionDesign> {
+  String myUserName = "Jane Do";
+
   //This method designs the confession and how it looks like
   Widget build(BuildContext context) {
+    //This method, when passed the user name of currectly signed user, either draws the delete icon or not.
+    List<Widget> isUser_DisplayFlag(String signedInUser) {
+      var buttonList = <Widget>[
+        InkWell(
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => ViewCommentsPage(
+                      widget.userName,
+                      widget.confessionText,
+                      widget.votes,
+                      widget.isBookmarked,
+                      widget.avatarPath,
+                      widget.timePassed,
+                      widget.numOfComments,
+                      widget.snapshot,
+                      widget.confessionID,
+                      context)),
+            );
+          },
+          child: Stack(
+            //comment button and text Stack to push them together
+            children: <Widget>[
+              Container(
+                alignment: Alignment.centerLeft,
+                width: 30,
+                child: Icon(
+                  OMIcons.chat,
+                  size: 18,
+                  //check if dark theme change color
+                  color:
+                      Themer.setColor(context, Colors.black38, Colors.white70),
+                ),
+              ),
+              Positioned(
+                left: 20,
+                child: Text(widget.numOfComments,
+                    style: TextStyle(
+                      fontSize: 14,
+                      //check if dark theme change color
+                      color: Themer.setColor(
+                          context, Colors.black38, Colors.white70),
+                    )),
+              ),
+            ],
+          ),
+        ),
+
+        //report icon
+        IconButton(
+            icon: Icon(
+              OMIcons.flag,
+              size: 18,
+              //check if dark theme change color
+              color: Themer.setColor(context, Colors.black38, Colors.white70),
+            ),
+            onPressed: () {}),
+        IconButton(
+          icon: Icon(
+            OMIcons.delete,
+            size: 17,
+            //check if dark theme change color
+            color: Themer.setColor(context, Colors.black38, Colors.white70),
+          ),
+          onPressed: () {},
+        ),
+
+        //Bookmark icon
+        IconButton(
+          icon: widget
+                  .isBookmarked //if confession is book marked show red icon otherwise
+              ? Icon(
+                  Icons.bookmark_border,
+                  size: 17,
+                  color: Colors.red,
+                )
+              : Icon(
+                  Icons.bookmark_border,
+                  //check if dark theme change color
+                  color:
+                      Themer.setColor(context, Colors.black38, Colors.white70),
+                  size: 18,
+                ),
+          onPressed: () {},
+        ),
+      ];
+
+      if (signedInUser != widget.userName) {
+        buttonList.removeAt(2);
+      }
+
+      return buttonList;
+    }
+
     return Padding(
         padding: EdgeInsets.all(10),
         //very important to make up and down vote column strect to height of confession text otherwise it stick to top.
@@ -211,124 +308,15 @@ class ConfessionDesignState extends State<ConfessionDesign> {
 
                   //BOOKMARKS, VIEW COMMENTS, REPORT ROW.----------------------------------------------------------------------
                   Container(
-                    width: MediaQuery.of(context).size.width - 120,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: <Widget>[
-                        InkWell(
-                          onTap: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => ViewCommentsPage(
-                                      widget.userName,
-                                      widget.confessionText,
-                                      widget.votes,
-                                      widget.isBookmarked,
-                                      widget.avatarPath,
-                                      widget.timePassed,
-                                      widget.numOfComments,
-                                      widget.snapshot,
-                                      widget.confessionID,
-                                      context)),
-                            );
-                          },
-                          child: Stack(
-                            //comment button and text Stack to push them together
-                            children: <Widget>[
-                              Container(
-                                alignment: Alignment.centerLeft,
-                                width: 30,
-                                child: Icon(
-                                  OMIcons.chat,
-                                  size: 18,
-                                  //check if dark theme change color
-                                  color: Themer.setColor(
-                                      context, Colors.black38, Colors.white70),
-                                ),
-                              ),
-                              Positioned(
-                                left: 20,
-                                child: Text(widget.numOfComments,
-                                    style: TextStyle(
-                                      fontSize: 14,
-                                      //check if dark theme change color
-                                      color: Themer.setColor(context,
-                                          Colors.black38, Colors.white70),
-                                    )),
-                              ),
-                            ],
-                          ),
-                        ),
-
-                        //report icon
-                        IconButton(
-                            icon: Icon(
-                              OMIcons.flag,
-                              size: 18,
-                              //check if dark theme change color
-                              color: Themer.setColor(
-                                  context, Colors.black38, Colors.white70),
-                            ),
-                            onPressed: () {}),
-                        IconButton(
-                          icon: Icon(
-                            OMIcons.delete,
-                            size: 17,
-                            //check if dark theme change color
-                            color: Themer.setColor(
-                                context, Colors.black38, Colors.white70),
-                          ),
-                          onPressed: () {},
-                        ),
-
-                        //Bookmark icon
-                        IconButton(
-                          icon: widget
-                                  .isBookmarked //if confession is book marked show red icon otherwise
-                              ? Icon(
-                                  Icons.bookmark_border,
-                                  size: 17,
-                                  color: Colors.red,
-                                )
-                              : Icon(
-                                  Icons.bookmark_border,
-                                  //check if dark theme change color
-                                  color: Themer.setColor(
-                                      context, Colors.black38, Colors.white70),
-                                  size: 18,
-                                ),
-                          onPressed: () {},
-                        ),
-                      ],
-                    ),
-                  ),
+                      width: MediaQuery.of(context).size.width - 120,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: isUser_DisplayFlag(myUserName),
+                      )),
                 ],
               ),
             ],
           ),
         ));
-    ;
   }
 }
-
-/*
-
-                             onPressed: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => ViewCommentsPage(
-                                          widget.userName,
-                                          widget.confessionText,
-                                          widget.votes,
-                                          widget.isBookmarked,
-                                          widget.avatarPath,
-                                          widget.timePassed,
-                                          widget.numOfComments,
-                                          widget.snapshot,
-                                          widget.confessionID,
-                                          context)),
-                                );
-                              }
- */
