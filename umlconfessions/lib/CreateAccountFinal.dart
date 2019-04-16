@@ -2,10 +2,11 @@ import 'package:flutter/material.dart';
 import 'TermsOfService.dart';
 import 'Home.dart';
 import 'package:flutter/material.dart';
-
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 final FirebaseAuth _auth = FirebaseAuth.instance;
+FirebaseUser fbUser;
 
 class CreateAccountFinal extends StatelessWidget {
 String username;
@@ -25,17 +26,32 @@ CreateAccountFinal(String email, String username){
     TextEditingController _accountPassword = new TextEditingController();
 
     void _doSignUp() async {
-
-      FirebaseUser fbUser = await _auth.createUserWithEmailAndPassword(
+String lll =_accountPassword.text;
+      fbUser = await _auth.createUserWithEmailAndPassword(
 
           email: email,
 
-          password: _accountPassword.text
+          password: lll
 
       );
       UserUpdateInfo j = new UserUpdateInfo();
       j.displayName = username;
       fbUser.updateProfile(j);
+
+      _auth.signInWithEmailAndPassword(
+
+          email: email,
+
+          password: lll
+
+      );
+fbUser = await _auth.currentUser();
+
+Fluttertoast.showToast(
+  msg: fbUser.toString(),
+  toastLength: Toast.LENGTH_SHORT,
+  gravity: ToastGravity.CENTER,
+);
 
     }
 
@@ -172,8 +188,31 @@ CreateAccountFinal(String email, String username){
                                 onPressed: () {
                                   //AFTER SUCCESSFUL SIGNUP, remove all widgets and load home screen
                                   _doSignUp();
+
+                                    //.catchError(handleError);
+                                 /* var route = new MaterialPageRoute(
+
+                                    builder: (BuildContext context) =>
+
+                                    new NextPage(value: email),
+
+                                  );
                                   Navigator.of(context)
-                                      .pushNamedAndRemoveUntil('/homeScreen', (Route<dynamic> route) => false);
+                                      .pushNamedAndRemoveUntil('/homeScreen', (Route<dynamic> route) => false);*/
+
+                                 MaterialPageRoute rt = new MaterialPageRoute(
+                                     builder: (context) =>
+                                         Home(username,
+                                             "assets/images/man.png",
+                                             100,
+                                             315,email,_accountPassword.text,fbUser));
+                                  Navigator.of(context).pushNamedAndRemoveUntil('/homeScreen',  (Route<dynamic> route) => false);
+                                  Navigator.push(
+                                    context,
+                                    rt,
+                                  );
+                                 // Navigator.removeRouteBelow(context, rt);
+                                 // Navigator.of(context).removeRouteBelow(anchorRoute);
                                 },
                               ),
                             )

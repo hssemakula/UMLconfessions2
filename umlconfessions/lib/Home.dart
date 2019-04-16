@@ -15,6 +15,9 @@ import 'package:umlconfessions/Update_Post.dart';
 import 'Settings.dart';
 import 'Bookmarks.dart';
 import 'Themer.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+
+final FirebaseAuth _auth = FirebaseAuth.instance;
 
 class Home extends StatefulWidget {
   String userName;
@@ -23,14 +26,16 @@ class Home extends StatefulWidget {
   String userEmail;
   String userPassword;
   int numOfPosts;
-
+  FirebaseUser fbu;
+  FirebaseUser fbUser;
   Home(
       this.userName,
       this.profilePictureUrl, //profile picture from firebae
       this.karma,
       this.numOfPosts,
       this.userEmail,
-      this.userPassword);
+      this.userPassword,
+      this.fbu);
 
   //might need, to store confessions)
   @override
@@ -47,6 +52,8 @@ class HomeState extends State<Home> {
 
   @override
   void initState() {
+
+
     Future<Confession> myConfession =
         FirebaseFunctionality.getConfession("-LSu6ejqSX97jDn6UR1s");
 
@@ -58,12 +65,14 @@ class HomeState extends State<Home> {
       );
     }
 
-    /*FirebaseFunctionality.getConfession("-LSu6ejqSX97jDn6UR1s").then(_updateConfession);  //.catchError(handleError);
-    Fluttertoast.showToast(
-      msg: "0000000000000000",
-      toastLength: Toast.LENGTH_SHORT,
-      gravity: ToastGravity.CENTER,
-    ).whenComplete(() => Fluttertoast.showToast(
+
+
+
+
+   // FirebaseFunctionality.getConfession("-LSu6ejqSX97jDn6UR1s").then(_updateConfession);  //.catchError(handleError);
+
+
+    /*.whenComplete(() => Fluttertoast.showToast(
       msg: "00",
       toastLength: Toast.LENGTH_SHORT,
       gravity: ToastGravity.CENTER,
@@ -73,6 +82,8 @@ class HomeState extends State<Home> {
         .then((StreamSubscription s) => _subscriptionConfession = s);
     super.initState();
   }
+
+
 
   @override
   void dispose() {
@@ -85,6 +96,8 @@ class HomeState extends State<Home> {
   //UI
   @override
   Widget build(BuildContext context) {
+
+
     //This array contains the different screens to be displayed, each index corresponds to a specific nav index when nav icon is pressed.
     final bodyChildren = <Widget>[
       buildConfessionsList(),
@@ -227,7 +240,7 @@ class HomeState extends State<Home> {
             (_, DataSnapshot snapshot, Animation<double> animation, int x) {
           return new Column(children: [
             ConfessionDesign(
-                "Jane Doe",
+                "Jane Doe",//_loginUser(),
                 // randomString(Random().nextInt(100)),
 
                 //textGenerate(FirebaseDatabase.instance
@@ -353,6 +366,42 @@ class HomeState extends State<Home> {
         builder: (context) => AddConfessionDialog(post_Key: postKey),
         fullscreenDialog: true);
     Navigator.of(context).push(v);
+  }
+  String _loginUser() {
+String val;
+    _loginU().then((result) {
+      print(result);
+      setState(() {
+        val = result;
+      });
+    });
+    return val;
+   }
+
+  Future<String> _loginU() async {
+    Completer<FirebaseUser> completer = new Completer<FirebaseUser>();
+    FirebaseUser use =  await _auth.signInWithEmailAndPassword(
+
+        email: widget.userEmail,
+
+        password: widget.userPassword
+
+    );
+
+    completer.complete(use);
+    if(use=null){
+      Fluttertoast.showToast(
+        msg: "ITS NULL",
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.CENTER,
+      );
+    }
+    Fluttertoast.showToast(
+      msg: use.toString(),
+      toastLength: Toast.LENGTH_SHORT,
+      gravity: ToastGravity.CENTER,
+    );
+    return use.displayName;
   }
 
   static Future<List<Confession>> getAllConfessions() async {
