@@ -52,6 +52,11 @@ class HomeState extends State<Home> {
   final confessionsArray = <Widget>[];
   var list;
 
+  static SharedPreferences localStorage;
+  static Future init() async {
+    localStorage = await SharedPreferences.getInstance();
+  }
+
   @override
   void initState() {
 

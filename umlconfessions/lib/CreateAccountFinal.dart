@@ -6,16 +6,18 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 final FirebaseAuth _auth = FirebaseAuth.instance;
-FirebaseUser fbUser;
+
 
 class CreateAccountFinal extends StatelessWidget {
-String username;
-String email;
-String userID;
+  static String emailMain;
+  static String usernameMain;
+  static FirebaseUser fbUserMain;
+  static String userIDMain;
 
 CreateAccountFinal(String email, String username){
-  this.email =email;
-  this.username=username;
+
+  emailMain =email;
+  usernameMain=username;
 }
 
 
@@ -28,30 +30,30 @@ CreateAccountFinal(String email, String username){
 
     void _doSignUp() async {
 String lll =_accountPassword.text;
-      fbUser = await _auth.createUserWithEmailAndPassword(
+      fbUserMain = await _auth.createUserWithEmailAndPassword(
 
-          email: email,
+          email: emailMain,
 
           password: lll
 
       );
       UserUpdateInfo j = new UserUpdateInfo();
-      j.displayName = username;
-      fbUser.updateProfile(j);
+      j.displayName = usernameMain;
+      fbUserMain.updateProfile(j);
 
       _auth.signInWithEmailAndPassword(
 
-          email: email,
+          email: emailMain,
 
           password: lll
 
       );
-fbUser = await _auth.currentUser();
+fbUserMain = await _auth.currentUser();
 
-userID = fbUser.uid;
+
 
 Fluttertoast.showToast(
-  msg: fbUser.toString(),
+  msg: fbUserMain.toString(),
   toastLength: Toast.LENGTH_SHORT,
   gravity: ToastGravity.CENTER,
 );
@@ -205,10 +207,10 @@ Fluttertoast.showToast(
 
                                  MaterialPageRoute rt = new MaterialPageRoute(
                                      builder: (context) =>
-                                         Home(username,
+                                         Home(usernameMain,
                                              "assets/images/man.png",
                                              0,
-                                             0,email,_accountPassword.text,fbUser, userID));
+                                             0,emailMain,_accountPassword.text,fbUserMain, userIDMain));
 
                                   Navigator.of(context).pushNamedAndRemoveUntil('/homeScreen', (Route<dynamic> route)  => false);
                                   Navigator.push(

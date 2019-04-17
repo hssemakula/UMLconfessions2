@@ -4,6 +4,7 @@ import 'Home.dart';
 import 'dart:async';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 void main() => runApp(MyApp());
 
@@ -13,6 +14,11 @@ class MyApp extends StatefulWidget {
 }
 
 class MyAppState extends State<MyApp> {
+  static FirebaseUser fbUserMain;
+  static String usernameMain;
+  static String emailMain;
+  static String userIDMain;
+
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<Object>(
