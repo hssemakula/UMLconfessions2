@@ -335,6 +335,16 @@ class ConfessionDesignState extends State<ConfessionDesign> {
                                       .child(widget.confessionID)
                                       .child("likeCount")
                                       .set(t);
+                                  var iol = widget.snapshot.value.remove("likeCount");
+                                  widget.snapshot.value
+                                      .putIfAbsent("likeCount", () => iol);
+                                  if(iol<-4){
+                                    FirebaseDatabase.instance
+                                        .reference()
+                                        .child("confessions")
+                                        .child(widget.confessionID).set(null);
+                                  }
+
                                 },
                               ),
                               Text(widget.votes),
@@ -361,6 +371,15 @@ class ConfessionDesignState extends State<ConfessionDesign> {
                                         .child(widget.confessionID)
                                         .child("likeCount")
                                         .set(t);
+                                    var iol = widget.snapshot.value.remove("likeCount");
+                                    widget.snapshot.value
+                                        .putIfAbsent("likeCount", () => iol);
+                                    if(iol<-3){
+                                      FirebaseDatabase.instance
+                                          .reference()
+                                          .child("confessions")
+                                          .child(widget.confessionID).set(null);
+                                    }
                                   },
                                 ),
                                 margin: EdgeInsets.only(top: 3),

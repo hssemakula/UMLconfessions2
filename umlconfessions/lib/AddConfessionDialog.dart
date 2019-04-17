@@ -9,9 +9,15 @@ import 'package:flutter/material.dart';
 import 'package:umlconfessions/FirebaseDatabaseUsage.dart';
 
 class AddConfessionDialog extends StatefulWidget {
-  final String post_Key;
 
-  AddConfessionDialog({Key key, this.post_Key}) : super(key: key);
+  final String post_Key;
+ final String email;
+ final String username;
+ final String userID;
+
+  //AddConfessionDialog({Key key, this.post_Key}) : super(key: key);
+  AddConfessionDialog(Key key, this.post_Key, this.email, this.username, this.userID) : super(key: key);
+
 
   @override
   AddConfessionDialogState createState() => new AddConfessionDialogState();
@@ -28,6 +34,7 @@ class AddConfessionDialogState extends State<AddConfessionDialog> {
 
     FirebaseDatabaseUsage.createPost().then((String postKey) {
       FirebaseDatabaseUsage.pullText(postKey, val);
+      FirebaseDatabaseUsage.createPostUser(postKey, widget.email, widget.username, widget.userID);
     });
 
     Navigator.pop(context);

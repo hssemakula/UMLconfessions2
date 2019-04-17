@@ -1,7 +1,50 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'Home.dart';
 
+final FirebaseAuth _auth = FirebaseAuth.instance;
+FirebaseUser fbUser;
+TextEditingController _accountEmail  = new TextEditingController();
+TextEditingController _accountPassword = new TextEditingController();
 class LogIn extends StatelessWidget {
+
+
   Widget build(BuildContext context) {
+
+    String username;
+    String email;
+  String password;
+  String userID;
+
+    void _doSignIn() async {
+      password =_accountPassword.text;
+      email =_accountEmail.text;
+      fbUser = await _auth.signInWithEmailAndPassword(
+
+          email: email,
+
+          password: password
+
+      );
+
+
+          username = fbUser.displayName;
+
+
+
+      fbUser = await _auth.currentUser();
+      userID = fbUser.uid;
+
+      Fluttertoast.showToast(
+        msg: fbUser.displayName,
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.CENTER,
+      );
+
+    }
+
+
     return Scaffold(
         appBar: AppBar(
           title: Container(
@@ -45,7 +88,9 @@ class LogIn extends StatelessWidget {
                                   ),
                                 ),
                                 TextFormField(
+                                  controller: _accountEmail,
                                   style: TextStyle(fontSize: 20),
+                                  //
                                   decoration: const InputDecoration(
                                     labelStyle: TextStyle(fontSize: 17),
                                     border: OutlineInputBorder(),
@@ -64,6 +109,7 @@ class LogIn extends StatelessWidget {
                                 Container(
                                     margin: EdgeInsets.only(top: 30),
                                     child: TextFormField(
+                                     controller: _accountPassword,
                                       obscureText: true,
                                       style: TextStyle(fontSize: 20),
                                       decoration: const InputDecoration(
@@ -102,8 +148,21 @@ class LogIn extends StatelessWidget {
                                   borderRadius: BorderRadius.circular(35)),
                               onPressed: () {
                                 //AFTER SUCCESSFUL SIGNUP, remove all widgets and load home screen
+                                _doSignIn();
+                                MaterialPageRoute rt = new MaterialPageRoute(
+                                    builder: (context) =>
+                                        Home(username,
+                                            "assets/images/man.png",
+                                            100,
+                                            315,email,password,fbUser, userID));
+
                                 Navigator.of(context)
                                     .pushNamedAndRemoveUntil('/homeScreen', (Route<dynamic> route) => false);
+                                Navigator.push(
+                                  context,
+                                  rt,
+                                );
+
                               },
                             )
                           ],

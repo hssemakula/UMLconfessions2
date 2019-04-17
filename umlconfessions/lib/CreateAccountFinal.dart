@@ -11,6 +11,7 @@ FirebaseUser fbUser;
 class CreateAccountFinal extends StatelessWidget {
 String username;
 String email;
+String userID;
 
 CreateAccountFinal(String email, String username){
   this.email =email;
@@ -46,6 +47,8 @@ String lll =_accountPassword.text;
 
       );
 fbUser = await _auth.currentUser();
+
+userID = fbUser.uid;
 
 Fluttertoast.showToast(
   msg: fbUser.toString(),
@@ -204,14 +207,17 @@ Fluttertoast.showToast(
                                      builder: (context) =>
                                          Home(username,
                                              "assets/images/man.png",
-                                             100,
-                                             315,email,_accountPassword.text,fbUser));
-                                  Navigator.of(context).pushNamedAndRemoveUntil('/homeScreen',  (Route<dynamic> route) => false);
+                                             0,
+                                             0,email,_accountPassword.text,fbUser, userID));
+
+                                  Navigator.of(context).pushNamedAndRemoveUntil('/homeScreen', (Route<dynamic> route)  => false);
                                   Navigator.push(
                                     context,
                                     rt,
                                   );
-                                 // Navigator.removeRouteBelow(context, rt);
+                                  //Navigator.removeRoute(context, route);
+
+
                                  // Navigator.of(context).removeRouteBelow(anchorRoute);
                                 },
                               ),

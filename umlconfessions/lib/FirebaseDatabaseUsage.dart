@@ -36,6 +36,26 @@ class FirebaseDatabaseUsage  {
     return ref.key;
   }
 
+  static void createPostUser(String pstKey,String email, String username, String userID ) async {
+    String postKey = await _getPostKey();
+
+    FirebaseDatabase.instance.reference().child("confessions").child(pstKey).child("userInfo").child("active").set(true);
+    FirebaseDatabase.instance.reference().child("confessions").child(pstKey).child("userInfo").child("email_address").set(email);
+    FirebaseDatabase.instance.reference().child("confessions").child(pstKey).child("userInfo").child("userInfo").set(username);
+    FirebaseDatabase.instance.reference().child("confessions").child(pstKey).child("userInfo").child("email_address").set(userID);
+
+
+
+    int positive = _getCurrentDate();
+    int neg = 0-positive;
+
+
+
+
+
+
+  }
+
   static Future<String> createComment(String pstKey) async {
     String commentKey = await _getPostKey();
 

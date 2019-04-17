@@ -27,6 +27,7 @@ class Home extends StatefulWidget {
   String userPassword;
   int numOfPosts;
   FirebaseUser fbu;
+  String userID;
   FirebaseUser fbUser;
   Home(
       this.userName,
@@ -35,7 +36,8 @@ class Home extends StatefulWidget {
       this.numOfPosts,
       this.userEmail,
       this.userPassword,
-      this.fbu);
+      this.fbu,
+      this.userID);
 
   //might need, to store confessions)
   @override
@@ -146,7 +148,7 @@ class HomeState extends State<Home> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (context) => AddConfessionDialog(),
+                      builder: (context) => AddConfessionDialog(null, null, widget.userEmail, widget.userName, widget.userID),
                       fullscreenDialog: true),
                 );
               },
@@ -205,6 +207,16 @@ class HomeState extends State<Home> {
     return t;
   }
 
+  String tagMake(DataSnapshot snapshot) {
+    var iop = snapshot.value.remove("userInfo");
+    var d = iop;
+    var r = d.remove("userInfo");
+    String t = r.toString();
+    d.putIfAbsent("userInfo", () => r);
+    snapshot.value.putIfAbsent("userInfo", () => iop);
+    return t;
+  }
+
   _updateConfession(Confession value) {
     var confessionText = value.confessionText;
     setState(() {
@@ -240,7 +252,7 @@ class HomeState extends State<Home> {
             (_, DataSnapshot snapshot, Animation<double> animation, int x) {
           return new Column(children: [
             ConfessionDesign(
-                "Jane Doe",//_loginUser(),
+                tagMake(snapshot),//_loginUser(),
                 // randomString(Random().nextInt(100)),
 
                 //textGenerate(FirebaseDatabase.instance
@@ -363,7 +375,7 @@ class HomeState extends State<Home> {
     var v = MaterialPageRoute(
         //builder: (context) => new UpdatePostPage(postKey: postKey),
 
-        builder: (context) => AddConfessionDialog(post_Key: postKey),
+        builder: (context) => AddConfessionDialog(null, null, widget.userEmail, widget.userName, widget.userID),
         fullscreenDialog: true);
     Navigator.of(context).push(v);
   }
