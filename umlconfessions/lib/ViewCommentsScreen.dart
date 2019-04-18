@@ -32,6 +32,14 @@ class ViewCommentsPage extends StatefulWidget {
 
   String confessionID;
 
+  final String email;
+
+  final String userID;
+
+  final String currentUsername;
+  final String currentUserEmail;
+  final String currentUserID;
+
   BuildContext context;
 
 
@@ -55,6 +63,14 @@ class ViewCommentsPage extends StatefulWidget {
       this.snapshop,
 
       this.confessionID,
+
+      this.email,
+
+      this.userID,
+
+  this.currentUsername,
+  this.currentUserEmail,
+  this.currentUserID,
 
       this.context);
 
@@ -180,7 +196,9 @@ class ViewCommentsPageState extends State<ViewCommentsPage> {
 
                           FirebaseDatabaseUsage.createComment(widget.confessionID).then((String commentKey) {
                             FirebaseDatabaseUsage.commentText(commentKey, myController.text, widget.confessionID);
-                          });
+                            FirebaseDatabaseUsage.createCommentUser(widget.confessionID,widget.currentUserEmail, widget.currentUsername, widget.currentUserID, commentKey);
+
+                            });
 
                           //set action for send button
 
@@ -824,7 +842,7 @@ class ViewCommentsPageState extends State<ViewCommentsPage> {
 
 
 
-        return buildComment("John Doe", textMake(snaps),
+        return buildComment(tagMake(snaps), textMake(snaps),
 
             "assets/images/man.png", "40m", this.context);
 
@@ -863,7 +881,15 @@ class ViewCommentsPageState extends State<ViewCommentsPage> {
     return t;
 
   }
-
+  String tagMake(DataSnapshot snapshot) {
+    var iop = snapshot.value.remove("userInfo");
+    var d = iop;
+    var r = d.remove("userInfo");
+    String t = r.toString();
+    d.putIfAbsent("userInfo", () => r);
+    snapshot.value.putIfAbsent("userInfo", () => iop);
+    return t;
+  }
 
 
   String textMakeT(DataSnapshot snapshot) {

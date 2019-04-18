@@ -222,6 +222,27 @@ class HomeState extends State<Home> {
     return t;
   }
 
+  String emailMake(DataSnapshot snapshot) {
+    var iop = snapshot.value.remove("userInfo");
+    var d = iop;
+    var r = d.remove("email_address");
+    String t = r.toString();
+    d.putIfAbsent("email_address", () => r);
+    snapshot.value.putIfAbsent("userInfo", () => iop);
+    return t;
+  }
+
+  String userIDMake(DataSnapshot snapshot) {
+    var iop = snapshot.value.remove("userInfo");
+    var d = iop;
+    var r = d.remove("user_ID");
+    String t = r.toString();
+    d.putIfAbsent("user_ID", () => r);
+    snapshot.value.putIfAbsent("userInfo", () => iop);
+    return t;
+  }
+
+
   _updateConfession(Confession value) {
     var confessionText = value.confessionText;
     setState(() {
@@ -274,6 +295,11 @@ class HomeState extends State<Home> {
                 commentCountMake(snapshot),
                 snapshot,
                 confessionIDMake(snapshot),
+                emailMake(snapshot),
+                userIDMake(snapshot),
+                widget.userName,
+                widget.userEmail,
+                widget.userID,
                 context),
             Divider()
           ]);
@@ -305,6 +331,11 @@ class HomeState extends State<Home> {
                     "assets/images/woman.png",
                     "20m",
                     "4",
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
                     null,
                     null,
                     context),

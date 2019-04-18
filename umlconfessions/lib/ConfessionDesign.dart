@@ -17,6 +17,11 @@ class ConfessionDesign extends StatefulWidget {
   String numOfComments;
   DataSnapshot snapshot;
   String confessionID;
+  String email;
+  String userID;
+  String currentUsername;
+  String currentUserEmail;
+  String currentUserID;
   BuildContext context;
 
   ConfessionDesign(
@@ -29,6 +34,11 @@ class ConfessionDesign extends StatefulWidget {
       this.numOfComments,
       this.snapshot,
       this.confessionID,
+      this.email,
+      this.userID,
+  this.currentUsername,
+  this.currentUserEmail,
+  this.currentUserID,
       context);
 
   @override
@@ -58,6 +68,11 @@ class ConfessionDesignState extends State<ConfessionDesign> {
                       widget.numOfComments,
                       widget.snapshot,
                       widget.confessionID,
+                      widget.email,
+                      widget.userID,
+                      widget.currentUsername,
+                      widget.currentUserEmail,
+                      widget.currentUserID,
                       context)),
             );
           },
@@ -283,6 +298,11 @@ class ConfessionDesignState extends State<ConfessionDesign> {
                                         widget.numOfComments,
                                         widget.snapshot,
                                         widget.confessionID,
+                                        widget.email,
+                                        widget.userID,
+                                        widget.currentUsername,
+                                        widget.currentUserEmail,
+                                        widget.currentUserID,
                                         context)),
                               );
                             },
