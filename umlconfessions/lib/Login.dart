@@ -33,7 +33,7 @@ class LogIn extends StatelessWidget {
 
 
 
-      fbUser = await _auth.currentUser();
+
       userID = fbUser.uid;
 
       Fluttertoast.showToast(

@@ -4,6 +4,8 @@ import 'package:umlconfessions/FirebaseDatabaseUsage.dart';
 import 'package:flutter/services.dart';
 import 'dart:async';
 import 'Themer.dart';
+import 'dart:io';
+import 'package:image_picker/image_picker.dart';
 
 import 'package:flutter/material.dart';
 import 'package:umlconfessions/FirebaseDatabaseUsage.dart';
@@ -15,6 +17,7 @@ class AddConfessionDialog extends StatefulWidget {
  final String username;
  final String userID;
 
+
   //AddConfessionDialog({Key key, this.post_Key}) : super(key: key);
   AddConfessionDialog(Key key, this.post_Key, this.email, this.username, this.userID) : super(key: key);
 
@@ -25,9 +28,30 @@ class AddConfessionDialog extends StatefulWidget {
 
 class AddConfessionDialogState extends State<AddConfessionDialog> {
   String profilePicture = 'assets/images/man.png';
+  File img;
   final GlobalKey<FormState> _key_for_form = new GlobalKey<FormState>();
   String val;
+
   bool isConfessDisabled = true;
+
+
+
+  Future getImg() async {
+
+
+    File pic = await ImagePicker.pickImage(
+
+
+          source: ImageSource.camera, maxWidth: 300.0, maxHeight: 500.0);
+
+    setState(() {
+
+
+              img = pic;
+    });
+
+
+  }
 
   void _submit() {
     final FormState f = _key_for_form.currentState;
@@ -81,17 +105,31 @@ class AddConfessionDialogState extends State<AddConfessionDialog> {
         iconTheme: IconThemeData(color: Themer.setColor(context, Colors.black, null)),
         elevation: 0,
       ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: getImg,
+        tooltip: 'Pick Image',
+        child: Icon(Icons.add_a_photo),
+      ),
       body: SingleChildScrollView(
         child: Padding(
           padding: EdgeInsets.only(top: 30, right: 10, left: 10),
           child: IntrinsicWidth(
             child: Column(
+
+
               children: <Widget>[
+
+
+
                 //profile picture and textbox row
+
+
                 Row(
                   //profile picture
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
+
+
                     Container(
                       height: 37,
                       width: 37,
@@ -128,11 +166,28 @@ class AddConfessionDialogState extends State<AddConfessionDialog> {
                           });
                         },
                       ),
-                    )
+                    ),
+
+
+
+
                   ],
                 ),
+                Container(
+                  width: MediaQuery.of(context).size.width - 100,
+                  //device width - 100
+                  padding: EdgeInsets.only(left: 15),
+                  margin: EdgeInsets.only(bottom: 20),
+                  height: MediaQuery.of(context).size.height / 2,
+
+                  child: img == null
+                      ? Text('')
+                      : Image.file(img),
+                ),
+
               ],
             ),
+
           ),
         ),
       ),
