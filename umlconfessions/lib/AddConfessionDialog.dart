@@ -6,9 +6,14 @@ import 'dart:async';
 import 'Themer.dart';
 import 'dart:io';
 import 'package:image_picker/image_picker.dart';
-
+import 'dart:math';
+import 'package:firebase_storage/firebase_storage.dart';
+//import 'package:path/path.dart';
 import 'package:flutter/material.dart';
 import 'package:umlconfessions/FirebaseDatabaseUsage.dart';
+import 'package:firebase_database/firebase_database.dart';
+import 'package:random_string/random_string.dart' as random;
+
 
 class AddConfessionDialog extends StatefulWidget {
 
@@ -56,9 +61,15 @@ class AddConfessionDialogState extends State<AddConfessionDialog> {
   void _submit() {
     final FormState f = _key_for_form.currentState;
 
+
+
     FirebaseDatabaseUsage.createPost().then((String postKey) {
       FirebaseDatabaseUsage.pullText(postKey, val);
       FirebaseDatabaseUsage.createPostUser(postKey, widget.email, widget.username, widget.userID);
+
+      if(img!=null){
+        uploadImage(postKey);
+      }
     });
 
     Navigator.pop(context);
@@ -69,6 +80,23 @@ class AddConfessionDialogState extends State<AddConfessionDialog> {
     // f.save();
     //}
   }
+
+
+Future<String> uploadImage(String pstKey) async{
+StorageReference ref = FirebaseStorage.instance.ref().child(random.randomAlphaNumeric(80));
+StorageUploadTask upload =ref.putFile(img);
+
+var t_url = await (await upload.onComplete).ref.getDownloadURL();
+var url = t_url.toString();
+
+FirebaseDatabase.instance.reference().child("confessions").child(pstKey).child("imgURL").set(url);
+
+print("Download URL : $url");
+
+return "";
+}
+
+
 
   @override
   Widget build(BuildContext context) {

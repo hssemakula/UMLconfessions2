@@ -205,6 +205,13 @@ class HomeState extends State<Home> {
     return t;
   }
 
+  String imgURLMake(DataSnapshot snapshot) {
+    var iop = snapshot.value.remove("imgURL");
+    String t = iop.toString();
+    snapshot.value.putIfAbsent("imgURL", () => iop);
+    return t;
+  }
+
   String likeCountMake(DataSnapshot snapshot) {
     var iop = snapshot.value.remove("likeCount");
     String t = iop.toString();
@@ -300,6 +307,7 @@ class HomeState extends State<Home> {
                 widget.userName,
                 widget.userEmail,
                 widget.userID,
+                imgURLMake(snapshot),
                 context),
             Divider()
           ]);
@@ -331,6 +339,7 @@ class HomeState extends State<Home> {
                     "assets/images/woman.png",
                     "20m",
                     "4",
+                    null,
                     null,
                     null,
                     null,

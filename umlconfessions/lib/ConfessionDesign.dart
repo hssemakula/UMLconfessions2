@@ -22,6 +22,7 @@ class ConfessionDesign extends StatefulWidget {
   String currentUsername;
   String currentUserEmail;
   String currentUserID;
+  String imgURL;
   BuildContext context;
 
   ConfessionDesign(
@@ -39,6 +40,7 @@ class ConfessionDesign extends StatefulWidget {
   this.currentUsername,
   this.currentUserEmail,
   this.currentUserID,
+      this.imgURL,
       context);
 
   @override
@@ -411,6 +413,17 @@ class ConfessionDesignState extends State<ConfessionDesign> {
                     ),
                   ),
 
+                  Container(
+                    width: MediaQuery.of(context).size.width - 100,
+                    //device width - 100
+                    padding: EdgeInsets.only(left: 15),
+                    margin: EdgeInsets.only(bottom: 20),
+                    height: MediaQuery.of(context).size.height / 2,
+
+                    child: widget.imgURL == null
+                        ? Text('')
+                        : Image.network(widget.imgURL),
+                  ),
                   //BOOKMARKS, VIEW COMMENTS, REPORT ROW.----------------------------------------------------------------------
                   Container(
                       width: MediaQuery.of(context).size.width - 120,
