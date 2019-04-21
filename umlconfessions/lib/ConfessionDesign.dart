@@ -329,7 +329,7 @@ class ConfessionDesignState extends State<ConfessionDesign> {
                                       ),
                                       widget.imgURL == "null"
                                           ? Container(height: 0, width: 0, margin: EdgeInsets.all(0), padding: EdgeInsets.all(0),)
-                                          : Text(widget.imgURL )/*Container(
+                                          : Container(
                                               width: MediaQuery.of(context)
                                                       .size
                                                       .width -
@@ -348,7 +348,7 @@ class ConfessionDesignState extends State<ConfessionDesign> {
                                               ),
                                               child:
                                                   Image.network(widget.imgURL),
-                                            ) */,
+                                            ) ,
                                     ]))),
 
                         //UPVOTE DOWNVOTE BUTTON
