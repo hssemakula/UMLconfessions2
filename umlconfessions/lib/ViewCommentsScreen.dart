@@ -859,7 +859,7 @@ class ViewCommentsPageState extends State<ViewCommentsPage> {
   }
 
 
-//gets the key of a post directly from the datasnapshot
+//gets the key of a post directly from the datasnapshot -Michael Moschella
   String commentKeyMake(DataSnapshot snapshot) {
 
     var iop = snapshot.value.remove("ConfessionID");
@@ -873,7 +873,7 @@ class ViewCommentsPageState extends State<ViewCommentsPage> {
   }
 
 
-//gets the text of a comment directly from the datasnapshot
+//gets the text of a comment directly from the datasnapshot - Michael Moschella
   String textMake(DataSnapshot snapshot) {
 
     var iop = snapshot.value.remove("comment_text");
@@ -885,7 +885,7 @@ class ViewCommentsPageState extends State<ViewCommentsPage> {
     return t;
 
   }
-  //gets the username of a user directly from the datasnapshot
+  //gets the username of a user directly from the datasnapshot - Michael Moschella
   String tagMake(DataSnapshot snapshot) {
     var iop = snapshot.value.remove("userInfo");
     var d = iop;
@@ -896,7 +896,7 @@ class ViewCommentsPageState extends State<ViewCommentsPage> {
     return t;
   }
 
-//gets the text of a post directly from the datasnapshot
+//gets the text of a post directly from the datasnapshot - Michael Moschella
   String textMakeT(DataSnapshot snapshot) {
 
     var iop = snapshot.value.remove("confessionText");
