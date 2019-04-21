@@ -121,7 +121,7 @@ class CreateAccountOneState extends State<CreateAccountOne> {
                               shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(35)),
                               onPressed: () {
-                                
+
                                 //_doSignUp();
                                 Navigator.push(
                                   context,

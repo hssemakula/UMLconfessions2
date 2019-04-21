@@ -5,6 +5,8 @@ import 'package:firebase_database/firebase_database.dart';
 
 class FirebaseDatabaseUsage  {
 
+
+  //this is for entering all the data ito the firebase confession node
   static Future<String> createPost() async {
     String postKey = await _getPostKey();
 
@@ -36,6 +38,7 @@ class FirebaseDatabaseUsage  {
     return ref.key;
   }
 
+  //This is for entering all the user info into the firebase confession node
   static void createPostUser(String pstKey,String email, String username, String userID ) async {
     String postKey = await _getPostKey();
 
@@ -56,6 +59,8 @@ class FirebaseDatabaseUsage  {
 
   }
 
+
+  //enter all the user info into the comment node in firebase
   static void createCommentUser(String pstKey,String email, String username, String userID, String commKey ) async {
     String postKey = await _getPostKey();
 
@@ -77,7 +82,7 @@ class FirebaseDatabaseUsage  {
   }
 
 
-
+//enter the data for a comment node into firebase
   static Future<String> createComment(String pstKey) async {
     String commentKey = await _getPostKey();
 
@@ -118,12 +123,14 @@ class FirebaseDatabaseUsage  {
     return ref.key;
   }
 
+  //enters the text data for a confession into firebase
   static Future<void> pullText(String postKey, String postText) async {
     //String postKey = await _getPostKey();
 
     return FirebaseDatabase.instance.reference().child("confessions").child(postKey).child("confessionText").set(postText);
   }
 
+  //enters the text data for a comment into firebase
   static Future<void> commentText(String commentKey, String postText, String postKey) async {
     //String postKey = await _getPostKey();
 
