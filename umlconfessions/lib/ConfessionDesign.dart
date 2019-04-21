@@ -37,9 +37,9 @@ class ConfessionDesign extends StatefulWidget {
       this.confessionID,
       this.email,
       this.userID,
-  this.currentUsername,
-  this.currentUserEmail,
-  this.currentUserID,
+      this.currentUsername,
+      this.currentUserEmail,
+      this.currentUserID,
       this.imgURL,
       context);
 
@@ -309,19 +309,46 @@ class ConfessionDesignState extends State<ConfessionDesign> {
                               );
                             },
                             child: Container(
-                              //CONFESSION TEXT
-                              margin: EdgeInsets.only(top: 3),
-                              //make width 140 pixels less that screen width
-                              width: MediaQuery.of(context).size.width - 140,
-                              child: Text(
-                                widget.confessionText,
-                                softWrap: true,
-                                overflow: TextOverflow.ellipsis,
-                                maxLines: 5,
-                                textAlign: TextAlign.justify,
-                                style: TextStyle(fontSize: 16, height: 1.2),
-                              ),
-                            )),
+                                //CONFESSION TEXT
+                                margin: EdgeInsets.only(top: 3),
+                                //make width 140 pixels less that screen width
+                                width: MediaQuery.of(context).size.width - 140,
+                                child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        widget.confessionText,
+                                        softWrap: true,
+                                        overflow: TextOverflow.ellipsis,
+                                        maxLines: 5,
+                                        textAlign: TextAlign.justify,
+                                        style: TextStyle(
+                                            fontSize: 16, height: 1.2),
+                                      ),
+                                      widget.imgURL == null
+                                          ? Text(widget.imgURL)
+                                          : Container(
+                                              width: MediaQuery.of(context)
+                                                      .size
+                                                      .width -
+                                                  100,
+                                              height: 300,
+                                              margin: EdgeInsets.only(top: 10),
+                                              decoration: BoxDecoration(
+                                                borderRadius:
+                                                    BorderRadius.circular(10.0),
+                                                border: Border.all(
+                                                    width: 1,
+                                                    color: Themer.setColor(
+                                                        context,
+                                                        Colors.black12,
+                                                        null)),
+                                              ),
+                                              child:
+                                                  Image.network(widget.imgURL),
+                                            ),
+                                    ]))),
 
                         //UPVOTE DOWNVOTE BUTTON
                         Padding(
@@ -357,16 +384,17 @@ class ConfessionDesignState extends State<ConfessionDesign> {
                                       .child(widget.confessionID)
                                       .child("likeCount")
                                       .set(t);
-                                  var iol = widget.snapshot.value.remove("likeCount");
+                                  var iol =
+                                      widget.snapshot.value.remove("likeCount");
                                   widget.snapshot.value
                                       .putIfAbsent("likeCount", () => iol);
-                                  if(iol<-4){
+                                  if (iol < -4) {
                                     FirebaseDatabase.instance
                                         .reference()
                                         .child("confessions")
-                                        .child(widget.confessionID).set(null);
+                                        .child(widget.confessionID)
+                                        .set(null);
                                   }
-
                                 },
                               ),
                               Text(widget.votes),
@@ -393,14 +421,16 @@ class ConfessionDesignState extends State<ConfessionDesign> {
                                         .child(widget.confessionID)
                                         .child("likeCount")
                                         .set(t);
-                                    var iol = widget.snapshot.value.remove("likeCount");
+                                    var iol = widget.snapshot.value
+                                        .remove("likeCount");
                                     widget.snapshot.value
                                         .putIfAbsent("likeCount", () => iol);
-                                    if(iol<-3){
+                                    if (iol < -3) {
                                       FirebaseDatabase.instance
                                           .reference()
                                           .child("confessions")
-                                          .child(widget.confessionID).set(null);
+                                          .child(widget.confessionID)
+                                          .set(null);
                                     }
                                   },
                                 ),
@@ -413,17 +443,6 @@ class ConfessionDesignState extends State<ConfessionDesign> {
                     ),
                   ),
 
-                  Container(
-                    width: MediaQuery.of(context).size.width - 100,
-                    //device width - 100
-                    padding: EdgeInsets.only(left: 15),
-                    margin: EdgeInsets.only(bottom: 20),
-                    height: MediaQuery.of(context).size.height / 2,
-
-                    child: widget.imgURL == null
-                        ? Text('')
-                        : Image.network(widget.imgURL),
-                  ),
                   //BOOKMARKS, VIEW COMMENTS, REPORT ROW.----------------------------------------------------------------------
                   Container(
                       width: MediaQuery.of(context).size.width - 120,
