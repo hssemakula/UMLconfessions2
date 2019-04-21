@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'CreateAccountOne.dart';
 import 'Login.dart';
-
+/* This is the class that shows up when the User opens the app.  Made by Hillary Ssemakula
+* it allows users to choose to either log in or create an account*/
 class WelcomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {

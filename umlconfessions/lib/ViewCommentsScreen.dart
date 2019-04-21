@@ -10,7 +10,9 @@ import 'package:firebase_database/ui/firebase_animated_list.dart';
 
 import 'package:umlconfessions/FirebaseDatabaseUsage.dart';
 
-
+/*  This is the class that lets you see the comments of a specific post.
+* Front End by Hillary Ssemakula
+* Back end by Michael Moschella*/
 
 class ViewCommentsPage extends StatefulWidget {
 
@@ -193,7 +195,7 @@ class ViewCommentsPageState extends State<ViewCommentsPage> {
                       IconButton(
 
                         onPressed: () {
-
+//will create a comment using the current confession ID and set the text and user -Michael Moschella
                           FirebaseDatabaseUsage.createComment(widget.confessionID).then((String commentKey) {
                             FirebaseDatabaseUsage.commentText(commentKey, myController.text, widget.confessionID);
                             FirebaseDatabaseUsage.createCommentUser(widget.confessionID,widget.currentUserEmail, widget.currentUsername, widget.currentUserID, commentKey);
@@ -782,6 +784,8 @@ class ViewCommentsPageState extends State<ViewCommentsPage> {
 
     // return ListView.builder(
 
+
+    //Uses a firebaseAnimatedList to get data for comments - Michael Moschella
     return FirebaseAnimatedList(
 
       query: FirebaseDatabase.instance
@@ -855,7 +859,7 @@ class ViewCommentsPageState extends State<ViewCommentsPage> {
   }
 
 
-
+//gets the key of a post directly from the datasnapshot
   String commentKeyMake(DataSnapshot snapshot) {
 
     var iop = snapshot.value.remove("ConfessionID");
@@ -869,7 +873,7 @@ class ViewCommentsPageState extends State<ViewCommentsPage> {
   }
 
 
-
+//gets the text of a comment directly from the datasnapshot
   String textMake(DataSnapshot snapshot) {
 
     var iop = snapshot.value.remove("comment_text");
@@ -881,6 +885,7 @@ class ViewCommentsPageState extends State<ViewCommentsPage> {
     return t;
 
   }
+  //gets the username of a user directly from the datasnapshot
   String tagMake(DataSnapshot snapshot) {
     var iop = snapshot.value.remove("userInfo");
     var d = iop;
@@ -891,7 +896,7 @@ class ViewCommentsPageState extends State<ViewCommentsPage> {
     return t;
   }
 
-
+//gets the text of a post directly from the datasnapshot
   String textMakeT(DataSnapshot snapshot) {
 
     var iop = snapshot.value.remove("confessionText");
@@ -907,147 +912,3 @@ class ViewCommentsPageState extends State<ViewCommentsPage> {
 }
 
 
-
-/*
-
-return FirebaseAnimatedList(
-
-
-
-
-
-              query: FirebaseDatabase.instance
-
-                  .reference().child("confessions").orderByChild("negative_time"),
-
-
-
-
-
-                //padding: new EdgeInsets.all(8.0),
-
-                //reverse: false,
-
-                itemBuilder: (_, DataSnapshot snapshot,
-
-                    Animation<double> animation, int x) {
-
-                return new
-
-                  Column(
-
-                      children: [ ConfessionDesign(
-
-                          "Jane Doe",
-
-                          // randomString(Random().nextInt(100)),
-
-
-
-                          //textGenerate(FirebaseDatabase.instance
-
-                          //  .reference().child("confessions")),
-
-
-
-
-
-
-
-
-
-
-
-
-
-                          textMake(snapshot),//"$_confessionText",
-
-                          likeCountMake(snapshot),//randomNumeric(Random().nextInt(3)),
-
-
-
-                          x % 2 == 0 ? false : true,
-
-                          "assets/images/woman.png",
-
-                          "20m",
-
-                          commentCountMake(snapshot),
-
-                          context), Divider()]
-
-                  );
-
-
-
-
-
-                 /* return new ListTile(
-
-                    subtitle: new Text(snapshot.value.remove("confessionText").toString()),
-
-                  );*/
-
-                }
-
-
-
-            );
-
- */
-
-
-
-/*
-
-Widget buildCommentsAndConfessionList() {
-
-   return ListView.builder(
-
-
-
-      itemBuilder: (context, i) {
-
-        if (i.isOdd && i == 1)
-
-          return Divider(
-
-            height: 5,
-
-          );
-
-        else if (i.isOdd) return Divider();
-
-
-
-        final index =
-
-            i ~/ 2; //counts number of confessions minus divider widget
-
-        if (index >= commentsArray.length) {
-
-          for (int j = 0; j <= 10; j++) {
-
-            // I removed the confession design and put in it's own class hence the object ConfessionDesign()
-
-            commentsArray.add(buildComment("John doe", "Some comment",
-
-                "assets/images/man.png", "40m", this.context));
-
-          }
-
-        }
-
-        commentsArray[0] = mainConfession();
-
-        return commentsArray[index];
-
-      },
-
-    );
-
-  }
-
-}
-
- */

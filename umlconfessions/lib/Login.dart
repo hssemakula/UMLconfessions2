@@ -17,6 +17,7 @@ class LogIn extends StatelessWidget {
   String password;
   String userID;
 
+  //function that logs into a firebase user with an email and password
     void _doSignIn() async {
       password =_accountPassword.text;
       email =_accountEmail.text;
@@ -36,11 +37,7 @@ class LogIn extends StatelessWidget {
 
       userID = fbUser.uid;
 
-      Fluttertoast.showToast(
-        msg: fbUser.displayName,
-        toastLength: Toast.LENGTH_SHORT,
-        gravity: ToastGravity.CENTER,
-      );
+
 
     }
 
@@ -148,6 +145,7 @@ class LogIn extends StatelessWidget {
                                   borderRadius: BorderRadius.circular(35)),
                               onPressed: () {
                                 //AFTER SUCCESSFUL SIGNUP, remove all widgets and load home screen
+                                //signs in when pressed
                                 _doSignIn();
                                 MaterialPageRoute rt = new MaterialPageRoute(
                                     builder: (context) =>
