@@ -4,6 +4,9 @@ import 'TermsOfService.dart';
 import 'DeleteAccount.dart';
 import 'Themer.dart';
 
+/* This is the class for the settings page.  Made by Hillary Ssemakula
+* Accessed by the bottom navaigation bar*/
+
 class Settings extends StatefulWidget {
   String userEmail;
   String password;

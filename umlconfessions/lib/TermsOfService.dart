@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
 import 'Themer.dart';
 
+/*
+* This is the class for the terms of service page.  Made by Hillary Ssemakula
+* Contains information that users must agree to before creating an account
+* */
+
 class TermsOfService extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(

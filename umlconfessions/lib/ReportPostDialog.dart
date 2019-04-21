@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'Themer.dart';
 
+/*This is the class for the reporting posts dialog.  Made by Hillary Ssemakula*/
+
 class ReportPostDialog extends StatefulWidget {
   @override
   ReportPostDialogState createState() => new ReportPostDialogState();

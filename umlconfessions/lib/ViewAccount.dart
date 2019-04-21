@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'EditAccount.dart';
 import 'Themer.dart';
 
+/* This is the class for the profile page.  Made by Hillary Ssemakula*/
+
 class Account extends StatefulWidget {
   String userEmail;
   String password;
