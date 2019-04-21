@@ -284,6 +284,7 @@ class HomeState extends State<Home> {
         itemBuilder:
             (_, DataSnapshot snapshot, Animation<double> animation, int x) {
           return new Column(children: [
+            //GETS THE RELEVANT DATA FROM EACH DATASNAPSHOT IN THE FZIREBASE ANIMATED LIST
             ConfessionDesign(
                 tagMake(snapshot),//_loginUser(),
                 // randomString(Random().nextInt(100)),
@@ -515,6 +516,7 @@ class FirebaseFunctionality {
     return subscription;
   }
 
+  //Some of this code is unused. The unused code is a failed implementation of the posts feed
   static Future<Confession> getConfession(String confessionKey) async {
     //String confessionKey = await Preferences.getConfessionKey();
 
