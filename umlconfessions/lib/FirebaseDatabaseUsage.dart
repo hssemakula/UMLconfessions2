@@ -161,6 +161,7 @@ class FirebaseDatabaseUsage  {
     return '';
   }
 
+  //finds all the confessions in the database
   static DatabaseReference findConfession() {
     return FirebaseDatabase.instance.reference().child("confessions");
   }
@@ -171,7 +172,7 @@ class FirebaseDatabaseUsage  {
 
   }
 
-
+//returns the current date
   static int _getCurrentDate() {
     int date = new DateTime.now().millisecondsSinceEpoch;
     String str = date.toString();

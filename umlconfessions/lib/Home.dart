@@ -184,41 +184,42 @@ class HomeState extends State<Home> {
     return list;
   }
 
+  //gets the text of a post directly from the datasnapshot
   String textMake(DataSnapshot snapshot) {
     var iop = snapshot.value.remove("confessionText");
     String t = iop.toString();
     snapshot.value.putIfAbsent("confessionText", () => iop);
     return t;
   }
-
+  //gets the ID of a post directly from the datasnapshot
   String confessionIDMake(DataSnapshot snapshot) {
     var iop = snapshot.value.remove("confessionID");
     String t = iop.toString();
     snapshot.value.putIfAbsent("confessionID", () => iop);
     return t;
   }
-
+//gets the comment Count of a post directly from the datasnapshot
   String commentCountMake(DataSnapshot snapshot) {
     var iop = snapshot.value.remove("commentCount");
     String t = iop.toString();
     snapshot.value.putIfAbsent("commentCount", () => iop);
     return t;
   }
-
+//gets the image url of a post directly from the datasnapshot
   String imgURLMake(DataSnapshot snapshot) {
     var iop = snapshot.value.remove("imgURL");
     String t = iop.toString();
     snapshot.value.putIfAbsent("imgURL", () => iop);
     return t;
   }
-
+//gets the like count of a post directly from the datasnapshot
   String likeCountMake(DataSnapshot snapshot) {
     var iop = snapshot.value.remove("likeCount");
     String t = iop.toString();
     snapshot.value.putIfAbsent("likeCount", () => iop);
     return t;
   }
-
+//gets the username of a post directly from the datasnapshot
   String tagMake(DataSnapshot snapshot) {
     var iop = snapshot.value.remove("userInfo");
     var d = iop;
@@ -228,7 +229,7 @@ class HomeState extends State<Home> {
     snapshot.value.putIfAbsent("userInfo", () => iop);
     return t;
   }
-
+//gets the email of a post directly from the datasnapshot
   String emailMake(DataSnapshot snapshot) {
     var iop = snapshot.value.remove("userInfo");
     var d = iop;
@@ -238,7 +239,7 @@ class HomeState extends State<Home> {
     snapshot.value.putIfAbsent("userInfo", () => iop);
     return t;
   }
-
+//gets the userID of a post directly from the datasnapshot
   String userIDMake(DataSnapshot snapshot) {
     var iop = snapshot.value.remove("userInfo");
     var d = iop;
@@ -248,7 +249,6 @@ class HomeState extends State<Home> {
     snapshot.value.putIfAbsent("userInfo", () => iop);
     return t;
   }
-
 
   _updateConfession(Confession value) {
     var confessionText = value.confessionText;
@@ -272,7 +272,7 @@ class HomeState extends State<Home> {
     //[
     // return Flexible(
 
-    /**DON'T DELETE!  THIS IS THE CODE THAT SHOWS THE FEED RIGHT NOW.  WORK IN PROGRESS*/
+    //This is the code that shows the feed
     return FirebaseAnimatedList(
         query: FirebaseDatabase.instance
             .reference()
