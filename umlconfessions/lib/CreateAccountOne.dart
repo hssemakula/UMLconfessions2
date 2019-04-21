@@ -1,45 +1,22 @@
 import 'package:flutter/material.dart';
 import 'CreateAccountFinal.dart';
-import 'package:flutter/material.dart';
-
+import 'CurrentUser.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
 final FirebaseAuth _auth = FirebaseAuth.instance;
 
-class CreateAccountOne extends StatelessWidget {
+class CreateAccountOne extends StatefulWidget {
+  @override
+  State<StatefulWidget> createState() {
+    return CreateAccountOneState();
+  }
+}
 
-
+class CreateAccountOneState extends State<CreateAccountOne> {
   Widget build(BuildContext context) {
     dynamic res;
-    TextEditingController _accountEmail = new TextEditingController();
 
-    TextEditingController _accountUsername = new TextEditingController();
-
-   /* void _doSignUp() async {
-
-
-
-
-        FirebaseUser fbUser = await _auth.createUserWithEmailAndPassword(
-
-          email: _accountEmail.text,
-
-          password: _accountPassword.text,
-
-
-        );
-
-
-
-
-      Fluttertoast.showToast(
-        msg: fbUser.toString(),//fbUser.toString(),
-        toastLength: Toast.LENGTH_SHORT,
-        gravity: ToastGravity.CENTER,
-      );
-
-    }*/
     return Scaffold(
         appBar: AppBar(
           title: Container(
@@ -81,7 +58,7 @@ class CreateAccountOne extends StatelessWidget {
                             child: Column(
                               children: <Widget>[
                                 TextFormField(
-                                  controller:_accountUsername,
+                                  controller: CurrentUser.usernameMain,
                                   style: TextStyle(fontSize: 20),
                                   decoration: const InputDecoration(
                                     labelStyle: TextStyle(fontSize: 17),
@@ -104,7 +81,7 @@ class CreateAccountOne extends StatelessWidget {
                                 Container(
                                     margin: EdgeInsets.only(top: 30),
                                     child: TextFormField(
-                                      controller:_accountEmail,
+                                      controller: CurrentUser.emailMain,
                                       style: TextStyle(fontSize: 20),
                                       decoration: InputDecoration(
                                         labelStyle: TextStyle(fontSize: 17),
@@ -145,7 +122,7 @@ class CreateAccountOne extends StatelessWidget {
                                   borderRadius: BorderRadius.circular(35)),
                               onPressed: () {
                                 Fluttertoast.showToast(
-                                  msg: _accountEmail.text,
+                                  msg: CurrentUser.emailMain.text,
                                   toastLength: Toast.LENGTH_SHORT,
                                   gravity: ToastGravity.CENTER,
                                 );
@@ -154,9 +131,7 @@ class CreateAccountOne extends StatelessWidget {
                                   context,
                                   MaterialPageRoute(
                                       builder: (context) =>
-                                          CreateAccountFinal(_accountEmail.text,
-
-                                             _accountUsername.text)),
+                                          CreateAccountFinal()),
                                 );
                               },
                             )

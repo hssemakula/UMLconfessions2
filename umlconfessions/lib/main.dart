@@ -2,9 +2,7 @@ import 'package:flutter/material.dart';
 import 'WecomeScreen.dart';
 import 'Home.dart';
 import 'dart:async';
-import 'package:firebase_database/firebase_database.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'CurrentUser.dart';
 
 void main() => runApp(MyApp());
 
@@ -14,11 +12,6 @@ class MyApp extends StatefulWidget {
 }
 
 class MyAppState extends State<MyApp> {
-  static FirebaseUser fbUserMain;
-  static String usernameMain;
-  static String emailMain;
-  static String userIDMain;
-
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<Object>(
@@ -26,20 +19,21 @@ class MyAppState extends State<MyApp> {
         initialData: false,
         builder: (context, snapshot) {
           return MaterialApp(
-            // new
+              // new
               home: WelcomeScreen(),
               theme: snapshot.data ? ThemeData.dark() : ThemeData.light(),
               routes: <String, WidgetBuilder>{
                 '/welcomeScreen': (BuildContext context) => WelcomeScreen(),
                 '/homeScreen': (BuildContext context) =>
-                    Home(
-                        "John Doe",
-                        "assets/images/man.png",
-                        100,
-                        315,
-                        "someone@example.com",
-                        "apassword",
-                    null, null)
+                Home(
+                    CurrentUser.usernameMain.text,
+                    "assets/images/man.png",
+                    0,
+                    0,
+                    CurrentUser.emailMain.text,
+                    CurrentUser.accountPassword.text,
+                    CurrentUser.fbUserMain,
+                    CurrentUser.userIDMain)
               },
               debugShowCheckedModeBanner: false);
         });

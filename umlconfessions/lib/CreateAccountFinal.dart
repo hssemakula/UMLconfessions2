@@ -1,63 +1,40 @@
 import 'package:flutter/material.dart';
 import 'TermsOfService.dart';
 import 'Home.dart';
-import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'CurrentUser.dart';
 
 final FirebaseAuth _auth = FirebaseAuth.instance;
 
-
-class CreateAccountFinal extends StatelessWidget {
-  static String emailMain;
-  static String usernameMain;
-  static FirebaseUser fbUserMain;
-  static String userIDMain;
-
-CreateAccountFinal(String email, String username){
-
-  emailMain =email;
-  usernameMain=username;
+class CreateAccountFinal extends StatefulWidget {
+  @override
+  State<StatefulWidget> createState() {
+    return CreateAccountFinalState();
+  }
 }
 
-
-
-
+class CreateAccountFinalState extends State<CreateAccountFinal> {
   Widget build(BuildContext context) {
     TextEditingController _accountPasswordVerify = new TextEditingController();
 
-    TextEditingController _accountPassword = new TextEditingController();
-
     void _doSignUp() async {
-String lll =_accountPassword.text;
-      fbUserMain = await _auth.createUserWithEmailAndPassword(
-
-          email: emailMain,
-
-          password: lll
-
-      );
+      String lll = CurrentUser.accountPassword.text;
+      CurrentUser.fbUserMain = await _auth.createUserWithEmailAndPassword(
+          email: CurrentUser.emailMain.text, password: lll);
       UserUpdateInfo j = new UserUpdateInfo();
-      j.displayName = usernameMain;
-      fbUserMain.updateProfile(j);
+      j.displayName = CurrentUser.usernameMain.text;
+      CurrentUser.fbUserMain.updateProfile(j);
 
       _auth.signInWithEmailAndPassword(
+          email: CurrentUser.emailMain.text, password: lll);
+      CurrentUser.fbUserMain = await _auth.currentUser();
 
-          email: emailMain,
-
-          password: lll
-
+      Fluttertoast.showToast(
+        msg: CurrentUser.fbUserMain.toString(),
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.CENTER,
       );
-fbUserMain = await _auth.currentUser();
-
-
-
-Fluttertoast.showToast(
-  msg: fbUserMain.toString(),
-  toastLength: Toast.LENGTH_SHORT,
-  gravity: ToastGravity.CENTER,
-);
-
     }
 
     return Scaffold(
@@ -101,8 +78,8 @@ Fluttertoast.showToast(
                             child: Column(
                               children: <Widget>[
                                 TextFormField(
-                                  controller:_accountPassword,
-                                 // controller: _accountPassword,
+                                  controller: CurrentUser.accountPassword,
+                                  // controller: _accountPassword,
                                   style: TextStyle(fontSize: 20),
                                   obscureText: true,
                                   decoration: const InputDecoration(
@@ -121,10 +98,9 @@ Fluttertoast.showToast(
                                   },
                                 ),
                                 Container(
-
                                     margin: EdgeInsets.only(top: 30),
                                     child: TextFormField(
-                                      controller:_accountPasswordVerify,
+                                      controller: _accountPasswordVerify,
                                       obscureText: true,
                                       style: TextStyle(fontSize: 20),
                                       decoration: const InputDecoration(
@@ -148,10 +124,7 @@ Fluttertoast.showToast(
                             child: Column(
                           crossAxisAlignment: CrossAxisAlignment.stretch,
                           children: <Widget>[
-                            Wrap(
-                              spacing: 4,
-                              runSpacing: 7,
-                                children: <Widget>[
+                            Wrap(spacing: 4, runSpacing: 7, children: <Widget>[
                               Text(
                                 'By signing up, you agree to our',
                                 softWrap: true,
@@ -194,33 +167,12 @@ Fluttertoast.showToast(
                                   //AFTER SUCCESSFUL SIGNUP, remove all widgets and load home screen
                                   _doSignUp();
 
-                                    //.catchError(handleError);
-                                 /* var route = new MaterialPageRoute(
-
-                                    builder: (BuildContext context) =>
-
-                                    new NextPage(value: email),
-
-                                  );
-                                  Navigator.of(context)
-                                      .pushNamedAndRemoveUntil('/homeScreen', (Route<dynamic> route) => false);*/
-
-                                 MaterialPageRoute rt = new MaterialPageRoute(
-                                     builder: (context) =>
-                                         Home(usernameMain,
-                                             "assets/images/man.png",
-                                             0,
-                                             0,emailMain,_accountPassword.text,fbUserMain, userIDMain));
-
-                                  Navigator.of(context).pushNamedAndRemoveUntil('/homeScreen', (Route<dynamic> route)  => false);
-                                  Navigator.push(
-                                    context,
-                                    rt,
-                                  );
-                                  //Navigator.removeRoute(context, route);
-
-
-                                 // Navigator.of(context).removeRouteBelow(anchorRoute);
+                                 /* setState(() {
+                                    CurrentUser.usernameMain.text = "Skreewww";
+                                  }); */
+                                  Navigator.of(context).pushNamedAndRemoveUntil(
+                                      '/homeScreen',
+                                      (Route<dynamic> route) => false);
                                 },
                               ),
                             )
@@ -232,7 +184,5 @@ Fluttertoast.showToast(
             );
           },
         ));
-
-
   }
 }

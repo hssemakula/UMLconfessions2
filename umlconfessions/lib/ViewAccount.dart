@@ -136,8 +136,8 @@ class AccountState extends State<Account> {
                   margin: EdgeInsets.only(left: 5, right: 10, top: 2),
                   decoration: BoxDecoration(
                       border: Border.all(
-                          color: Themer.setColor(context,
-                              Theme.of(context).canvasColor, null),
+                          color: Themer.setColor(
+                              context, Theme.of(context).canvasColor, null),
                           width: 4),
                       shape: BoxShape.circle,
                       image: DecorationImage(
