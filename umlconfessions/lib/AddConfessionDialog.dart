@@ -40,7 +40,8 @@ class AddConfessionDialogState extends State<AddConfessionDialog> {
   bool isConfessDisabled = true;
 
 
-
+//This function uses the phone camera to get an image and then sets the File value img
+  // equal to that image
   Future getImg() async {
 
 
@@ -58,13 +59,18 @@ class AddConfessionDialogState extends State<AddConfessionDialog> {
 
   }
 
+  //this function creates a new post node in firebase and then enters all the data.
   void _submit() {
     final FormState f = _key_for_form.currentState;
 
 
-
+//creates the post node in firebase
     FirebaseDatabaseUsage.createPost().then((String postKey) {
+
+      //sets the text value
       FirebaseDatabaseUsage.pullText(postKey, val);
+
+      //creates a user for the post node
       FirebaseDatabaseUsage.createPostUser(postKey, widget.email, widget.username, widget.userID);
 
       if(img!=null){
@@ -81,8 +87,9 @@ class AddConfessionDialogState extends State<AddConfessionDialog> {
     //}
   }
 
-
+//uploads the image you take to firebase storage and keeps the url in the node for that confession
 Future<String> uploadImage(String pstKey) async{
+
 StorageReference ref = FirebaseStorage.instance.ref().child(random.randomAlphaNumeric(80));
 StorageUploadTask upload =ref.putFile(img);
 

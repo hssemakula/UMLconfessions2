@@ -18,6 +18,9 @@ class CreateAccountFinalState extends State<CreateAccountFinal> {
   Widget build(BuildContext context) {
     TextEditingController _accountPasswordVerify = new TextEditingController();
 
+
+    //creates a firebase user with email and password, then changes display name
+    //to be equal to the users username.
     void _doSignUp() async {
       String lll = CurrentUser.accountPassword.text;
       CurrentUser.fbUserMain = await _auth.createUserWithEmailAndPassword(
@@ -30,11 +33,7 @@ class CreateAccountFinalState extends State<CreateAccountFinal> {
           email: CurrentUser.emailMain.text, password: lll);
       CurrentUser.fbUserMain = await _auth.currentUser();
 
-      Fluttertoast.showToast(
-        msg: CurrentUser.fbUserMain.toString(),
-        toastLength: Toast.LENGTH_SHORT,
-        gravity: ToastGravity.CENTER,
-      );
+
     }
 
     return Scaffold(

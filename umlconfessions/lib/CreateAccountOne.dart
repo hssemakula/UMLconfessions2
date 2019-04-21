@@ -121,11 +121,7 @@ class CreateAccountOneState extends State<CreateAccountOne> {
                               shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(35)),
                               onPressed: () {
-                                Fluttertoast.showToast(
-                                  msg: CurrentUser.emailMain.text,
-                                  toastLength: Toast.LENGTH_SHORT,
-                                  gravity: ToastGravity.CENTER,
-                                );
+                                
                                 //_doSignUp();
                                 Navigator.push(
                                   context,
