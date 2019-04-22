@@ -385,12 +385,6 @@ class ConfessionDesignState extends State<ConfessionDesign> {
                                 //IT CHANGES THE VALUE IN FIREBASE TO THE VALUE +1
                                 //MADE BY MICHAEL MOSCHELLA
                                 onTap: () {
-                                  Fluttertoast.showToast(
-                                    msg: "Upvote",
-                                    toastLength: Toast.LENGTH_SHORT,
-                                    gravity: ToastGravity.CENTER,
-                                  );
-
                                   var iop =
                                       widget.snapshot.value.remove("likeCount");
                                   int t = iop + 1;
