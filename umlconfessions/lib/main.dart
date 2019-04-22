@@ -3,7 +3,7 @@ import 'WecomeScreen.dart';
 import 'Home.dart';
 import 'dart:async';
 import 'CurrentUser.dart';
-
+/*This is the class for the main functionality that starts when the user first opens the app.  Made by Hillary Ssemakula*/
 void main() => runApp(MyApp());
 
 class MyApp extends StatefulWidget {
