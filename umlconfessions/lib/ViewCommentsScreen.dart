@@ -100,7 +100,7 @@ class ViewCommentsPageState extends State<ViewCommentsPage> {
         Align(
           alignment: Alignment.bottomLeft,
           child: Container(
-            color: Colors.white,
+            color: Theme.of(context).canvasColor,
             padding: EdgeInsets.all(0),
             child: Column(mainAxisSize: MainAxisSize.min, children: [
               Divider(
