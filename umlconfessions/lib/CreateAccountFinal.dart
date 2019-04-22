@@ -22,7 +22,7 @@ class CreateAccountFinalState extends State<CreateAccountFinal> {
 
 
     //creates a firebase user with email and password, then changes display name
-    //to be equal to the users username.
+    //to be equal to the users username. - Michael Moschella
     void _doSignUp() async {
       String lll = CurrentUser.accountPassword.text;
       CurrentUser.fbUserMain = await _auth.createUserWithEmailAndPassword(

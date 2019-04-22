@@ -414,6 +414,7 @@ class HomeState extends State<Home> {
         activeColor: Color(0xFF0072bc)),
   ];
 
+  //unused
   void _createConfessionText() {
     FirebaseDatabaseUsage.createPost().then((String postKey) {
       //FirebaseDatabaseUsage.doNothing().then((String postKey){
@@ -421,6 +422,7 @@ class HomeState extends State<Home> {
     });
   }
 
+  //unused
   void _update(String postKey) {
     var v = MaterialPageRoute(
         //builder: (context) => new UpdatePostPage(postKey: postKey),
@@ -440,6 +442,7 @@ String val;
     return val;
    }
 
+   //unused
   Future<String> _loginU() async {
     Completer<FirebaseUser> completer = new Completer<FirebaseUser>();
     FirebaseUser use =  await _auth.signInWithEmailAndPassword(
@@ -466,6 +469,7 @@ String val;
     return use.displayName;
   }
 
+  //unused
   static Future<List<Confession>> getAllConfessions() async {
     //String confessionKey = await Preferences.getConfessionKey();
 
@@ -490,6 +494,7 @@ String val;
   }
 }
 
+//unused
 class Confession {
   final String key;
   String confessionText;
@@ -501,7 +506,7 @@ class Confession {
     }
   }
 }
-
+//unused
 class FirebaseFunctionality {
   static Future<StreamSubscription<Event>> getConfessionStream(
       String confessionKey, void onData(Confession confession)) async {

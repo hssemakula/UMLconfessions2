@@ -13,7 +13,8 @@ import 'package:flutter/material.dart';
 import 'package:umlconfessions/FirebaseDatabaseUsage.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:random_string/random_string.dart' as random;
-
+/*This is the class for the dialog for when you are creating a confession
+* Front End by Hillary Ssemakula, Back End by Michael Moschella*/
 
 class AddConfessionDialog extends StatefulWidget {
 
@@ -41,7 +42,7 @@ class AddConfessionDialogState extends State<AddConfessionDialog> {
 
 
 //This function uses the phone camera to get an image and then sets the File value img
-  // equal to that image
+  // equal to that image - Michael Moschella
   Future getImg() async {
 
 
@@ -59,18 +60,18 @@ class AddConfessionDialogState extends State<AddConfessionDialog> {
 
   }
 
-  //this function creates a new post node in firebase and then enters all the data.
+  //this function creates a new post node in firebase and then enters all the data. - Michael Moschella
   void _submit() {
     final FormState f = _key_for_form.currentState;
 
 
-//creates the post node in firebase
+//creates the post node in firebase - Michael Moschella
     FirebaseDatabaseUsage.createPost().then((String postKey) {
 
-      //sets the text value
+      //sets the text value - Michael Moschella
       FirebaseDatabaseUsage.pullText(postKey, val);
 
-      //creates a user for the post node
+      //creates a user for the post node - Micahel Moschella
       FirebaseDatabaseUsage.createPostUser(postKey, widget.email, widget.username, widget.userID);
 
       if(img!=null){
@@ -87,7 +88,7 @@ class AddConfessionDialogState extends State<AddConfessionDialog> {
     //}
   }
 
-//uploads the image you take to firebase storage and keeps the url in the node for that confession
+//uploads the image you take to firebase storage and keeps the url in the node for that confession - Michael Moschella
 Future<String> uploadImage(String pstKey) async{
 
 StorageReference ref = FirebaseStorage.instance.ref().child(random.randomAlphaNumeric(80));
@@ -208,6 +209,7 @@ return "";
 
                   ],
                 ),
+                //Shows the image that you took a picture of on this page - Michael Moschella
                 Container(
                   width: MediaQuery.of(context).size.width - 100,
                   //device width - 100

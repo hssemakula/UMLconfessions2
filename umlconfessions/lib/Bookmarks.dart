@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:umlconfessions/Home.dart';
-
+/*This is the class for the bookmarks page.  Created by Hillary Ssemakula*/
 class Bookmarks extends StatefulWidget {
   var confessionsArray;
 
