@@ -26,14 +26,17 @@ class Settings extends StatefulWidget {
 
 class SettingsState extends State<Settings> {
   final FirebaseAuth _auth = FirebaseAuth.instance;
+  //signs user out of firebase user account then returns to the welcome screen
+  // -Michael Moschella
+     _sign_Out() async{
 
-  _sign_Out() async{
     await _auth.signOut().then((_){
-
       Navigator.of(context).pushNamedAndRemoveUntil('/welcomeScreen', (Route<dynamic> route) => false);
 
+
     });
-  }
+
+    }
 
   @override
   Widget build(BuildContext context) {
@@ -153,7 +156,10 @@ class SettingsState extends State<Settings> {
                               ),
                               FlatButton(
                                 onPressed: () {
-                                  //LOG OUT CODE HERE
+                                  //LOG OUT CODE
+
+                                  //signs the user out of their firebase account
+                                  //- Michael Moschella
                                   _sign_Out();
                                 },
                                 child: Text(

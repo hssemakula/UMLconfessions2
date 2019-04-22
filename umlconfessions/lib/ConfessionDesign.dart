@@ -127,6 +127,9 @@ class ConfessionDesignState extends State<ConfessionDesign> {
                             FlatButton(
                               onPressed: () {
                                 //SEND FEEDBACK
+
+                                //Increments the flag count on a confession node
+                                // in firebase - Michael Moschella
                                 Navigator.pop(context);
                                 var iop =
                                 widget.snapshot.value.remove("Flags");
