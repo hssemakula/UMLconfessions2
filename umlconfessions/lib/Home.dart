@@ -174,6 +174,8 @@ class HomeState extends State<Home> {
             )
           : null,
       bottomNavigationBar: BottomNavyBar(
+          backgroundColor: Themer.setColor(context, Colors.white, Colors.black12),
+
           items: navItems,
           onItemSelected: (index) {
             return setState(() {
