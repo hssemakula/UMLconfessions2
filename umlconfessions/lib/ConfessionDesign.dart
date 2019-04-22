@@ -338,10 +338,6 @@ class ConfessionDesignState extends State<ConfessionDesign> {
                                               padding: EdgeInsets.all(0),
                                             )
                                           : Container(
-                                              width: MediaQuery.of(context)
-                                                      .size
-                                                      .width -
-                                                  100,
                                               height: 300,
                                               margin: EdgeInsets.only(top: 10),
                                               decoration: BoxDecoration(
