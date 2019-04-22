@@ -169,6 +169,7 @@ class CreateAccountFinalState extends State<CreateAccountFinal> {
                                  /* setState(() {
                                     CurrentUser.usernameMain.text = "Skreewww";
                                   }); */
+
                                   Navigator.of(context).pushNamedAndRemoveUntil(
                                       '/homeScreen',
                                       (Route<dynamic> route) => false);

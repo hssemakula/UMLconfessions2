@@ -3,6 +3,8 @@ import 'main.dart';
 import 'TermsOfService.dart';
 import 'DeleteAccount.dart';
 import 'Themer.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'CurrentUser.dart';
 
 /* This is the class for the settings page.  Made by Hillary Ssemakula
 * Accessed by the bottom navaigation bar*/
@@ -13,6 +15,8 @@ class Settings extends StatefulWidget {
   String userName;
   String profilePictureUrl;
 
+
+
   Settings(
       this.userEmail, this.password, this.userName, this.profilePictureUrl);
 
@@ -21,6 +25,16 @@ class Settings extends StatefulWidget {
 }
 
 class SettingsState extends State<Settings> {
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+
+  _sign_Out() async{
+    await _auth.signOut().then((_){
+
+      Navigator.of(context).pushNamedAndRemoveUntil('/welcomeScreen', (Route<dynamic> route) => false);
+
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<Object>(
@@ -140,6 +154,7 @@ class SettingsState extends State<Settings> {
                               FlatButton(
                                 onPressed: () {
                                   //LOG OUT CODE HERE
+                                  _sign_Out();
                                 },
                                 child: Text(
                                   "OK",
