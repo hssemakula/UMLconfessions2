@@ -3,7 +3,9 @@ import 'CreateAccountFinal.dart';
 import 'CurrentUser.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-
+/*This is the first page for creating an account.
+* It prompts the user for a username and an email
+* Front End by Hillary Ssemakula*/
 final FirebaseAuth _auth = FirebaseAuth.instance;
 
 class CreateAccountOne extends StatefulWidget {

@@ -19,6 +19,10 @@ import 'package:firebase_auth/firebase_auth.dart';
 
 final FirebaseAuth _auth = FirebaseAuth.instance;
 
+/*This is the series of classes for the home page, where most of the functionality
+* of the app stems from.  The Back End is Done by Michael Moschella and the front end
+* is done by Hillary Ssemakula */
+
 class Home extends StatefulWidget {
   String userName;
   String profilePictureUrl; //profile picture from firebae
@@ -184,42 +188,42 @@ class HomeState extends State<Home> {
     return list;
   }
 
-  //gets the text of a post directly from the datasnapshot
+  //gets the text of a post directly from the datasnapshot - Michael Moschella
   String textMake(DataSnapshot snapshot) {
     var iop = snapshot.value.remove("confessionText");
     String t = iop.toString();
     snapshot.value.putIfAbsent("confessionText", () => iop);
     return t;
   }
-  //gets the ID of a post directly from the datasnapshot
+  //gets the ID of a post directly from the datasnapshot - Michael Moschella
   String confessionIDMake(DataSnapshot snapshot) {
     var iop = snapshot.value.remove("confessionID");
     String t = iop.toString();
     snapshot.value.putIfAbsent("confessionID", () => iop);
     return t;
   }
-//gets the comment Count of a post directly from the datasnapshot
+//gets the comment Count of a post directly from the datasnapshot - Michael Moschella
   String commentCountMake(DataSnapshot snapshot) {
     var iop = snapshot.value.remove("commentCount");
     String t = iop.toString();
     snapshot.value.putIfAbsent("commentCount", () => iop);
     return t;
   }
-//gets the image url of a post directly from the datasnapshot
+//gets the image url of a post directly from the datasnapshot - Michael Moschella
   String imgURLMake(DataSnapshot snapshot) {
     var iop = snapshot.value.remove("imgURL");
     String t = iop.toString();
     snapshot.value.putIfAbsent("imgURL", () => iop);
     return t;
   }
-//gets the like count of a post directly from the datasnapshot
+//gets the like count of a post directly from the datasnapshot - Michael Moschella
   String likeCountMake(DataSnapshot snapshot) {
     var iop = snapshot.value.remove("likeCount");
     String t = iop.toString();
     snapshot.value.putIfAbsent("likeCount", () => iop);
     return t;
   }
-//gets the username of a post directly from the datasnapshot
+//gets the username of a post directly from the datasnapshot - Michael Moschella
   String tagMake(DataSnapshot snapshot) {
     var iop = snapshot.value.remove("userInfo");
     var d = iop;
@@ -229,7 +233,7 @@ class HomeState extends State<Home> {
     snapshot.value.putIfAbsent("userInfo", () => iop);
     return t;
   }
-//gets the email of a post directly from the datasnapshot
+//gets the email of a post directly from the datasnapshot - Michael Moschella
   String emailMake(DataSnapshot snapshot) {
     var iop = snapshot.value.remove("userInfo");
     var d = iop;
@@ -239,7 +243,7 @@ class HomeState extends State<Home> {
     snapshot.value.putIfAbsent("userInfo", () => iop);
     return t;
   }
-//gets the userID of a post directly from the datasnapshot
+//gets the userID of a post directly from the datasnapshot - Michael Moschella
   String userIDMake(DataSnapshot snapshot) {
     var iop = snapshot.value.remove("userInfo");
     var d = iop;
@@ -272,7 +276,7 @@ class HomeState extends State<Home> {
     //[
     // return Flexible(
 
-    //This is the code that shows the feed
+    //This is the code that shows the feed - Michael Moschella
     return FirebaseAnimatedList(
         query: FirebaseDatabase.instance
             .reference()

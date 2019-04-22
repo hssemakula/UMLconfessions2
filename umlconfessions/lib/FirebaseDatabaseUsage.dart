@@ -1,12 +1,13 @@
 import 'package:intl/intl.dart';
 import 'dart:async';
 import 'package:firebase_database/firebase_database.dart';
-
+/* This class contains some methods for getting info from and entering info into firebase
+* Made by Michael Moschella*/
 
 class FirebaseDatabaseUsage  {
 
 
-  //this is for entering all the data ito the firebase confession node
+  //this is for entering all the data ito the firebase confession node -Michael Moschella
   static Future<String> createPost() async {
     String postKey = await _getPostKey();
 
@@ -38,7 +39,7 @@ class FirebaseDatabaseUsage  {
     return ref.key;
   }
 
-  //This is for entering all the user info into the firebase confession node
+  //This is for entering all the user info into the firebase confession node - Michael Moschella
   static void createPostUser(String pstKey,String email, String username, String userID ) async {
     String postKey = await _getPostKey();
 
@@ -60,7 +61,7 @@ class FirebaseDatabaseUsage  {
   }
 
 
-  //enter all the user info into the comment node in firebase
+  //enter all the user info into the comment node in firebase - Michael Moschella
   static void createCommentUser(String pstKey,String email, String username, String userID, String commKey ) async {
     String postKey = await _getPostKey();
 
@@ -82,7 +83,7 @@ class FirebaseDatabaseUsage  {
   }
 
 
-//enter the data for a comment node into firebase
+//enter the data for a comment node into firebase - Michael Moschella
   static Future<String> createComment(String pstKey) async {
     String commentKey = await _getPostKey();
 
@@ -123,20 +124,20 @@ class FirebaseDatabaseUsage  {
     return ref.key;
   }
 
-  //enters the text data for a confession into firebase
+  //enters the text data for a confession into firebase -Michael Moschella
   static Future<void> pullText(String postKey, String postText) async {
     //String postKey = await _getPostKey();
 
     return FirebaseDatabase.instance.reference().child("confessions").child(postKey).child("confessionText").set(postText);
   }
 
-  //enters the text data for a comment into firebase
+  //enters the text data for a comment into firebase - Michael Moschella
   static Future<void> commentText(String commentKey, String postText, String postKey) async {
     //String postKey = await _getPostKey();
 
     return FirebaseDatabase.instance.reference().child("the_comments").child(postKey).child(commentKey).child("comment_text").set(postText);
   }
-
+//unused
   static Future<StreamSubscription<Event>> getTextStream(String postKey, void onData(String theText)) async {
     //String postKey = await _getPostKey;
 
@@ -150,18 +151,18 @@ class FirebaseDatabaseUsage  {
 
     return subscription;
   }
-
+//unused
   static Future<Query> queryPostText() async {
     //String UserKey = await _getUserKey();
 
     return FirebaseDatabase.instance.reference().child("confessions").orderByChild("confessionText");
   }
-
+//unused
   static Future<String> _getPostKey() async {
     return '';
   }
 
-  //finds all the confessions in the database
+  //finds all the confessions in the database - Michael Moschella
   static DatabaseReference findConfession() {
     return FirebaseDatabase.instance.reference().child("confessions");
   }

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'Home.dart';
-
+/* This is the class for the login page.  Front End-Hillary Ssemakula, Back End-Michael Moschella*/
 final FirebaseAuth _auth = FirebaseAuth.instance;
 FirebaseUser fbUser;
 TextEditingController _accountEmail  = new TextEditingController();
@@ -17,7 +17,7 @@ class LogIn extends StatelessWidget {
   String password;
   String userID;
 
-  //function that logs into a firebase user with an email and password
+  //function that logs into a firebase user with an email and password - Michael Moschella
     void _doSignIn() async {
       password =_accountPassword.text;
       email =_accountEmail.text;
@@ -145,7 +145,7 @@ class LogIn extends StatelessWidget {
                                   borderRadius: BorderRadius.circular(35)),
                               onPressed: () {
                                 //AFTER SUCCESSFUL SIGNUP, remove all widgets and load home screen
-                                //signs in when pressed
+                                //signs in when pressed - Michael Moschella
                                 _doSignIn();
                                 MaterialPageRoute rt = new MaterialPageRoute(
                                     builder: (context) =>

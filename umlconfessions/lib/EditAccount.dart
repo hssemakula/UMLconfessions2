@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'Themer.dart';
 
+/* This is the class for the editing accounts page.  Made by Hillary Ssemakula*/
+
 class EditAccount extends StatefulWidget {
   String userEmail;
   String password;

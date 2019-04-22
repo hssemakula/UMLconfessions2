@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'Themer.dart';
-
+/* This is the class for the deleting accounts page.  Made by Hillary Ssemakula*/
 class DeleteAccount extends StatefulWidget {
   String userEmail;
   String password;
