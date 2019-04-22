@@ -7,6 +7,9 @@ import 'ReportPostDialog.dart';
 import 'Themer.dart';
 import 'ViewCommentsScreen.dart';
 
+/*This is the class for the layout of an individual confession.
+* Front End by Hillary Ssemakula, Back End by Michael Moschella*/
+
 class ConfessionDesign extends StatefulWidget {
   String userName;
   String confessionText;
@@ -383,6 +386,9 @@ class ConfessionDesignState extends State<ConfessionDesign> {
                                   ),
                                   margin: EdgeInsets.only(bottom: 3),
                                 ),
+                                //THIS IS THE CODE FOR WHAT HAPPENS WHEN YOU UPVOTE.
+                                //IT CHANGES THE VALUE IN FIREBASE TO THE VALUE +1
+                                //MADE BY MICHAEL MOSCHELLA
                                 onTap: () {
                                   Fluttertoast.showToast(
                                     msg: "Upvote",
@@ -420,6 +426,10 @@ class ConfessionDesignState extends State<ConfessionDesign> {
                                 child: InkWell(
                                   child: Icon(Icons.expand_more,
                                       color: Color(0xFF0072bc), size: 35),
+                                  //THIS IS THE CODE FOR WHAT HAPPENS WHEN YOU DOWNVOTE.
+                                  //IT CHANGES THE VALUE IN FIREBASE TO THE VALUE -1
+                                  //IT WILL ALSO DELETE THE POST IF THE VALUE IS LESS THAN -4
+                                  //MADE BY MICHAEL MOSCHELLA
                                   onTap: () {
                                     Fluttertoast.showToast(
                                       msg: "Downvote",
