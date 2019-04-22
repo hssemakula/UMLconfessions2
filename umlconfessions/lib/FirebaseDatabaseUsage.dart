@@ -1,4 +1,3 @@
-import 'package:intl/intl.dart';
 import 'dart:async';
 import 'package:firebase_database/firebase_database.dart';
 /* This class contains some methods for getting info from and entering info into firebase

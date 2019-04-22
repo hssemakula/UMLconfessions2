@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'TermsOfService.dart';
-import 'Home.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'CurrentUser.dart';
 /*This is the second page for creating an account.

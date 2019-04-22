@@ -1,44 +1,28 @@
-import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'Home.dart';
+import 'package:flutter/material.dart';
 import 'CurrentUser.dart';
+
 /* This is the class for the login page.  Front End-Hillary Ssemakula, Back End-Michael Moschella*/
 final FirebaseAuth _auth = FirebaseAuth.instance;
 
 class LogIn extends StatelessWidget {
-
-
   Widget build(BuildContext context) {
-    
+    String username;
     String email;
-  String password;
-  String userID;
+    String password;
+    String userID;
 
-  //function that logs into a firebase user with an email and password - Michael Moschella
+    //function that logs into a firebase user with an email and password - Michael Moschella
     void _doSignIn() async {
       password = CurrentUser.accountPassword.text;
       email = CurrentUser.emailMain.text;
       CurrentUser.fbUserMain = await _auth.signInWithEmailAndPassword(
+          email: email, password: password);
 
-          email: email,
-
-          password: password
-
-      );
-
-
-          CurrentUser.usernameMain.text = CurrentUser.fbUserMain.displayName;
-
-
-
+      CurrentUser.usernameMain.text = CurrentUser.fbUserMain.displayName;
 
       userID = CurrentUser.fbUserMain.uid;
-
-
-
     }
-
 
     return Scaffold(
         appBar: AppBar(
@@ -70,7 +54,9 @@ class LogIn extends StatelessWidget {
                               children: <Widget>[
                                 Container(
                                   margin: EdgeInsets.only(top: 10, bottom: 15),
-                                  constraints: BoxConstraints(minWidth: viewportConstraints.maxWidth), //add this so that container doesn't wrap text width and mess up margin
+                                  constraints: BoxConstraints(
+                                      minWidth: viewportConstraints.maxWidth),
+                                  //add this so that container doesn't wrap text width and mess up margin
                                   child: Text(
                                     'Log in to UML Confessions.',
                                     textAlign: TextAlign.left,
@@ -104,7 +90,7 @@ class LogIn extends StatelessWidget {
                                 Container(
                                     margin: EdgeInsets.only(top: 30),
                                     child: TextFormField(
-                                     controller: CurrentUser.accountPassword,
+                                      controller: CurrentUser.accountPassword,
                                       obscureText: true,
                                       style: TextStyle(fontSize: 20),
                                       decoration: const InputDecoration(
@@ -145,8 +131,9 @@ class LogIn extends StatelessWidget {
                                 //AFTER SUCCESSFUL LOGIN, remove all widgets and load home screen
                                 _doSignIn();
 
-                                Navigator.of(context)
-                                    .pushNamedAndRemoveUntil('/homeScreen', (Route<dynamic> route) => false);
+                                Navigator.of(context).pushNamedAndRemoveUntil(
+                                    '/homeScreen',
+                                    (Route<dynamic> route) => false);
                               },
                             )
                           ],
@@ -158,6 +145,4 @@ class LogIn extends StatelessWidget {
           },
         ));
   }
-
-
 }
