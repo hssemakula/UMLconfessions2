@@ -144,7 +144,6 @@ class LogIn extends StatelessWidget {
                                   borderRadius: BorderRadius.circular(35)),
                               onPressed: () {
                                 //AFTER SUCCESSFUL SIGNUP, remove all widgets and load home screen
-                                //signs in when pressed - Michael Moschella
                                 _doSignIn();
 
                                 Navigator.of(context)
