@@ -2,11 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'Home.dart';
+import 'CurrentUser.dart';
 /* This is the class for the login page.  Front End-Hillary Ssemakula, Back End-Michael Moschella*/
 final FirebaseAuth _auth = FirebaseAuth.instance;
-FirebaseUser fbUser;
-TextEditingController _accountEmail  = new TextEditingController();
-TextEditingController _accountPassword = new TextEditingController();
+
 class LogIn extends StatelessWidget {
 
 
@@ -19,9 +18,9 @@ class LogIn extends StatelessWidget {
 
   //function that logs into a firebase user with an email and password - Michael Moschella
     void _doSignIn() async {
-      password =_accountPassword.text;
-      email =_accountEmail.text;
-      fbUser = await _auth.signInWithEmailAndPassword(
+      password = CurrentUser.accountPassword.text;
+      email = CurrentUser.emailMain.text;
+      CurrentUser.fbUserMain = await _auth.signInWithEmailAndPassword(
 
           email: email,
 
@@ -30,12 +29,12 @@ class LogIn extends StatelessWidget {
       );
 
 
-          username = fbUser.displayName;
+          username = CurrentUser.fbUserMain.displayName;
 
 
 
 
-      userID = fbUser.uid;
+      userID = CurrentUser.fbUserMain.uid;
 
 
 
@@ -85,7 +84,7 @@ class LogIn extends StatelessWidget {
                                   ),
                                 ),
                                 TextFormField(
-                                  controller: _accountEmail,
+                                  controller: CurrentUser.emailMain,
                                   style: TextStyle(fontSize: 20),
                                   //
                                   decoration: const InputDecoration(
@@ -106,7 +105,7 @@ class LogIn extends StatelessWidget {
                                 Container(
                                     margin: EdgeInsets.only(top: 30),
                                     child: TextFormField(
-                                     controller: _accountPassword,
+                                     controller: CurrentUser.accountPassword,
                                       obscureText: true,
                                       style: TextStyle(fontSize: 20),
                                       decoration: const InputDecoration(
@@ -147,20 +146,9 @@ class LogIn extends StatelessWidget {
                                 //AFTER SUCCESSFUL SIGNUP, remove all widgets and load home screen
                                 //signs in when pressed - Michael Moschella
                                 _doSignIn();
-                                MaterialPageRoute rt = new MaterialPageRoute(
-                                    builder: (context) =>
-                                        Home(username,
-                                            "assets/images/man.png",
-                                            100,
-                                            315,email,password,fbUser, userID));
 
                                 Navigator.of(context)
                                     .pushNamedAndRemoveUntil('/homeScreen', (Route<dynamic> route) => false);
-                                Navigator.push(
-                                  context,
-                                  rt,
-                                );
-
                               },
                             )
                           ],
