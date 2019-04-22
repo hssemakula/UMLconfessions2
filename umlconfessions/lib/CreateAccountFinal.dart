@@ -4,7 +4,9 @@ import 'Home.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'CurrentUser.dart';
-
+/*This is the second page for creating an account.
+* It prompts the user for a password and to confirm the password
+* Front End by Hillary Ssemakula, Back End by Michael Moschella*/
 final FirebaseAuth _auth = FirebaseAuth.instance;
 
 class CreateAccountFinal extends StatefulWidget {

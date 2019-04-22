@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-
+/* This is the class that contains the user as well as the info for the current user.
+* Made by Hillary Ssemakula*/
 class CurrentUser extends StatefulWidget {
   @override
   CurrentUserState createState() => new CurrentUserState();
