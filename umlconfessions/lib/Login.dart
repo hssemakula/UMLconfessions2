@@ -10,8 +10,7 @@ class LogIn extends StatelessWidget {
 
 
   Widget build(BuildContext context) {
-
-    String username;
+    
     String email;
   String password;
   String userID;
@@ -29,7 +28,7 @@ class LogIn extends StatelessWidget {
       );
 
 
-          username = CurrentUser.fbUserMain.displayName;
+          CurrentUser.usernameMain.text = CurrentUser.fbUserMain.displayName;
 
 
 
@@ -143,7 +142,7 @@ class LogIn extends StatelessWidget {
                               shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(35)),
                               onPressed: () {
-                                //AFTER SUCCESSFUL SIGNUP, remove all widgets and load home screen
+                                //AFTER SUCCESSFUL LOGIN, remove all widgets and load home screen
                                 _doSignIn();
 
                                 Navigator.of(context)
