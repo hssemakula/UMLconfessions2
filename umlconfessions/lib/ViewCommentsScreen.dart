@@ -365,7 +365,7 @@ class ViewCommentsPageState extends State<ViewCommentsPage> {
                                                   .size
                                                   .width -
                                               40,
-                                          child: ReportPostDialog())),
+                                          child: ReportPostDialog(widget.confessionID))),
                                 );
                               });
                         }),

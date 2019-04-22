@@ -127,6 +127,22 @@ class ConfessionDesignState extends State<ConfessionDesign> {
                             FlatButton(
                               onPressed: () {
                                 //SEND FEEDBACK
+                                Navigator.pop(context);
+                                var iop =
+                                widget.snapshot.value.remove("Flags");
+                                if(iop==null){
+                                  iop=0;
+                                }
+                                int t = iop + 1;
+                                widget.snapshot.value
+                                    .putIfAbsent("Flags", () => iop);
+
+                                FirebaseDatabase.instance
+                                    .reference()
+                                    .child("confessions")
+                                    .child(widget.confessionID)
+                                    .child("Flags")
+                                    .set(t);
                               },
                               child: Text("SEND"),
                             ),
@@ -143,7 +159,7 @@ class ConfessionDesignState extends State<ConfessionDesign> {
                           content: Container(
                               height: MediaQuery.of(context).size.height / 3,
                               width: MediaQuery.of(context).size.width - 40,
-                              child: ReportPostDialog())),
+                              child: ReportPostDialog(widget.confessionID))),
                     );
                   });
             }),

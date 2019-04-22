@@ -116,6 +116,10 @@ class DeleteAccountState extends State<DeleteAccount> {
                     borderRadius: BorderRadius.circular(5)),
                 onPressed: () {
                   //DELETE ACCOUNT ACCOUNT HERE
+
+                  //There is currently no way to delete Firebase users using Flutter
+                  // check here for more on this issue: https://github.com/flutter/flutter/issues/15907
+                  // - Michael Moschella
                 },
               ),
             )

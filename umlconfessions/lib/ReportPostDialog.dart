@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
 import 'Themer.dart';
+import 'package:firebase_database/firebase_database.dart';
 
 /*This is the class for the reporting posts dialog.  Made by Hillary Ssemakula*/
 
 class ReportPostDialog extends StatefulWidget {
+String confessionKey;
+
+  ReportPostDialog(this.confessionKey);
+
   @override
   ReportPostDialogState createState() => new ReportPostDialogState();
 }
