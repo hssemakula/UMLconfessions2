@@ -50,6 +50,7 @@ class ConfessionDesign extends StatefulWidget {
 class ConfessionDesignState extends State<ConfessionDesign> {
   String myUserName = "Jane Doe";
 
+
   //This method designs the confession and how it looks like
   Widget build(BuildContext context) {
     //This method, when passed the user name of currectly signed user, either draws the delete icon or not.
@@ -326,8 +327,8 @@ class ConfessionDesignState extends State<ConfessionDesign> {
                                         style: TextStyle(
                                             fontSize: 16, height: 1.2),
                                       ),
-                                      widget.imgURL == null
-                                          ? Text(widget.imgURL)
+                                      widget.imgURL == "null"
+                                          ? Container(height: 0, width: 0, margin: EdgeInsets.all(0), padding: EdgeInsets.all(0),)
                                           : Container(
                                               width: MediaQuery.of(context)
                                                       .size
@@ -347,7 +348,7 @@ class ConfessionDesignState extends State<ConfessionDesign> {
                                               ),
                                               child:
                                                   Image.network(widget.imgURL),
-                                            ),
+                                            ) ,
                                     ]))),
 
                         //UPVOTE DOWNVOTE BUTTON
