@@ -17,6 +17,7 @@ import 'ConfessionDesign.dart';
 import 'Settings.dart';
 import 'Themer.dart';
 import 'ViewAccount.dart';
+import 'CurrentUser.dart';
 
 final FirebaseAuth _auth = FirebaseAuth.instance;
 
@@ -108,7 +109,7 @@ class HomeState extends State<Home> {
       Account(
           widget.userEmail,
           widget.userPassword,
-          widget.userName,
+          CurrentUser.usernameMain.text,
           widget.profilePictureUrl,
           widget.karma.toString(),
           widget.numOfPosts.toString()),

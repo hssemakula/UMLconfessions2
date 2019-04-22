@@ -508,13 +508,15 @@ class ViewCommentsPageState extends State<ViewCommentsPage> {
         .child("the_comments")
         .child(widget.confessionID);
 
+
 //Uses a firebaseAnimatedList to get data for comments - Michael Moschella
     return FirebaseAnimatedList(
       query: q,
       itemBuilder:
           (context, DataSnapshot snaps, Animation<double> animation, int x) {
+            if (q == null) return mainConfession();
         return Column(children: [
-          x == 0 ? mainConfession() : Text(""),
+          x == 0 ? mainConfession() : Text(snaps.key.isEmpty.toString()),
           Divider(
             height: 0,
           ),
