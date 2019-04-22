@@ -503,15 +503,12 @@ class ViewCommentsPageState extends State<ViewCommentsPage> {
   //Build list of comments and confession
 
   Widget buildCommentsAndConfessionList() {
-    // return ListView.builder(
-
     Query q = FirebaseDatabase.instance
         .reference()
         .child("the_comments")
         .child(widget.confessionID);
 
-
-    //Uses a firebaseAnimatedList to get data for comments - Michael Moschella
+//Uses a firebaseAnimatedList to get data for comments - Michael Moschella
     return FirebaseAnimatedList(
       query: q,
       itemBuilder:
@@ -527,7 +524,6 @@ class ViewCommentsPageState extends State<ViewCommentsPage> {
       },
     );
   }
-  
 
 //gets the key of a post directly from the datasnapshot -Michael Moschella
   String commentKeyMake(DataSnapshot snapshot) {

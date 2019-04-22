@@ -2,7 +2,6 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:outline_material_icons/outline_material_icons.dart';
-
 import 'ReportPostDialog.dart';
 import 'Themer.dart';
 import 'ViewCommentsScreen.dart';

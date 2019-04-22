@@ -1,21 +1,22 @@
-import 'package:flutter/material.dart';
-import 'package:bottom_navy_bar/bottom_navy_bar.dart';
-import 'package:random_string/random_string.dart';
-import 'dart:math';
 import 'dart:async';
-import 'package:firebase_database/firebase_database.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:fluttertoast/fluttertoast.dart';
-import 'ConfessionDesign.dart';
-import 'AddConfessionDialog.dart';
-import 'package:firebase_database/ui/firebase_animated_list.dart';
-import 'package:umlconfessions/FirebaseDatabaseUsage.dart';
-import 'ViewAccount.dart';
-import 'package:umlconfessions/Update_Post.dart';
-import 'Settings.dart';
-import 'Bookmarks.dart';
-import 'Themer.dart';
+import 'dart:math';
+
+import 'package:bottom_navy_bar/bottom_navy_bar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_database/firebase_database.dart';
+import 'package:firebase_database/ui/firebase_animated_list.dart';
+import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:random_string/random_string.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:umlconfessions/FirebaseDatabaseUsage.dart';
+
+import 'AddConfessionDialog.dart';
+import 'Bookmarks.dart';
+import 'ConfessionDesign.dart';
+import 'Settings.dart';
+import 'Themer.dart';
+import 'ViewAccount.dart';
 
 final FirebaseAuth _auth = FirebaseAuth.instance;
 
@@ -33,6 +34,7 @@ class Home extends StatefulWidget {
   FirebaseUser fbu;
   String userID;
   FirebaseUser fbUser;
+
   Home(
       this.userName,
       this.profilePictureUrl, //profile picture from firebae
@@ -54,17 +56,17 @@ class HomeState extends State<Home> {
   String _confessionText = "Confession Text Here";
   StreamSubscription _subscriptionConfession;
   final confessionsArray = <Widget>[];
+  var bookmarksList = <Widget>[];
   var list;
 
   static SharedPreferences localStorage;
+
   static Future init() async {
     localStorage = await SharedPreferences.getInstance();
   }
 
   @override
   void initState() {
-
-
     Future<Confession> myConfession =
         FirebaseFunctionality.getConfession("-LSu6ejqSX97jDn6UR1s");
 
@@ -76,12 +78,7 @@ class HomeState extends State<Home> {
       );
     }
 
-
-
-
-
-   // FirebaseFunctionality.getConfession("-LSu6ejqSX97jDn6UR1s").then(_updateConfession);  //.catchError(handleError);
-
+    // FirebaseFunctionality.getConfession("-LSu6ejqSX97jDn6UR1s").then(_updateConfession);  //.catchError(handleError);
 
     /*.whenComplete(() => Fluttertoast.showToast(
       msg: "00",
@@ -94,8 +91,6 @@ class HomeState extends State<Home> {
     super.initState();
   }
 
-
-
   @override
   void dispose() {
     if (_subscriptionConfession != null) {
@@ -107,8 +102,6 @@ class HomeState extends State<Home> {
   //UI
   @override
   Widget build(BuildContext context) {
-
-
     //This array contains the different screens to be displayed, each index corresponds to a specific nav index when nav icon is pressed.
     final bodyChildren = <Widget>[
       buildConfessionsList(),
@@ -119,8 +112,9 @@ class HomeState extends State<Home> {
           widget.profilePictureUrl,
           widget.karma.toString(),
           widget.numOfPosts.toString()),
-      Bookmarks(confessionsArray),
-      Settings(widget.userEmail, widget.userPassword, widget.userName, widget.profilePictureUrl)
+      Bookmarks(),
+      Settings(widget.userEmail, widget.userPassword, widget.userName,
+          widget.profilePictureUrl)
     ];
 
     //This array contains appbars and a specific index is chosen depending on nav icon selected.
@@ -157,7 +151,8 @@ class HomeState extends State<Home> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (context) => AddConfessionDialog(null, null, widget.userEmail, widget.userName, widget.userID),
+                      builder: (context) => AddConfessionDialog(null, null,
+                          widget.userEmail, widget.userName, widget.userID),
                       fullscreenDialog: true),
                 );
               },
@@ -174,8 +169,8 @@ class HomeState extends State<Home> {
             )
           : null,
       bottomNavigationBar: BottomNavyBar(
-          backgroundColor: Themer.setColor(context, Colors.white, Colors.black12),
-
+          backgroundColor:
+              Themer.setColor(context, Colors.white, Colors.black12),
           items: navItems,
           onItemSelected: (index) {
             return setState(() {
@@ -197,6 +192,7 @@ class HomeState extends State<Home> {
     snapshot.value.putIfAbsent("confessionText", () => iop);
     return t;
   }
+
   //gets the ID of a post directly from the datasnapshot - Michael Moschella
   String confessionIDMake(DataSnapshot snapshot) {
     var iop = snapshot.value.remove("confessionID");
@@ -204,6 +200,7 @@ class HomeState extends State<Home> {
     snapshot.value.putIfAbsent("confessionID", () => iop);
     return t;
   }
+
 //gets the comment Count of a post directly from the datasnapshot - Michael Moschella
   String commentCountMake(DataSnapshot snapshot) {
     var iop = snapshot.value.remove("commentCount");
@@ -211,6 +208,7 @@ class HomeState extends State<Home> {
     snapshot.value.putIfAbsent("commentCount", () => iop);
     return t;
   }
+
 //gets the image url of a post directly from the datasnapshot - Michael Moschella
   String imgURLMake(DataSnapshot snapshot) {
     var iop = snapshot.value.remove("imgURL");
@@ -218,6 +216,7 @@ class HomeState extends State<Home> {
     snapshot.value.putIfAbsent("imgURL", () => iop);
     return t;
   }
+
 //gets the like count of a post directly from the datasnapshot - Michael Moschella
   String likeCountMake(DataSnapshot snapshot) {
     var iop = snapshot.value.remove("likeCount");
@@ -225,6 +224,7 @@ class HomeState extends State<Home> {
     snapshot.value.putIfAbsent("likeCount", () => iop);
     return t;
   }
+
 //gets the username of a post directly from the datasnapshot - Michael Moschella
   String tagMake(DataSnapshot snapshot) {
     var iop = snapshot.value.remove("userInfo");
@@ -235,6 +235,7 @@ class HomeState extends State<Home> {
     snapshot.value.putIfAbsent("userInfo", () => iop);
     return t;
   }
+
 //gets the email of a post directly from the datasnapshot - Michael Moschella
   String emailMake(DataSnapshot snapshot) {
     var iop = snapshot.value.remove("userInfo");
@@ -245,6 +246,7 @@ class HomeState extends State<Home> {
     snapshot.value.putIfAbsent("userInfo", () => iop);
     return t;
   }
+
 //gets the userID of a post directly from the datasnapshot - Michael Moschella
   String userIDMake(DataSnapshot snapshot) {
     var iop = snapshot.value.remove("userInfo");
@@ -292,7 +294,8 @@ class HomeState extends State<Home> {
           return new Column(children: [
             //GETS THE RELEVANT DATA FROM EACH DATASNAPSHOT IN THE FZIREBASE ANIMATED LIST
             ConfessionDesign(
-                tagMake(snapshot),//_loginUser(),
+                tagMake(snapshot),
+                //_loginUser(),
                 // randomString(Random().nextInt(100)),
 
                 //textGenerate(FirebaseDatabase.instance
@@ -429,12 +432,14 @@ class HomeState extends State<Home> {
     var v = MaterialPageRoute(
         //builder: (context) => new UpdatePostPage(postKey: postKey),
 
-        builder: (context) => AddConfessionDialog(null, null, widget.userEmail, widget.userName, widget.userID),
+        builder: (context) => AddConfessionDialog(
+            null, null, widget.userEmail, widget.userName, widget.userID),
         fullscreenDialog: true);
     Navigator.of(context).push(v);
   }
+
   String _loginUser() {
-String val;
+    String val;
     _loginU().then((result) {
       print(result);
       setState(() {
@@ -442,21 +447,16 @@ String val;
       });
     });
     return val;
-   }
+  }
 
-   //unused
+  //unused
   Future<String> _loginU() async {
     Completer<FirebaseUser> completer = new Completer<FirebaseUser>();
-    FirebaseUser use =  await _auth.signInWithEmailAndPassword(
-
-        email: widget.userEmail,
-
-        password: widget.userPassword
-
-    );
+    FirebaseUser use = await _auth.signInWithEmailAndPassword(
+        email: widget.userEmail, password: widget.userPassword);
 
     completer.complete(use);
-    if(use=null){
+    if (use = null) {
       Fluttertoast.showToast(
         msg: "ITS NULL",
         toastLength: Toast.LENGTH_SHORT,
@@ -508,6 +508,7 @@ class Confession {
     }
   }
 }
+
 //unused
 class FirebaseFunctionality {
   static Future<StreamSubscription<Event>> getConfessionStream(
