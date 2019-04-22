@@ -1,11 +1,11 @@
-import 'package:flutter/material.dart';
-import 'package:outline_material_icons/outline_material_icons.dart';
-import 'ViewCommentsScreen.dart';
-import 'Themer.dart';
 import 'package:firebase_database/firebase_database.dart';
+import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:outline_material_icons/outline_material_icons.dart';
+
 import 'ReportPostDialog.dart';
-import 'dart:async';
+import 'Themer.dart';
+import 'ViewCommentsScreen.dart';
 
 class ConfessionDesign extends StatefulWidget {
   String userName;
@@ -49,7 +49,6 @@ class ConfessionDesign extends StatefulWidget {
 
 class ConfessionDesignState extends State<ConfessionDesign> {
   String myUserName = "Jane Doe";
-
 
   //This method designs the confession and how it looks like
   Widget build(BuildContext context) {
@@ -214,7 +213,6 @@ class ConfessionDesignState extends State<ConfessionDesign> {
       if (signedInUser != widget.userName) {
         buttonList.removeAt(2);
       }
-
       return buttonList;
     }
 
@@ -310,13 +308,14 @@ class ConfessionDesignState extends State<ConfessionDesign> {
                               );
                             },
                             child: Container(
-                                //CONFESSION TEXT
+                                //CONFESSION TEXT AND/OR PICTURE----------------------------------------------
                                 margin: EdgeInsets.only(top: 3),
                                 //make width 140 pixels less that screen width
                                 width: MediaQuery.of(context).size.width - 140,
                                 child: Column(
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
+                                    mainAxisAlignment: MainAxisAlignment.start,
                                     children: [
                                       Text(
                                         widget.confessionText,
@@ -327,8 +326,14 @@ class ConfessionDesignState extends State<ConfessionDesign> {
                                         style: TextStyle(
                                             fontSize: 16, height: 1.2),
                                       ),
-                                      widget.imgURL == "null"
-                                          ? Container(height: 0, width: 0, margin: EdgeInsets.all(0), padding: EdgeInsets.all(0),)
+                                      widget.imgURL ==
+                                              "null" //if post has no picture, replace picture container with dummy
+                                          ? Container(
+                                              height: 0,
+                                              width: 0,
+                                              margin: EdgeInsets.all(0),
+                                              padding: EdgeInsets.all(0),
+                                            )
                                           : Container(
                                               width: MediaQuery.of(context)
                                                       .size
@@ -348,7 +353,7 @@ class ConfessionDesignState extends State<ConfessionDesign> {
                                               ),
                                               child:
                                                   Image.network(widget.imgURL),
-                                            ) ,
+                                            ),
                                     ]))),
 
                         //UPVOTE DOWNVOTE BUTTON
