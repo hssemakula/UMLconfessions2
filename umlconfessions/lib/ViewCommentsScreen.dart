@@ -3,6 +3,7 @@ import 'package:firebase_database/ui/firebase_animated_list.dart';
 import 'package:flutter/material.dart';
 import 'package:outline_material_icons/outline_material_icons.dart';
 import 'package:umlconfessions/FirebaseDatabaseUsage.dart';
+
 import 'ReportPostDialog.dart';
 import 'Themer.dart';
 
@@ -102,7 +103,9 @@ class ViewCommentsPageState extends State<ViewCommentsPage> {
             color: Colors.white,
             padding: EdgeInsets.all(0),
             child: Column(mainAxisSize: MainAxisSize.min, children: [
-              Divider(height: 0,),
+              Divider(
+                height: 0,
+              ),
               Padding(
                 padding: const EdgeInsets.only(left: 20, right: 10),
                 child: Row(
@@ -132,8 +135,8 @@ class ViewCommentsPageState extends State<ViewCommentsPage> {
 //will create a comment using the current confession ID and set the text and user -Michael Moschella
                         FirebaseDatabaseUsage.createComment(widget.confessionID)
                             .then((String commentKey) {
-                          FirebaseDatabaseUsage.commentText(
-                              commentKey, myController.text, widget.confessionID);
+                          FirebaseDatabaseUsage.commentText(commentKey,
+                              myController.text, widget.confessionID);
                           FirebaseDatabaseUsage.createCommentUser(
                               widget.confessionID,
                               widget.currentUserEmail,
@@ -153,28 +156,6 @@ class ViewCommentsPageState extends State<ViewCommentsPage> {
           ),
         ),
       ]),
-
-      //ListView.builder(
-
-      //itemBuilder: (context,i) {
-
-      // if (i<1) {
-
-      // return buildCommentsAndConfessionList();/*new Column(
-
-      //children: <Widget>[
-
-      // buildCommentsAndConfessionList(),
-
-      //   ],
-
-      // );*/
-
-      //}
-
-      //   }
-
-      // )
     );
   }
 
@@ -363,22 +344,30 @@ class ViewCommentsPageState extends State<ViewCommentsPage> {
                                           child: Text("SEND"),
                                         ),
                                         FlatButton(
-                                          onPressed: () => Navigator.pop(context),
+                                          onPressed: () =>
+                                              Navigator.pop(context),
                                           child: Text(
                                             "CANCEL",
                                             style: TextStyle(
-                                                color: Themer.setColor(context,
-                                                    Colors.black54, Colors.white70)),
+                                                color: Themer.setColor(
+                                                    context,
+                                                    Colors.black54,
+                                                    Colors.white70)),
                                           ),
                                         )
                                       ],
                                       content: Container(
-                                          height: MediaQuery.of(context).size.height / 3,
-                                          width: MediaQuery.of(context).size.width - 40,
+                                          height: MediaQuery.of(context)
+                                                  .size
+                                                  .height /
+                                              3,
+                                          width: MediaQuery.of(context)
+                                                  .size
+                                                  .width -
+                                              40,
                                           child: ReportPostDialog())),
                                 );
                               });
-
                         }),
                   ),
 
@@ -411,109 +400,104 @@ class ViewCommentsPageState extends State<ViewCommentsPage> {
   Widget buildComment(String userName, String commentText, String avatarPath,
       String timePassed, BuildContext context) {
     return Padding(
-        padding: EdgeInsets.only(left: 70, right: 10, top: 10, bottom: 10),
+        padding: EdgeInsets.only(left: 70, right: 10, top: 10),
 
         //very important to make up and down vote column strect to height of confession text otherwise it stick to top.
 
-        child: IntrinsicHeight(
-            child: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            Container(
-              height: 40,
-              width: 40,
-              margin: EdgeInsets.only(left: 5, right: 10, top: 2),
-              decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  image: DecorationImage(
-                      image: AssetImage(avatarPath), fit: BoxFit.cover)),
-            ),
-            Column(
-              //MAIN COLUMN
+        child: Container(
+          margin: EdgeInsets.only(top: 5),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Container(
+                height: 40,
+                width: 40,
+                margin: EdgeInsets.only(left: 5, right: 10, top: 2),
+                decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    image: DecorationImage(
+                        image: AssetImage(avatarPath), fit: BoxFit.cover)),
+              ),
+              Column(
+                //MAIN COLUMN
+                crossAxisAlignment: CrossAxisAlignment.start,
 
-              mainAxisAlignment: MainAxisAlignment.start,
+                children: <Widget>[
+                  //USERNAME, TIME row ---------------------------------------------------------------------------
 
-              crossAxisAlignment: CrossAxisAlignment.start,
+                  Row(
+                    children: <Widget>[
+                      Container(
+                        //USER NAME
 
-              children: <Widget>[
-                //USERNAME, TIME row ---------------------------------------------------------------------------
+                        child: Text(
+                          userName,
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold, fontSize: 18),
+                        ),
 
-                Row(
-                  children: <Widget>[
-                    Container(
-                      //USER NAME
-
-                      child: Text(
-                        userName,
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold, fontSize: 18),
+                        margin: EdgeInsets.only(bottom: 2),
                       ),
+                      Container(
+                        //dot between name and time
 
-                      margin: EdgeInsets.only(bottom: 2),
-                    ),
-                    Container(
-                      //dot between name and time
+                        height: 5,
 
-                      height: 5,
+                        width: 5,
 
-                      width: 5,
+                        margin: EdgeInsets.only(
+                            top: 10, bottom: 10, left: 5, right: 5),
 
-                      margin: EdgeInsets.only(
-                          top: 10, bottom: 10, left: 5, right: 5),
-
-                      decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          color: Themer.setColor(
-                              context, Colors.black38, Colors.white70)),
-                    ),
-                    Container(
-                      //TIME PASSED
-
-                      child: Text(
-                        timePassed,
-                        style: TextStyle(
-                            fontWeight: FontWeight.w300,
-                            fontSize: 14,
+                        decoration: BoxDecoration(
+                            shape: BoxShape.circle,
                             color: Themer.setColor(
                                 context, Colors.black38, Colors.white70)),
                       ),
-                    ),
-                  ],
-                ),
+                      Container(
+                        //TIME PASSED
 
-                //COMMENT TEXT ROW.-------------------------------------------------------------------------
-
-                IntrinsicHeight(
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      GestureDetector(
-                          onTap: () {},
-                          child: Container(
-                            //CONFESSION TEXT
-
-                            margin: EdgeInsets.only(top: 1),
-
-                            width: MediaQuery.of(context).size.width - 155,
-
-                            //width of device - 155 pixels. 155 becuase of larger left margin
-
-                            child: Text(
-                              commentText,
-                              softWrap: true,
-                              overflow: TextOverflow.ellipsis,
-                              maxLines: 100,
-                              textAlign: TextAlign.justify,
-                              style: TextStyle(fontSize: 16, height: 1.2),
-                            ),
-                          )),
+                        child: Text(
+                          timePassed,
+                          style: TextStyle(
+                              fontWeight: FontWeight.w300,
+                              fontSize: 14,
+                              color: Themer.setColor(
+                                  context, Colors.black38, Colors.white70)),
+                        ),
+                      ),
                     ],
                   ),
-                ),
-              ],
-            ),
-          ],
-        )));
+
+                  //COMMENT TEXT ROW.-------------------------------------------------------------------------
+
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: <Widget>[
+                      Container(
+                        //CONFESSION TEXT
+
+                        margin: EdgeInsets.only(top: 1),
+
+                        width: MediaQuery.of(context).size.width - 155,
+
+                        //width of device - 155 pixels. 155 becuase of larger left margin
+
+                        child: Text(
+                          commentText,
+                          softWrap: true,
+                          overflow: TextOverflow.ellipsis,
+                          maxLines: 100,
+                          textAlign: TextAlign.justify,
+                          style: TextStyle(fontSize: 16, height: 1.2),
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ],
+          ),
+        ));
   }
 
   //Build list of comments and confession
@@ -521,12 +505,15 @@ class ViewCommentsPageState extends State<ViewCommentsPage> {
   Widget buildCommentsAndConfessionList() {
     // return ListView.builder(
 
+    Query q = FirebaseDatabase.instance
+        .reference()
+        .child("the_comments")
+        .child(widget.confessionID);
+
+
     //Uses a firebaseAnimatedList to get data for comments - Michael Moschella
     return FirebaseAnimatedList(
-      query: FirebaseDatabase.instance
-          .reference()
-          .child("the_comments")
-          .child(widget.confessionID),
+      query: q,
       itemBuilder:
           (context, DataSnapshot snaps, Animation<double> animation, int x) {
         return Column(children: [
@@ -540,46 +527,7 @@ class ViewCommentsPageState extends State<ViewCommentsPage> {
       },
     );
   }
-
-  //);
-  //query: FirebaseDatabase.instance
-
-//  .reference().child("confessions").orderByChild("negative_time"),
-  //  if (x.isOdd && x == 1)
-
-//  return Divider(
-
-//  height: 5,
-
-//);
-
-//else if (x.isOdd) return Divider();
-
-//final index =
-
-//  x ~/ 2; //counts number of confessions minus divider widget
-
-//if (index >= commentsArray.length) {
-
-//for (int j = 0; j <= 10; j++) {
-
-// I removed the confession design and put in it's own class hence the object ConfessionDesign()
-
-// commentsArray[0] = null;
-
-// commentsArray.add(buildComment(textMakeT(snaps), "Some comment",
-
-// "assets/images/man.png", "40m", this.context));
-
-// commentsArray.add(buildComment(textMake(snaps), "Some comment",
-
-//   "assets/images/man.png", "40m", this.context));
-
-// }
-
-// }
-
-//commentsArray[0] = mainConfession();
+  
 
 //gets the key of a post directly from the datasnapshot -Michael Moschella
   String commentKeyMake(DataSnapshot snapshot) {
