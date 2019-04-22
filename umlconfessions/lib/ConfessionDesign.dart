@@ -344,6 +344,7 @@ class ConfessionDesignState extends State<ConfessionDesign> {
                                               decoration: BoxDecoration(
                                                 borderRadius:
                                                     BorderRadius.circular(10.0),
+                                                //make border round.
                                                 border: Border.all(
                                                     width: 1,
                                                     color: Themer.setColor(
@@ -351,8 +352,19 @@ class ConfessionDesignState extends State<ConfessionDesign> {
                                                         Colors.black12,
                                                         null)),
                                               ),
-                                              child:
-                                                  Image.network(widget.imgURL),
+                                              child: new ClipRRect(
+                                                borderRadius:
+                                                    new BorderRadius.circular(
+                                                        10.0),
+                                                //explicitly make picture border round
+                                                child: Image.network(
+                                                  widget.imgURL,
+                                                  fit: BoxFit.cover,
+                                                ),
+                                              ), /*Image.network(
+                                                widget.imgURL,
+                                                fit: BoxFit.cover,
+                                              ) */
                                             ),
                                     ]))),
 
