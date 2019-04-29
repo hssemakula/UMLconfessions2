@@ -3,9 +3,11 @@ import 'package:firebase_database/ui/firebase_animated_list.dart';
 import 'package:flutter/material.dart';
 import 'package:outline_material_icons/outline_material_icons.dart';
 import 'package:umlconfessions/FirebaseDatabaseUsage.dart';
-
+import 'package:fluttertoast/fluttertoast.dart';
 import 'ReportPostDialog.dart';
 import 'Themer.dart';
+import 'package:umlconfessions/Home.dart';
+import 'package:location/location.dart';
 
 /*  This is the class that lets you see the comments of a specific post.
 * Front End by Hillary Ssemakula
@@ -62,6 +64,17 @@ class ViewCommentsPage extends StatefulWidget {
 }
 
 class ViewCommentsPageState extends State<ViewCommentsPage> {
+
+  static Future<LocationData> getLoc() async {
+    var currentLocation;
+    try {
+      currentLocation = await HomeState.loc.getLocation();
+    } catch (e) {
+      currentLocation = null;
+    }
+    return currentLocation;
+  }
+
   final commentsArray =
       <Widget>[]; //first item is the post followed by all of it's comments.
 
@@ -132,6 +145,28 @@ class ViewCommentsPageState extends State<ViewCommentsPage> {
                     ),
                     IconButton(
                       onPressed: () {
+
+                        getLoc().then((value) {
+                          setState(() {
+                            HomeState.locationNow = value;
+                          });
+//42.665634, -71.384551
+//42.608515, -71.270244
+                          if (HomeState.locationNow.longitude <  -71.270244 && HomeState.locationNow.longitude > -71.384551 && HomeState.locationNow.latitude <  42.665634 && HomeState.locationNow.latitude > 42.608515 ){
+                            Fluttertoast.showToast(
+                              msg: "You are in Lowell.",
+                              toastLength: Toast.LENGTH_SHORT,
+                              gravity: ToastGravity.CENTER,
+                            );
+                          } else {
+                            Fluttertoast.showToast(
+                              msg: "You are not in Lowell.  In a release version of this app, you would not be able to perform this action without being there.",
+                              toastLength: Toast.LENGTH_LONG,
+                              gravity: ToastGravity.CENTER,
+                            );
+                          }
+                        });
+
 //will create a comment using the current confession ID and set the text and user -Michael Moschella
                         FirebaseDatabaseUsage.createComment(widget.confessionID)
                             .then((String commentKey) {

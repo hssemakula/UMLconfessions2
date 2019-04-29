@@ -10,6 +10,8 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:random_string/random_string.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:umlconfessions/FirebaseDatabaseUsage.dart';
+import 'package:location/location.dart';
+import 'package:flutter/services.dart';
 
 import 'AddConfessionDialog.dart';
 import 'Bookmarks.dart';
@@ -49,7 +51,11 @@ class Home extends StatefulWidget {
   //might need, to store confessions)
   @override
   HomeState createState() => new HomeState();
+
+
 }
+//42.665634, -71.384551
+//42.608515, -71.270244
 
 class HomeState extends State<Home> {
   int navIndex = 0; //keeps track of what menu is open
@@ -59,15 +65,62 @@ class HomeState extends State<Home> {
   final confessionsArray = <Widget>[];
   var bookmarksList = <Widget>[];
   var list;
+  //Map<String, double> locationNow = new Map();
+  static LocationData locationNow;
+
+  static Future<LocationData> _getLocation() async {
+    var currentLocation;
+    try {
+      currentLocation = await HomeState.loc.getLocation();
+    } catch (e) {
+      currentLocation = null;
+    }
+    return currentLocation;
+  }
+
+
+ // StreamSubscription<Map<String, double>> subLocation;
+  StreamSubscription<LocationData> subLocation;
+
+  static var loc = new Location();
+  String error;
 
   static SharedPreferences localStorage;
+
+
+
 
   static Future init() async {
     localStorage = await SharedPreferences.getInstance();
   }
 
+  void initPlatformState() async {
+    //Map<String, double> location;
+    LocationData location;
+    try {
+      location = await loc.getLocation();
+      error = "";
+    } on PlatformException catch (e) {
+      if (e.code == 'PERMISSION_DENIED')
+        error = 'Permission denied';
+      else if (e.code == 'PERMISSION_DENIED_NEVER_ASK')
+        error = "Permission denied, user must enable location permission";
+      location = null;
+    }
+    setState((){
+      locationNow = location;
+    });
+  }
+
+
+
   @override
   void initState() {
+   // widget.karma =0;
+    String gg = widget.userEmail;
+    String sss =  gg.replaceAll(".",",");
+    getPostNum(sss);
+    getKarma(sss);
     Future<Confession> myConfession =
         FirebaseFunctionality.getConfession("-LSu6ejqSX97jDn6UR1s");
 
@@ -77,7 +130,34 @@ class HomeState extends State<Home> {
         toastLength: Toast.LENGTH_SHORT,
         gravity: ToastGravity.CENTER,
       );
+//locationNow. = 0.0;
+  //    locationNow['latitude'] = 0.0;
+    //  locationNow['longitude'] = 0.0;
+initPlatformState();
+subLocation = loc.onLocationChanged().listen((LocationData current){//(Map<String, double> result){
+setState((){
+locationNow = current;
+});
+      Fluttertoast.showToast(
+        msg: current.latitude.toString(),
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.CENTER,
+      );
+
+      Fluttertoast.showToast(
+        msg: current.longitude.toString(),
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.CENTER,
+      );
+
+     // print(current.latitude);
+      //print(current.longitude);
+
+});
+
     }
+
+
 
     // FirebaseFunctionality.getConfession("-LSu6ejqSX97jDn6UR1s").then(_updateConfession);  //.catchError(handleError);
 
@@ -100,11 +180,25 @@ class HomeState extends State<Home> {
     super.dispose();
   }
 
+
+
   //UI
   @override
   Widget build(BuildContext context) {
     //This array contains the different screens to be displayed, each index corresponds to a specific nav index when nav icon is pressed.
+    String gg = widget.userEmail;
+    String sss =  gg.replaceAll(".",",");
+    getPostNum(sss);
+
+    getKarma(sss);
+
     final bodyChildren = <Widget>[
+
+
+
+
+
+
       buildConfessionsList(),
       Account(
           widget.userEmail,
@@ -149,6 +243,27 @@ class HomeState extends State<Home> {
           ? FloatingActionButton(
               onPressed: () {
                 // _createConfessionText();
+                _getLocation().then((value) {
+                  setState(() {
+                    locationNow = value;
+                  });
+//42.665634, -71.384551
+//42.608515, -71.270244
+                  if (locationNow.longitude <  -71.270244 && locationNow.longitude > -71.384551 && locationNow.latitude <  42.665634 && locationNow.latitude > 42.608515 ){
+                    Fluttertoast.showToast(
+                      msg: "You are in Lowell.",
+                      toastLength: Toast.LENGTH_SHORT,
+                      gravity: ToastGravity.CENTER,
+                    );
+                  } else {
+                    Fluttertoast.showToast(
+                      msg: "You are not in Lowell.  In a release version of this app, you would not be able to perform this action without being there.",
+                      toastLength: Toast.LENGTH_LONG,
+                      gravity: ToastGravity.CENTER,
+                    );
+                  }
+                });
+
                 Navigator.push(
                   context,
                   MaterialPageRoute(
@@ -175,6 +290,10 @@ class HomeState extends State<Home> {
           items: navItems,
           onItemSelected: (index) {
             return setState(() {
+              String gg = widget.userEmail;
+              String sss =  gg.replaceAll(".",",");
+              getPostNum(sss);
+              getKarma(sss);
               navIndex = index;
             });
           }),
@@ -185,6 +304,10 @@ class HomeState extends State<Home> {
     list.add(s);
     return list;
   }
+
+
+
+
 
   //gets the text of a post directly from the datasnapshot - Michael Moschella
   String textMake(DataSnapshot snapshot) {
@@ -220,9 +343,17 @@ class HomeState extends State<Home> {
 
 //gets the like count of a post directly from the datasnapshot - Michael Moschella
   String likeCountMake(DataSnapshot snapshot) {
+
+
+
+
+
     var iop = snapshot.value.remove("likeCount");
     String t = iop.toString();
     snapshot.value.putIfAbsent("likeCount", () => iop);
+
+
+
     return t;
   }
 
@@ -232,6 +363,8 @@ class HomeState extends State<Home> {
     var d = iop;
     var r = d.remove("userInfo");
     String t = r.toString();
+
+
     d.putIfAbsent("userInfo", () => r);
     snapshot.value.putIfAbsent("userInfo", () => iop);
     return t;
@@ -265,6 +398,60 @@ class HomeState extends State<Home> {
       _confessionText = confessionText;
     });
   }
+  Future<int> getPostNum(String email) async {
+
+    var snap;
+
+    // DatabaseReference rrr = FirebaseDatabase.instance.reference().child("the_users").child(email).push();
+
+    // DatabaseReference rr = FirebaseDatabase.instance.reference().child("the_users").child(email).child("postNum").push();
+
+
+    await FirebaseDatabase.instance.reference().child("the_users").child(email).once().then((DataSnapshot snaps){
+      snap = snaps;
+    });
+
+    var iop = snap.value.remove("postNum");
+    widget.numOfPosts = iop;
+    snap.value.putIfAbsent("postNum", () => iop);
+
+
+
+
+
+
+
+
+    return iop;
+  }
+
+  Future<int> getKarma(String email) async {
+
+    var snap;
+
+    // DatabaseReference rrr = FirebaseDatabase.instance.reference().child("the_users").child(email).push();
+
+    // DatabaseReference rr = FirebaseDatabase.instance.reference().child("the_users").child(email).child("postNum").push();
+
+
+    await FirebaseDatabase.instance.reference().child("the_users").child(email).once().then((DataSnapshot snaps){
+      snap = snaps;
+    });
+
+    var iop = snap.value.remove("karma");
+    widget.karma = iop;
+    snap.value.putIfAbsent("karma", () => iop);
+
+
+
+
+
+
+
+
+    return iop;
+  }
+
 
   //Build list of confessions
   Widget buildConfessionsList() {
@@ -509,6 +696,8 @@ class Confession {
     }
   }
 }
+
+
 
 //unused
 class FirebaseFunctionality {

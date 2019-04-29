@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'TermsOfService.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'CurrentUser.dart';
+import 'package:umlconfessions/FirebaseDatabaseUsage.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 /*This is the second page for creating an account.
 * It prompts the user for a password and to confirm the password
 * Front End by Hillary Ssemakula, Back End by Michael Moschella*/
@@ -21,7 +23,7 @@ class CreateAccountFinalState extends State<CreateAccountFinal> {
 
     //creates a firebase user with email and password, then changes display name
     //to be equal to the users username. - Michael Moschella
-    void _doSignUp() async {
+    Future<void> _doSignUp() async {
       String lll = CurrentUser.accountPassword.text;
       CurrentUser.fbUserMain = await _auth.createUserWithEmailAndPassword(
           email: CurrentUser.emailMain.text, password: lll);
@@ -34,7 +36,32 @@ class CreateAccountFinalState extends State<CreateAccountFinal> {
       CurrentUser.fbUserMain = await _auth.currentUser();
 
 
+      String mmm = CurrentUser.fbUserMain.email;
+
+      String mmmmm =  mmm.replaceAll(".",",");
+
+      FirebaseDatabaseUsage.createUser(mmmmm, CurrentUser.fbUserMain.displayName, CurrentUser.fbUserMain.uid);
+
+      return null;
     }
+
+    void check(){
+      if(CurrentUser.fbUserMain==null){
+        Fluttertoast.showToast(
+          msg: "Bad formatting.  Use 7 or more characters for password, and don't use the @ symbol, commas, or periods except for the email.",
+          toastLength: Toast.LENGTH_LONG,
+          gravity: ToastGravity.CENTER,
+        );
+      } else {
+        Navigator.of(context)
+            .pushNamedAndRemoveUntil(
+            '/homeScreen',
+                (
+                Route<dynamic> route) => false);
+      }
+
+    }
+
 
     return Scaffold(
         appBar: AppBar(
@@ -164,15 +191,30 @@ class CreateAccountFinalState extends State<CreateAccountFinal> {
                                     borderRadius: BorderRadius.circular(35)),
                                 onPressed: () {
                                   //AFTER SUCCESSFUL SIGNUP, remove all widgets and load home screen
-                                  _doSignUp();
 
-                                 /* setState(() {
+                                  if(CurrentUser.accountPassword.text == "" || _accountPasswordVerify.text == ""){
+                                  Fluttertoast.showToast(
+                                  msg: "One of the above fields is empty. Please fill them both out.",
+                                  toastLength: Toast.LENGTH_SHORT,
+                                  gravity: ToastGravity.CENTER,
+                                  );
+                                  } else {
+                                    if(CurrentUser.accountPassword.text ==  _accountPasswordVerify.text){
+                                      _doSignUp().whenComplete(() => check());;
+
+                                      /* setState(() {
                                     CurrentUser.usernameMain.text = "Skreewww";
                                   }); */
 
-                                  Navigator.of(context).pushNamedAndRemoveUntil(
-                                      '/homeScreen',
-                                      (Route<dynamic> route) => false);
+                                    } else {
+                                      Fluttertoast.showToast(
+                                        msg: "The passwords above do not match.",
+                                        toastLength: Toast.LENGTH_SHORT,
+                                        gravity: ToastGravity.CENTER,
+                                      );
+
+                                   }
+                                  }
                                 },
                               ),
                             )

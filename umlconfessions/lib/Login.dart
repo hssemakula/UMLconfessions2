@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'CurrentUser.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 /* This is the class for the login page.  Front End-Hillary Ssemakula, Back End-Michael Moschella*/
 final FirebaseAuth _auth = FirebaseAuth.instance;
@@ -13,7 +14,7 @@ class LogIn extends StatelessWidget {
     String userID;
 
     //function that logs into a firebase user with an email and password - Michael Moschella
-    void _doSignIn() async {
+    Future<void> _doSignIn() async {
       password = CurrentUser.accountPassword.text;
       email = CurrentUser.emailMain.text;
       CurrentUser.fbUserMain = await _auth.signInWithEmailAndPassword(
@@ -22,7 +23,27 @@ class LogIn extends StatelessWidget {
       CurrentUser.usernameMain.text = CurrentUser.fbUserMain.displayName;
 
       userID = CurrentUser.fbUserMain.uid;
+
+
+return null;
+
     }
+
+    void check(){
+      if(CurrentUser.fbUserMain==null){
+        Fluttertoast.showToast(
+          msg: "Incorrect credentials.",
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.CENTER,
+        );
+      } else {
+        Navigator.of(context).pushNamedAndRemoveUntil(
+            '/homeScreen',
+                (Route<dynamic> route) => false);
+      }
+
+    }
+
 
     return Scaffold(
         appBar: AppBar(
@@ -128,12 +149,19 @@ class LogIn extends StatelessWidget {
                               shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(35)),
                               onPressed: () {
-                                //AFTER SUCCESSFUL LOGIN, remove all widgets and load home screen
-                                _doSignIn();
+            //AFTER SUCCESSFUL LOGIN, remove all widgets and load home screen
+                                if(CurrentUser.emailMain.text == "" || CurrentUser.accountPassword.text == ""){
+                                  Fluttertoast.showToast(
+                                    msg: "You must enter both your email and your password to proceed.",
+                                    toastLength: Toast.LENGTH_SHORT,
+                                    gravity: ToastGravity.CENTER,
+                                  );
+                                } else {
+                            _doSignIn().whenComplete(() => check());
 
-                                Navigator.of(context).pushNamedAndRemoveUntil(
-                                    '/homeScreen',
-                                    (Route<dynamic> route) => false);
+
+
+                              }
                               },
                             )
                           ],

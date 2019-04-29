@@ -5,6 +5,8 @@ import 'package:outline_material_icons/outline_material_icons.dart';
 import 'ReportPostDialog.dart';
 import 'Themer.dart';
 import 'ViewCommentsScreen.dart';
+import 'package:umlconfessions/Home.dart';
+import 'package:location/location.dart';
 
 /*This is the class for the layout of an individual confession.
 * Front End by Hillary Ssemakula, Back End by Michael Moschella*/
@@ -51,6 +53,96 @@ class ConfessionDesign extends StatefulWidget {
 
 class ConfessionDesignState extends State<ConfessionDesign> {
   String myUserName = "Jane Doe";
+
+  static Future<LocationData> getLoc() async {
+    var currentLocation;
+    try {
+      currentLocation = await HomeState.loc.getLocation();
+    } catch (e) {
+      currentLocation = null;
+    }
+    return currentLocation;
+  }
+
+  Future<int> decrementPostNum(String email) async {
+
+    var snap;
+
+    // DatabaseReference rrr = FirebaseDatabase.instance.reference().child("the_users").child(email).push();
+
+    // DatabaseReference rr = FirebaseDatabase.instance.reference().child("the_users").child(email).child("postNum").push();
+
+
+    await FirebaseDatabase.instance.reference().child("the_users").child(email).once().then((DataSnapshot snaps){
+      snap = snaps;
+    });
+
+    var iop = snap.value.remove("postNum");
+    int t = iop-1;
+    snap.value.putIfAbsent("postNum", () => t);
+
+
+
+
+
+    FirebaseDatabase.instance.reference().child("the_users").child(email).child("postNum").set(t);
+
+
+    return t;
+  }
+
+  Future<int> decrementKarma(String email) async {
+
+    var snap;
+
+    // DatabaseReference rrr = FirebaseDatabase.instance.reference().child("the_users").child(email).push();
+
+    // DatabaseReference rr = FirebaseDatabase.instance.reference().child("the_users").child(email).child("postNum").push();
+
+
+    await FirebaseDatabase.instance.reference().child("the_users").child(email).once().then((DataSnapshot snaps){
+      snap = snaps;
+    });
+
+    var iop = snap.value.remove("karma");
+    int t = iop-1;
+    snap.value.putIfAbsent("karma", () => t);
+
+
+
+
+    FirebaseDatabase.instance.reference().child("the_users").child(email).child("karma").set(t);
+
+
+    return t;
+  }
+
+  Future<int> incrementKarma(String email) async {
+
+    var snap;
+
+    // DatabaseReference rrr = FirebaseDatabase.instance.reference().child("the_users").child(email).push();
+
+    // DatabaseReference rr = FirebaseDatabase.instance.reference().child("the_users").child(email).child("postNum").push();
+
+
+    await FirebaseDatabase.instance.reference().child("the_users").child(email).once().then((DataSnapshot snaps){
+      snap = snaps;
+    });
+
+    var iop = snap.value.remove("karma");
+    int t = iop+1;
+    snap.value.putIfAbsent("karma", () => t);
+
+
+
+
+
+    FirebaseDatabase.instance.reference().child("the_users").child(email).child("karma").set(t);
+
+
+    return t;
+  }
 
   //This method designs the confession and how it looks like
   Widget build(BuildContext context) {
@@ -130,6 +222,8 @@ class ConfessionDesignState extends State<ConfessionDesign> {
 
                                 //Increments the flag count on a confession node
                                 // in firebase - Michael Moschella
+
+
                                 Navigator.pop(context);
                                 var iop =
                                 widget.snapshot.value.remove("Flags");
@@ -146,6 +240,35 @@ class ConfessionDesignState extends State<ConfessionDesign> {
                                     .child(widget.confessionID)
                                     .child("Flags")
                                     .set(t);
+
+                                Fluttertoast.showToast(
+                                  msg: "Your Feedback has been sent!  We will review this post.",
+                                  toastLength: Toast.LENGTH_LONG,
+                                  gravity: ToastGravity.CENTER,
+                                );
+
+                                getLoc().then((value) {
+                                  setState(() {
+                                    HomeState.locationNow = value;
+                                  });
+//42.665634, -71.384551
+//42.608515, -71.270244
+                                  if (HomeState.locationNow.longitude <  -71.270244 && HomeState.locationNow.longitude > -71.384551 && HomeState.locationNow.latitude <  42.665634 && HomeState.locationNow.latitude > 42.608515 ){
+                                    Fluttertoast.showToast(
+                                      msg: "You are in Lowell.",
+                                      toastLength: Toast.LENGTH_SHORT,
+                                      gravity: ToastGravity.CENTER,
+                                    );
+                                  } else {
+                                    Fluttertoast.showToast(
+                                      msg: "You are not in Lowell.  In a release version of this app, you would not be able to perform this action without being there.",
+                                      toastLength: Toast.LENGTH_LONG,
+                                      gravity: ToastGravity.CENTER,
+                                    );
+                                  }
+                                });
+
+
                               },
                               child: Text("SEND"),
                             ),
@@ -404,6 +527,35 @@ class ConfessionDesignState extends State<ConfessionDesign> {
                                 //IT CHANGES THE VALUE IN FIREBASE TO THE VALUE +1
                                 //MADE BY MICHAEL MOSCHELLA
                                 onTap: () {
+
+                                  Fluttertoast.showToast(
+                                    msg: "Upvote",
+                                    toastLength: Toast.LENGTH_SHORT,
+                                    gravity: ToastGravity.CENTER,
+                                  );
+
+                                  getLoc().then((value) {
+                                    setState(() {
+                                      HomeState.locationNow = value;
+                                    });
+//42.665634, -71.384551
+//42.608515, -71.270244
+                                    if (HomeState.locationNow.longitude <  -71.270244 && HomeState.locationNow.longitude > -71.384551 && HomeState.locationNow.latitude <  42.665634 && HomeState.locationNow.latitude > 42.608515 ){
+                                      Fluttertoast.showToast(
+                                        msg: "You are in Lowell.",
+                                        toastLength: Toast.LENGTH_LONG,
+                                        gravity: ToastGravity.CENTER,
+                                      );
+                                    } else {
+                                      Fluttertoast.showToast(
+                                        msg: "You are not in Lowell.  In a release version of this app, you would not be able to perform this action without being there.",
+                                        toastLength: Toast.LENGTH_LONG,
+                                        gravity: ToastGravity.CENTER,
+                                      );
+                                    }
+                                  });
+
+
                                   var iop =
                                       widget.snapshot.value.remove("likeCount");
                                   int t = iop + 1;
@@ -420,12 +572,33 @@ class ConfessionDesignState extends State<ConfessionDesign> {
                                       widget.snapshot.value.remove("likeCount");
                                   widget.snapshot.value
                                       .putIfAbsent("likeCount", () => iol);
+
+                                  String gg = widget.email;
+
+                                  gg = gg.replaceAll(".",",");
+
+
+                                  var aaa = incrementKarma(gg);
+
                                   if (iol < -4) {
+
+
+                                    String gg = widget.email;
+
+                                    String ff = gg.replaceAll(".",",");
+
+
+
+                                    var aaa = decrementPostNum(ff);
+
+
                                     FirebaseDatabase.instance
                                         .reference()
                                         .child("confessions")
                                         .child(widget.confessionID)
                                         .set(null);
+
+
                                   }
                                 },
                               ),
@@ -445,6 +618,27 @@ class ConfessionDesignState extends State<ConfessionDesign> {
                                       gravity: ToastGravity.CENTER,
                                     );
 
+                                    getLoc().then((value) {
+                                      setState(() {
+                                        HomeState.locationNow = value;
+                                      });
+//42.665634, -71.384551
+//42.608515, -71.270244
+                                      if (HomeState.locationNow.longitude <  -71.270244 && HomeState.locationNow.longitude > -71.384551 && HomeState.locationNow.latitude <  42.665634 && HomeState.locationNow.latitude > 42.608515 ){
+                                        Fluttertoast.showToast(
+                                          msg: "You are in Lowell.",
+                                          toastLength: Toast.LENGTH_LONG,
+                                          gravity: ToastGravity.CENTER,
+                                        );
+                                      } else {
+                                        Fluttertoast.showToast(
+                                          msg: "You are not in Lowell.  In a release version of this app, you would not be able to perform this action without being there.",
+                                          toastLength: Toast.LENGTH_LONG,
+                                          gravity: ToastGravity.CENTER,
+                                        );
+                                      }
+                                    });
+
                                     var iop = widget.snapshot.value
                                         .remove("likeCount");
                                     int t = iop - 1;
@@ -461,12 +655,29 @@ class ConfessionDesignState extends State<ConfessionDesign> {
                                         .remove("likeCount");
                                     widget.snapshot.value
                                         .putIfAbsent("likeCount", () => iol);
+
+                                    String gg = widget.email;
+
+                                    gg = gg.replaceAll(".",",");
+
+
+                                    var aaa = decrementKarma(gg);
                                     if (iol < -3) {
+                                      String gg = widget.email;
+
+                                      gg = gg.replaceAll(".",",");
+
+
+
+                                      var aaa = decrementPostNum(gg);
+
                                       FirebaseDatabase.instance
                                           .reference()
                                           .child("confessions")
                                           .child(widget.confessionID)
                                           .set(null);
+
+
                                     }
                                   },
                                 ),

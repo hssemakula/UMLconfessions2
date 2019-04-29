@@ -1,12 +1,13 @@
 import 'dart:async';
 import 'package:firebase_database/firebase_database.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 /* This class contains some methods for getting info from and entering info into firebase
 * Made by Michael Moschella*/
 
 class FirebaseDatabaseUsage  {
 
 
-  //this is for entering all the data ito the firebase confession node -Michael Moschella
+  //this is for entering all the data into the firebase confession node -Michael Moschella
   static Future<String> createPost() async {
     String postKey = await _getPostKey();
 
@@ -16,6 +17,8 @@ class FirebaseDatabaseUsage  {
 
     int positive = _getCurrentDate();
     int neg = 0-positive;
+
+
 
 
 
@@ -38,6 +41,39 @@ class FirebaseDatabaseUsage  {
     return ref.key;
   }
 
+  static Future<String> createUser(String email, String username, String userID) async {
+    String postKey = await _getPostKey();
+
+    DatabaseReference ref = FirebaseDatabase.instance.reference().child("the_users").child(email).push();
+
+    String myStr=ref.key;
+
+    int positive = _getCurrentDate();
+    int neg = 0-positive;
+
+
+
+
+    String mmm = email;
+
+    String mmmmm =  mmm.replaceAll(",",".");
+
+    FirebaseDatabase.instance.reference().child("the_users").child(email).child("active").set(true);
+    FirebaseDatabase.instance.reference().child("the_users").child(email).child("email_address").set(mmmmm);
+    FirebaseDatabase.instance.reference().child("the_users").child(email).child("karma").set(0);
+    FirebaseDatabase.instance.reference().child("the_users").child(email).child("postNum").set(0);
+    FirebaseDatabase.instance.reference().child("the_users").child(email).child("userInfo").set(username);
+    FirebaseDatabase.instance.reference().child("the_users").child(email).child("user_ID").set(userID);
+
+
+
+
+    return email;
+  }
+
+
+
+
   //This is for entering all the user info into the firebase confession node - Michael Moschella
   static void createPostUser(String pstKey,String email, String username, String userID ) async {
     String postKey = await _getPostKey();
@@ -45,7 +81,7 @@ class FirebaseDatabaseUsage  {
     FirebaseDatabase.instance.reference().child("confessions").child(pstKey).child("userInfo").child("active").set(true);
     FirebaseDatabase.instance.reference().child("confessions").child(pstKey).child("userInfo").child("email_address").set(email);
     FirebaseDatabase.instance.reference().child("confessions").child(pstKey).child("userInfo").child("userInfo").set(username);
-    FirebaseDatabase.instance.reference().child("confessions").child(pstKey).child("userInfo").child("email_address").set(userID);
+    FirebaseDatabase.instance.reference().child("confessions").child(pstKey).child("userInfo").child("user_ID").set(userID);
 
 
 
@@ -80,6 +116,9 @@ class FirebaseDatabaseUsage  {
 
 
   }
+
+
+
 
 
 //enter the data for a comment node into firebase - Michael Moschella
@@ -117,11 +156,16 @@ class FirebaseDatabaseUsage  {
 
 
 
+
+
+
     ref.set(post);
     myStr=ref.key;
 
     return ref.key;
   }
+
+
 
   //enters the text data for a confession into firebase -Michael Moschella
   static Future<void> pullText(String postKey, String postText) async {

@@ -7,6 +7,7 @@ import 'Themer.dart';
 import 'dart:io';
 import 'package:image_picker/image_picker.dart';
 import 'dart:math';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 //import 'package:path/path.dart';
 import 'package:flutter/material.dart';
@@ -74,6 +75,26 @@ class AddConfessionDialogState extends State<AddConfessionDialog> {
       //creates a user for the post node - Micahel Moschella
       FirebaseDatabaseUsage.createPostUser(postKey, widget.email, widget.username, widget.userID);
 
+      String gg = widget.email;
+
+     String ffff = gg.replaceAll(".",",");
+
+
+
+
+
+    var aaa = getPostNum(ffff);
+
+     // DatabaseReference rrr = FirebaseDatabase.instance.reference().child("the_users").child(gg).child("postNum");
+
+    // var eee = rrr.toString();
+
+
+
+
+
+
+
       if(img!=null){
         uploadImage(postKey);
       }
@@ -86,6 +107,33 @@ class AddConfessionDialogState extends State<AddConfessionDialog> {
     //} else {
     // f.save();
     //}
+  }
+
+  Future<int> getPostNum(String email) async {
+
+    var snap;
+
+   // DatabaseReference rrr = FirebaseDatabase.instance.reference().child("the_users").child(email).push();
+
+   // DatabaseReference rr = FirebaseDatabase.instance.reference().child("the_users").child(email).child("postNum").push();
+
+
+    await FirebaseDatabase.instance.reference().child("the_users").child(email).once().then((DataSnapshot snaps){
+      snap = snaps;
+    });
+
+    var iop = snap.value.remove("postNum");
+    int t = iop+1;
+    snap.value.putIfAbsent("postNum", () => t);
+
+
+
+
+
+    FirebaseDatabase.instance.reference().child("the_users").child(email).child("postNum").set(t);
+
+
+    return t;
   }
 
 //uploads the image you take to firebase storage and keeps the url in the node for that confession - Michael Moschella

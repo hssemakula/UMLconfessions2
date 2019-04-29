@@ -124,13 +124,23 @@ class CreateAccountOneState extends State<CreateAccountOne> {
                                   borderRadius: BorderRadius.circular(35)),
                               onPressed: () {
 
-                                //_doSignUp();
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) =>
-                                          CreateAccountFinal()),
-                                );
+                                if(CurrentUser.usernameMain.text == "" || CurrentUser.emailMain.text == ""){
+                                  Fluttertoast.showToast(
+                                    msg: "You must enter both your username and your email to proceed.",
+                                    toastLength: Toast.LENGTH_SHORT,
+                                    gravity: ToastGravity.CENTER,
+                                  );
+                                } else {
+
+
+                                  //_doSignUp();
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            CreateAccountFinal()),
+                                  );
+                                }
                               },
                             )
                           ],
