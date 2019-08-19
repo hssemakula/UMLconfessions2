@@ -15,4 +15,4 @@ students where they can communicate anonymously
 - Picture Posts functionality
 
 ## Demo
-!(demo.gif)
+![](demo.gif)
